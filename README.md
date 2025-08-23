@@ -128,9 +128,9 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosy
 
 ## 📞 İletişim
 
-- **Behance**: [Behance Profili](https://behance.net/kullaniciadi)
-- **LinkedIn**: [LinkedIn Profili](https://linkedin.com/in/kullaniciadi)
-- **Email**: contact@example.com
+- **Behance**: [Behance Profili](https://behance.net/designeverythink)
+- **LinkedIn**: [LinkedIn Profili](https://linkedin.com/in/yusufgulmz)
+- **Email**: bymrglmz@gmail.com
 
 ---
 
