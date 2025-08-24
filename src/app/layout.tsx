@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio - Tasarım & Geliştirme",
+  title: "DesignEveryThink",
   description: "Poster tasarımları, pixel art, 3D çalışmalar, UI/UX ve kodlama projeleri",
 };
 
