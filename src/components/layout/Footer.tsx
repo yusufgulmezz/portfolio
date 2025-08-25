@@ -6,10 +6,10 @@ import Link from 'next/link';
 
 const Footer = () => {
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: 'https://github.com' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com' },
-    { name: 'Behance', icon: Palette, href: 'https://behance.net' },
-    { name: 'Email', icon: Mail, href: 'mailto:contact@example.com' },
+    { name: 'GitHub', icon: Github, href: 'https://github.com/Developrimbor' },
+    { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/yusufglmz/' },
+    { name: 'Behance', icon: Palette, href: 'https://behance.net/designeverythink' },
+    { name: 'Email', icon: Mail, href: 'mailto:designeverythink.co@gmail.com' },
   ];
 
   return (
