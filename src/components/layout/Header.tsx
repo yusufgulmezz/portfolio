@@ -1,12 +1,27 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const rotatingTexts = [
+    'Graphic Designer',
+    'Pixel Artist',
+    'UI/UX Designer',
+    '3D Designer',
+    'Developer',
+  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % rotatingTexts.length);
+    }, 2000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const menuItems = [
     { name: 'Ana Sayfa', href: '/' },
@@ -23,13 +38,30 @@ const Header = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+          {/* Logo + rotating subtitle */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
             className="flex-shrink-0"
           >
-            <Link href="/" className="text-xl font-bold text-gray-900">
-              DesignEveryThink
+            <Link href="/" className="block">
+              <div className="leading-tight">
+                <span className="block text-xl font-bold text-gray-900">DesignEveryThink</span>
+                <div className="h-5 overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={rotatingTexts[currentIndex]}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.35 }}
+                      className="block text-sm text-gray-500 font-light"
+                      aria-live="polite"
+                    >
+                      {rotatingTexts[currentIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
+              </div>
             </Link>
           </motion.div>
 
