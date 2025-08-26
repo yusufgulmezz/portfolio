@@ -34,7 +34,7 @@ const Header = () => {
     <motion.header 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -45,7 +45,10 @@ const Header = () => {
           >
             <Link href="/" className="block">
               <div className="leading-tight">
-                <span className="block text-xl font-bold text-gray-900">DesignEveryThink</span>
+                <span className="block text-xl text-gray-900">
+                  <span className="font-normal">DesignEvery</span>
+                  <span className="font-bold">Think</span>
+                </span>
                 <div className="h-5 overflow-hidden">
                   <AnimatePresence mode="wait">
                     <motion.span
