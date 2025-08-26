@@ -83,7 +83,7 @@ const HeroSection = () => {
         </motion.div>
 
         {/* Scroll Indicator */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -97,7 +97,7 @@ const HeroSection = () => {
             <Mouse size={24} className="mb-2" />
             <ArrowDown size={16} />
           </motion.div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
