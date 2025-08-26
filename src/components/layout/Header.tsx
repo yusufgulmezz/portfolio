@@ -28,8 +28,8 @@ const Header = () => {
             whileHover={{ scale: 1.05 }}
             className="flex-shrink-0"
           >
-            <Link href="/" className="text-2xl font-bold text-gray-900">
-              Portfolio
+            <Link href="/" className="text-xl font-bold text-gray-900">
+              DesignEveryThink
             </Link>
           </motion.div>
 

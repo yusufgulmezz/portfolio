@@ -23,7 +23,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-bold mb-4">Portfolio</h3>
+            <h3 className="text-2xl font-bold mb-4">DesignEveryThink</h3>
             <p className="text-gray-400 mb-4">
               Tasarım ve geliştirme alanlarında yaratıcı çözümler üreten bir portföy sitesi.
             </p>
