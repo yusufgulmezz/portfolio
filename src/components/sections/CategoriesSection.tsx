@@ -8,8 +8,8 @@ const CategoriesSection = () => {
   const categories = [
     {
       id: 'poster',
-      name: 'Poster Tasarımları',
-      description: 'Yaratıcı ve etkileyici poster tasarımları',
+      name: 'Poster Designs',
+      description: 'Creative and impressive poster designs',
       icon: Palette,
       color: 'from-red-500 to-pink-500',
       count: 12
@@ -17,31 +17,31 @@ const CategoriesSection = () => {
     {
       id: 'pixel-art',
       name: 'Pixel Art',
-      description: 'Retro tarzda pixel art çalışmaları',
+      description: 'Retro-style pixel art works',
       icon: Image,
       color: 'from-green-500 to-teal-500',
       count: 8
     },
     {
       id: '3d',
-      name: '3D Çalışmalar',
-      description: 'Modern 3D modelleme ve render projeleri',
+      name: '3D Works',
+      description: 'Modern 3D modeling and rendering projects',
       icon: Box,
       color: 'from-blue-500 to-indigo-500',
       count: 15
     },
     {
       id: 'ui-ux',
-      name: 'UI/UX Tasarımları',
-      description: 'Kullanıcı deneyimi odaklı arayüz tasarımları',
+      name: 'UI/UX Designs',
+      description: 'User experience focused interface designs',
       icon: Smartphone,
       color: 'from-purple-500 to-pink-500',
       count: 20
     },
     {
       id: 'coding',
-      name: 'Kodlama Projeleri',
-      description: 'Web ve mobil uygulama geliştirme projeleri',
+      name: 'Coding Projects',
+      description: 'Web and mobile application development projects',
       icon: Code,
       color: 'from-orange-500 to-red-500',
       count: 25
@@ -81,11 +81,11 @@ const CategoriesSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Çalışma Alanlarım
+            My Work Areas
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Farklı tasarım ve geliştirme alanlarında yaratıcı projeler üretiyorum. 
-            Her kategori kendi benzersiz yaklaşımımı yansıtıyor.
+            Creating creative projects in different design and development areas. 
+            Each category reflects my unique approach.
           </p>
         </motion.div>
 
@@ -124,14 +124,14 @@ const CategoriesSection = () => {
                   {/* Project Count */}
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">
-                      {category.count} proje
+                      {category.count} projects
                     </span>
                     <motion.div
                       initial={{ x: 0 }}
                       whileHover={{ x: 5 }}
                       className="text-blue-600 font-semibold"
                     >
-                      Görüntüle →
+                      View →
                     </motion.div>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ const CategoriesSection = () => {
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              Tüm Projeleri Görüntüle
+              View All Projects
             </motion.button>
           </Link>
         </motion.div>

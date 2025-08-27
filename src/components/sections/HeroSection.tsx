@@ -42,9 +42,9 @@ const HeroSection = () => {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-gray-900 mb-6">
-            <span className="block">Tasarım &</span>
+            <span className="block">Design &</span>
             <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Geliştirme
+              Development
             </span>
           </h1>
         </motion.div>
@@ -55,8 +55,8 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed"
         >
-          Poster tasarımları, pixel art, 3D çalışmalar, UI/UX ve kodlama projelerimle 
-          yaratıcı çözümler üretiyorum.
+          Creating creative solutions with poster designs, pixel art, 3D work, 
+          UI/UX and coding projects.
         </motion.p>
 
         <motion.div
@@ -70,7 +70,7 @@ const HeroSection = () => {
             whileTap={{ scale: 0.95 }}
             className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            Projelerimi Görüntüle
+            View My Projects
           </motion.button>
           
           <motion.button
@@ -78,7 +78,7 @@ const HeroSection = () => {
             whileTap={{ scale: 0.95 }}
             className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-gray-400 transition-all duration-300"
           >
-            Hakkımda
+            About Me
           </motion.button>
         </motion.div>
 

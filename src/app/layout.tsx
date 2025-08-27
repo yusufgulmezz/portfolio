@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "DesignEveryThink",
-  description: "Poster tasarımları, pixel art, 3D çalışmalar, UI/UX ve kodlama projeleri",
+  description: "Poster designs, pixel art, 3D works, UI/UX and coding projects",
 };
 
 export default function RootLayout({
