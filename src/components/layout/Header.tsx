@@ -24,10 +24,10 @@ const Header = () => {
   }, []);
 
   const menuItems = [
-    { name: 'Ana Sayfa', href: '/' },
-    { name: 'Projeler', href: '/projects' },
-    { name: 'Hakkımda', href: '/about' },
-    { name: 'İletişim', href: '/contact' },
+    { name: 'Home', href: '/' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
