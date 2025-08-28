@@ -57,7 +57,7 @@ const Header = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.35 }}
-                      className="block text-sm text-gray-500 font-light"
+                      className="block text-sm text-gray-500 font-regular"
                       aria-live="polite"
                     >
                       {rotatingTexts[currentIndex]}
