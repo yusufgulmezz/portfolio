@@ -16,7 +16,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-white">
+    <section className="relative min-h-screen bg-[#edede9]">
       {/* Main Content Container */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="min-h-screen flex items-center">
@@ -34,10 +34,10 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-8 leading-tight"
+                className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-medium text-gray-900 mb-8 leading-tight"
               >
-                Digital designer &{' '}
-                <span className="text-blue-600">Developer.</span>
+                Designer &{' '}
+                <span className="text-gray-900">Developer.</span>
               </motion.h1>
               
               {/* Subtitle */}
@@ -48,7 +48,7 @@ const HeroSection = () => {
                 className="mb-8"
               >
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-700 mb-4">
-                  DesignEveryThink
+                  Yusuf Gülmez
                 </h2>
                 <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl">
                   I design and develop high-end digital experiences for design-driven companies that value attention to detail.
