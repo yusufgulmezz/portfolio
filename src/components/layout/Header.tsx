@@ -83,8 +83,8 @@ const Header = () => {
             className="text-right"
           >
             <div className="leading-tight">
-              <p className="text-lg font-bold text-gray-900">My</p>
-              <p className="text-sm font-medium text-gray-700">Portfolio</p>
+              <p className="block text-xl font-normal text-gray-900">Portfolio</p>
+              <p className="block text-sm text-gray-500 font-regular">DET</p>
             </div>
           </motion.div>
         </div>
