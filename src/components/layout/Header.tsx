@@ -34,10 +34,10 @@ const Header = () => {
     <motion.header 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
           {/* Logo + rotating subtitle */}
           <motion.div
             whileHover={{ scale: 1.02 }}
@@ -45,7 +45,7 @@ const Header = () => {
           >
             <Link href="/" className="block">
               <div className="leading-tight">
-                <span className="block text-xl text-gray-900">
+                <span className="block text-xl font-bold text-gray-900">
                   <span className="font-normal">DesignEvery</span>
                   <span className="font-bold">Think</span>
                 </span>
@@ -69,16 +69,16 @@ const Header = () => {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-12">
             {menuItems.map((item) => (
               <motion.div
                 key={item.name}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Link
                   href={item.href}
-                  className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors"
+                  className="text-gray-700 hover:text-gray-900 px-2 py-2 text-base font-medium transition-colors"
                 >
                   {item.name}
                 </Link>
