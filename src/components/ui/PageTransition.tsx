@@ -49,17 +49,17 @@ const PageTransition = () => {
           </div>
 
           {/* Main content */}
-          <div className="relative text-center">
+          <div className="relative text-center px-4 sm:px-6 lg:px-8 w-full max-w-4xl mx-auto">
             {/* Brand name */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="mb-8"
+              className="mb-6 sm:mb-8"
             >
-              <h1 className="text-5xl md:text-7xl font-bold text-white">
-                <span className="font-normal">DesignEvery</span>
-                <span className="font-bold">Think</span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
+                <span className="font-normal block sm:inline">DesignEvery</span>
+                <span className="font-bold block sm:inline">Think</span>
               </h1>
             </motion.div>
 
@@ -68,7 +68,7 @@ const PageTransition = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="h-8 mb-8 overflow-hidden"
+              className="h-6 sm:h-8 mb-6 sm:mb-8 overflow-hidden"
             >
               <AnimatePresence mode="wait">
                 <motion.p
@@ -77,53 +77,19 @@ const PageTransition = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4 }}
-                  className="text-xl md:text-2xl text-gray-300 font-light"
+                  className="text-lg sm:text-xl md:text-2xl text-gray-300 font-light"
                 >
                   {texts[currentText]}
                 </motion.p>
               </AnimatePresence>
             </motion.div>
 
-            {/* Loading animation */}
-            {/* <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.2 }}
-              className="flex justify-center items-center space-x-3"
-            >
-              {[0, 1, 2].map((index) => (
-                <motion.div
-                  key={index}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{
-                    duration: 0.3,
-                    delay: 1.4 + index * 0.1,
-                  }}
-                >
-                  <motion.div
-                    animate={{ 
-                      scale: [1, 1.2, 1],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      delay: index * 0.2,
-                      ease: "easeInOut"
-                    }}
-                    className="w-2 h-2 bg-white rounded-full"
-                  />
-                </motion.div>
-              ))}
-            </motion.div> */}
-
             {/* Progress bar */}
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ duration: 3, ease: "easeInOut" }}
-              className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+              className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
             />
           </div>
 
