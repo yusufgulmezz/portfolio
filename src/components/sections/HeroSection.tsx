@@ -1,103 +1,115 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowDown, Mouse } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const HeroSection = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Page transition'dan sonra animasyonları başlat
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 3500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"
-        />
-      </div>
+    <section className="relative min-h-screen bg-white">
+      {/* Main Content Container */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="min-h-screen flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
+            
+            {/* Left Side - Text Content (8 columns on large screens) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:col-span-8"
+            >
+              {/* Main Heading */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-8 leading-tight"
+              >
+                Digital designer &{' '}
+                <span className="text-blue-600">Developer.</span>
+              </motion.h1>
+              
+              {/* Subtitle */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="mb-8"
+              >
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-700 mb-4">
+                  DesignEveryThink
+                </h2>
+                <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl">
+                  I design and develop high-end digital experiences for design-driven companies that value attention to detail.
+                </p>
+              </motion.div>
+              
+              {/* CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-8 py-4 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-300"
+                >
+                  Contact me
+                </motion.button>
+                
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-8 py-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"
+                >
+                  View Projects
+                </motion.button>
+              </motion.div>
+            </motion.div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-gray-900 mb-6">
-            <span className="block">Design &</span>
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Development
-            </span>
-          </h1>
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed"
-        >
-          Creating creative solutions with poster designs, pixel art, 3D work, 
-          UI/UX and coding projects.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            View My Projects
-          </motion.button>
-          
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-gray-400 transition-all duration-300"
-          >
-            About Me
-          </motion.button>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        {/* <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center text-gray-500"
-          >
-            <Mouse size={24} className="mb-2" />
-            <ArrowDown size={16} />
-          </motion.div>
-        </motion.div> */}
+            {/* Right Side - Image/Visual (4 columns on large screens) */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={isLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="lg:col-span-4 flex justify-center lg:justify-end"
+            >
+              <div className="relative">
+                {/* Profile Image Placeholder */}
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={isLoaded ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  className="w-64 h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full border-4 border-white shadow-lg flex items-center justify-center"
+                >
+                  <div className="text-center">
+                    <div className="w-24 h-24 lg:w-32 lg:h-32 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
+                      <span className="text-3xl lg:text-4xl">👨‍💻</span>
+                    </div>
+                    <p className="text-sm lg:text-base font-medium text-gray-600">Designer Portrait</p>
+                  </div>
+                </motion.div>
+                
+                {/* Subtle background elements */}
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-blue-100 rounded-full opacity-60" />
+                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gray-100 rounded-full opacity-60" />
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );
