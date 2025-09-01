@@ -31,8 +31,8 @@ const Header = () => {
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Left Side - Logo + rotating subtitle */}
           <div className="flex-shrink-0">
             <button 
@@ -40,11 +40,11 @@ const Header = () => {
               className="block cursor-pointer hover:opacity-80 transition-opacity duration-200"
             >
               <div className="leading-tight">
-                <span className="block text-xl font-bold text-gray-900">
-                  <span className="font-normal">DesignEvery</span>
-                  <span className="font-bold">Think</span>
-                </span>
-                <div className="h-5 overflow-hidden text-left">
+                                 <span className="block text-lg sm:text-xl font-bold text-gray-900">
+                   <span className="font-normal">DesignEvery</span>
+                   <span className="font-bold">Think</span>
+                 </span>
+                 <div className="h-4 sm:h-5 overflow-hidden text-left">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={rotatingTexts[currentIndex]}
@@ -52,7 +52,7 @@ const Header = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.35 }}
-                      className="block text-sm text-gray-500 font-regular"
+                                             className="block text-xs sm:text-sm text-gray-500 font-regular"
                       aria-live="polite"
                     >
                       {rotatingTexts[currentIndex]}
@@ -83,8 +83,8 @@ const Header = () => {
             className="text-right"
           >
             <div className="leading-tight">
-              <p className="block text-xl font-normal text-gray-900">Portfolio</p>
-              <p className="block text-sm text-gray-500 font-regular">DET</p>
+                             <p className="block text-lg sm:text-xl font-normal text-gray-900">Portfolio</p>
+               <p className="block text-xs sm:text-sm text-gray-500 font-regular">DET</p>
             </div>
           </motion.div>
         </div>
