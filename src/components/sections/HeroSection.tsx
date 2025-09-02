@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,12 +24,11 @@ const HeroSection = () => {
             
             {/* Background Image - Large background element behind everything */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                            <Image
-                src="/images/ProfilePhoto.png"
+                            <img
+                src="./images/ProfilePhoto.png"
                 alt="Background visual"
-                width={800}
-                height={600}
-                priority
+                loading="eager"
+                decoding="async"
                 className="absolute left-0 lg:-right-[10%] top-1/2 -translate-y-1/2 w-[80vw] sm:w-[75vw] md:w-[70vw] lg:w-[65vw] xl:w-[60vw] max-w-none grayscale opacity-40 object-contain object-left select-none"
                 draggable={false}
               />
