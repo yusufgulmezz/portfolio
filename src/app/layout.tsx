@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${roboto.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
-        <main className="pt-16 sm:pt-4">
+        <main className="pt-20 sm:pt-24 lg:pt-18">
           {children}
         </main>
         <Footer />
