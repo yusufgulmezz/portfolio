@@ -10,7 +10,7 @@ const HeroSection = () => {
     // Page transition'dan sonra animasyonları başlat
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 3500);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -39,7 +39,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative z-10 lg:col-span-8 lg:col-start-5"
+              className="relative z-10 lg:col-span-8 lg:col-start-8"
             >
               {/* Main Heading with Name and Designer on same line */}
               <motion.div
