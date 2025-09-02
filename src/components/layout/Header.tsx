@@ -84,7 +84,7 @@ const Header = () => {
           >
             <div className="leading-tight">
                              <p className="block text-lg sm:text-xl font-bold text-gray-900">Portfolio</p>
-               <p className="block text-xs sm:text-sm text-gray-500 font-regular">DET</p>
+               <p className="block text-xs sm:text-sm text-gray-500 font-regular">Yusuf</p>
             </div>
           </motion.div>
         </div>
