@@ -22,19 +22,19 @@ const HeroSection = () => {
         <div className="min-h-screen flex items-center">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
             
-            {/* Background Image - Large background element behind everything */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                            <img
+            {/* Mobile: Image at top, Desktop: Background image */}
+            <div className="lg:absolute lg:inset-0 lg:pointer-events-none lg:overflow-hidden">
+              <img
                 src="./images/ProfilePhoto.png"
                 alt="Background visual"
                 loading="eager"
                 decoding="async"
-                className="absolute left-0 lg:-right-[10%] top-1/2 -translate-y-1/2 w-[80vw] sm:w-[75vw] md:w-[70vw] lg:w-[65vw] xl:w-[60vw] max-w-none grayscale opacity-40 object-contain object-left select-none"
+                className="w-full h-64 sm:h-80 md:h-96 object-cover object-top mb-8 grayscale opacity-40 lg:absolute lg:left-0 lg:-right-[10%] lg:top-1/2 lg:-translate-y-1/2 lg:w-[80vw] lg:sm:w-[75vw] lg:md:w-[70vw] lg:w-[65vw] lg:xl:w-[60vw] lg:max-w-none lg:object-contain lg:object-left lg:select-none lg:h-auto lg:mb-0"
                 draggable={false}
               />
             </div>
 
-            {/* Right Side - Text Content (8 columns on large screens) */}
+            {/* Mobile: Text below image, Desktop: Text on right */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
