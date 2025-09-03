@@ -10,7 +10,7 @@ const HeroSection = () => {
     // Page transition'dan sonra animasyonları başlat
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 3000);
+    }, 2500); // Adjusted to match PageTransition duration (2.5 seconds)
 
     return () => clearTimeout(timer);
   }, []);
