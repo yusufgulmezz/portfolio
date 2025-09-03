@@ -6,29 +6,47 @@ import { useEffect, useState } from 'react';
 const PageTransition = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [currentText, setCurrentText] = useState(0);
+  const [showEveryThink, setShowEveryThink] = useState(false);
 
-  const texts = [
+  const rotatingTexts = [
+    "3D Object", 
+    "UI/UX Prototype",
+    "Poster",
     "Pixel Art",
-    "Graphic Designe",
-    "UI/UX",
-    "3D",
-    "Coding",
+    "Development Process"
   ];
 
   useEffect(() => {
-    // Text değişimi animasyonu
-    const textInterval = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % texts.length);
-    }, 500);
+    // İlk 0.3 saniye sadece "Design" göster, sonra text'ler başlasın
+    const startInterval = setTimeout(() => {
+      // Text'leri sırayla göster
+      const timers: NodeJS.Timeout[] = [];
+      
+      // Her text için ayrı timer
+      rotatingTexts.forEach((_, index) => {
+        const timer = setTimeout(() => {
+          setCurrentText(index + 1);
+        }, index * 400); // 700ms → 400ms (daha hızlı)
+        timers.push(timer);
+      });
 
-    // Ana animasyonu gizle
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 3000);
+      // Son text'ten sonra EveryThink'i göster
+      const everyThinkTimer = setTimeout(() => {
+        setShowEveryThink(true);
+      }, rotatingTexts.length * 400);
+
+      // Ana animasyonu gizle
+      const hideTimer = setTimeout(() => {
+        setIsVisible(false);
+      }, (rotatingTexts.length + 1) * 400 + 100); // +100ms extra
+
+      return () => {
+        [...timers, everyThinkTimer, hideTimer].forEach(clearTimeout);
+      };
+    }, 300); // 500ms → 300ms (daha hızlı)
 
     return () => {
-      clearInterval(textInterval);
-      clearTimeout(timer);
+      clearTimeout(startInterval);
     };
   }, []);
 
@@ -49,48 +67,28 @@ const PageTransition = () => {
           </div>
 
           {/* Main content */}
-          <div className="relative text-center px-4 sm:px-6 lg:px-8 w-full max-w-4xl mx-auto">
-            {/* Brand name */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.3 }}
-              className="mb-6 sm:mb-8"
-            >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
-                <span className="font-normal block sm:inline">DesignEvery</span>
-                <span className="font-bold block sm:inline">Think</span>
+          <div className="relative text-center px-4 sm:px-6 lg:px-8 w-full max-w-6xl mx-auto">
+            {/* Main text with "Design" + rotating text */}
+            <div className="mb-6 sm:mb-8">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight">
+                <span className="font-normal">Design</span>
+                <span className="inline-block ml-4">
+                  {currentText > 0 && !showEveryThink && (
+                    <span className="font-bold text-gray-400">
+                      {rotatingTexts[currentText - 1]}
+                    </span>
+                  )}
+                  {showEveryThink && (
+                    <>
+                      <span className="font-normal text-white">Every</span>
+                      <span className="font-bold text-white">Think</span>
+                    </>
+                  )}
+                </span>
               </h1>
-            </motion.div>
+            </div>
 
-            {/* Rotating text */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="h-6 sm:h-8 mb-6 sm:mb-8 overflow-hidden"
-            >
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={currentText}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className="text-lg sm:text-xl md:text-2xl text-gray-300 font-light"
-                >
-                  {texts[currentText]}
-                </motion.p>
-              </AnimatePresence>
-            </motion.div>
 
-            {/* Progress bar */}
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 3, ease: "easeInOut" }}
-              className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-            />
           </div>
 
           {/* Corner accents */}
