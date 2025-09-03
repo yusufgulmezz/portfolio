@@ -13,7 +13,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-[#edede9] text-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand Section */}
@@ -23,8 +23,8 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-bold mb-4">DesignEveryThink</h3>
-            <p className="text-gray-400 mb-4">
+            <h3 className="text-lg sm:text-xl font-bold mb-4">DesignEveryThink</h3>
+            <p className="text-gray-600 mb-4">
               A portfolio website showcasing creative solutions in design and development.
             </p>
           </motion.div>
@@ -36,12 +36,12 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-base sm:text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-gray-400 hover:text-white transition-colors">Home</Link></li>
-              <li><Link href="/projects" className="text-gray-400 hover:text-white transition-colors">Projects</Link></li>
-              <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors">About</Link></li>
-              <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+              <li><Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">Home</Link></li>
+              <li><Link href="/projects" className="text-gray-600 hover:text-gray-900 transition-colors">Projects</Link></li>
+              <li><Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">About</Link></li>
+              <li><Link href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact</Link></li>
             </ul>
           </motion.div>
 
@@ -52,7 +52,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h4 className="text-lg font-semibold mb-4">Social Media</h4>
+            <h4 className="text-base sm:text-lg font-semibold mb-4">Social Media</h4>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
                 <motion.a
@@ -62,7 +62,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   <social.icon size={24} />
                 </motion.a>
@@ -77,10 +77,10 @@ const Footer = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="border-t border-gray-800 mt-8 pt-8 text-center"
+          className="border-t border-gray-300 mt-8 pt-8 text-center"
         >
-          <p className="text-gray-400">
-            © 2024 Portfolio. All rights reserved.
+          <p className="text-gray-600">
+            © 2025
           </p>
         </motion.div>
       </div>
