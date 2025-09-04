@@ -19,7 +19,7 @@ const HeroSection = () => {
     <section className="relative min-h-screen bg-[#edede9]">
       {/* Main Content Container */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="min-h-screen flex items-center">
+        <div className="min-h-screen flex items-start pt-8 sm:pt-12 lg:pt-32">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
             
             {/* Mobile: Image at top, Desktop: Background image */}
@@ -39,7 +39,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative z-10 lg:col-span-8 lg:col-start-8"
+              className="relative z-10 lg:col-span-8 lg:col-start-6 text-right"
             >
               {/* Main Heading with Name and Designer on same line */}
               <motion.div
@@ -48,16 +48,16 @@ const HeroSection = () => {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="mb-6"
               >
-                <div className="flex items-baseline gap-4 mb-2">
-                  <span className="text-lg sm:text-xl lg:text-2xl font-normal text-orange-500">
+                <div className="flex items-baseline gap-4 mb-2 justify-end">
+                  {/* <span className="text-lg sm:text-xl lg:text-2xl font-normal text-orange-500">
                     Yusuf Gülmez
-                  </span>
-                  <span className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900">
-                    DESIGNER
+                  </span> */}
+                  <span className="text-3xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900">
+                    DIGITAL
                   </span>
                 </div>
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900">
-                  & DEVELOPER.
+                <h1 className="text-3xl sm:text-54xl lg:text-5xl xl:text-6xl font-bold text-gray-600 text-right">
+                DESIGNER & DEVELOPER
                 </h1>
               </motion.div>
               
@@ -68,7 +68,7 @@ const HeroSection = () => {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="mb-8"
               >
-                <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl">
+                <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl ml-auto text-right">
                   I design and develop high-end digital experiences for design-driven companies that value attention to detail.
                 </p>
               </motion.div>
@@ -78,11 +78,12 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
+                className="flex justify-end"
               >
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-8 py-4 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors duration-300"
+                  className="px-8 py-4 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-600 transition-colors duration-300"
                 >
                   Contact me
                 </motion.button>
