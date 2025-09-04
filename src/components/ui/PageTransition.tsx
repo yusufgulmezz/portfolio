@@ -13,7 +13,7 @@ const PageTransition = () => {
     "UI/UX Prototype",
     "Poster",
     "Pixel Art",
-    "Development Process"
+    "Code Process"
   ];
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const PageTransition = () => {
                 <span className="inline-block ml-4">
                   {currentText > 0 && !showEveryThink && (
                     <span className="font-bold text-gray-400">
-                      {rotatingTexts[currentText - 1]}
+                      a {rotatingTexts[currentText - 1]}
                     </span>
                   )}
                   {showEveryThink && (
