@@ -51,7 +51,7 @@ const Header = () => {
                       initial={{ opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.35 }}
+                      transition={{ duration: 0.15 }}
                                              className="block text-xs sm:text-sm text-gray-500 font-regular"
                       aria-live="polite"
                     >
@@ -84,7 +84,7 @@ const Header = () => {
           >
             <div className="leading-tight">
                              <p className="block text-lg sm:text-xl font-bold text-gray-900">Portfolio</p>
-               <p className="block text-xs sm:text-sm text-gray-500 font-regular">Yusuf</p>
+               <p className="block text-xs sm:text-sm text-gray-500 font-regular">Yusuf Gülmez</p>
             </div>
           </motion.div>
         </div>
