@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import Spline from '@splinetool/react-spline';
 
 const DesignEveryThinkSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
