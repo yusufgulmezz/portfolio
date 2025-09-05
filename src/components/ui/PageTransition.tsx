@@ -70,7 +70,7 @@ const PageTransition = () => {
           <div className="relative text-center px-4 sm:px-6 lg:px-8 w-full max-w-6xl mx-auto">
             {/* Main text with "Design" + rotating text */}
             <div className="mb-6 sm:mb-8">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
                 <span className="font-normal">Design</span>
                 <span className="inline-block ml-4">
                   {currentText > 0 && !showEveryThink && (
