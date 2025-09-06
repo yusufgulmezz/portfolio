@@ -22,13 +22,13 @@ const DesignEveryThinkSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-[#edede9] flex flex-col justify-center items-center">
+    <section className="relative min-h-screen bg-[#edede9] flex flex-col justify-start items-center pt-56">
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Main Title */}
         <motion.h1 
-          className="text-[120px] font-normal text-[#1A1A1A] leading-none mb-16 text-center"
-          style={{ fontFamily: 'var(--font-roboto)' }}
+          className="text-[128px] font-medium text-[#1A1A1A] leading-none mb-16 text-center"
+          style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
           initial={{ opacity: 0, y: 50 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 1, delay: 0.5 }}
@@ -59,7 +59,7 @@ const DesignEveryThinkSection = () => {
 
       {/* Animated Scroll Down Button */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-32 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: 20 }}
         animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 1, delay: 2 }}
@@ -70,25 +70,11 @@ const DesignEveryThinkSection = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          {/* Animated Arrow */}
+          {/* Modern Scroll Down Icon */}
           <motion.div
-            className="w-6 h-6 border-r-2 border-b-2 border-[#1A1A1A] transform rotate-45 mb-2"
+            className="w-8 h-12 border-2 border-[#1A1A1A] rounded-full flex justify-center items-start pt-2"
             animate={{
-              y: [0, 8, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          
-          {/* Scroll Text */}
-          <motion.span 
-            className="text-[#1A1A1A] text-sm font-normal"
-            style={{ fontFamily: 'var(--font-roboto)' }}
-            animate={{
-              opacity: [0.6, 1, 0.6],
+              y: [0, 4, 0],
             }}
             transition={{
               duration: 2,
@@ -96,8 +82,19 @@ const DesignEveryThinkSection = () => {
               ease: "easeInOut"
             }}
           >
-            Scroll Down
-          </motion.span>
+            <motion.div
+              className="w-1 h-3 bg-[#1A1A1A] rounded-full"
+              animate={{
+                y: [0, 8, 0],
+                opacity: [1, 0.3, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          </motion.div>
         </motion.button>
       </motion.div>
     </section>
