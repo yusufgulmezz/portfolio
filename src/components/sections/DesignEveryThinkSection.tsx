@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 const DesignEveryThinkSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [sectionMinHeight, setSectionMinHeight] = useState<number | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -12,6 +13,20 @@ const DesignEveryThinkSection = () => {
     }, 1000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Set section height to viewport minus header height so the whole block is visible
+  useEffect(() => {
+    const updateHeight = () => {
+      const header = document.querySelector('header') as HTMLElement | null;
+      const headerHeight = header?.offsetHeight ?? 0;
+      const viewportHeight = window.innerHeight;
+      setSectionMinHeight(viewportHeight - headerHeight);
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
   }, []);
 
   const scrollToNext = () => {
@@ -22,7 +37,10 @@ const DesignEveryThinkSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen bg-[#edede9] flex flex-col justify-start items-center pt-56">
+    <section
+      className="relative bg-[#edede9] flex flex-col justify-center items-center"
+      style={{ minHeight: sectionMinHeight ? `${sectionMinHeight}px` : '100vh' }}
+    >
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Main Title */}
@@ -46,7 +64,7 @@ const DesignEveryThinkSection = () => {
 
         {/* Description Text */}
         <motion.p 
-          className="text-[24px] font-normal text-[#1A1A1A] leading-relaxed text-left"
+          className="text-[24px] font-normal text-[#1A1A1A] leading-relaxed text-left mx-auto"
           style={{ fontFamily: 'var(--font-roboto)' }}
           initial={{ opacity: 0, y: 30 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -59,7 +77,7 @@ const DesignEveryThinkSection = () => {
 
       {/* Animated Scroll Down Button */}
       <motion.div 
-        className="absolute bottom-32 left-1/2 transform -translate-x-1/2"
+        className="absolute left-1/2 transform -translate-x-1/2 bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12"
         initial={{ opacity: 0, y: 20 }}
         animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 1, delay: 2 }}
