@@ -27,7 +27,7 @@ const DesignEveryThinkSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Main Title */}
         <motion.h1 
-          className="text-[128px] font-medium text-[#1A1A1A] leading-none mb-16 text-center"
+          className="text-[52px] sm:text-[80px] md:text-[104px] lg:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] mb-12 text-center"
           style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
           initial={{ opacity: 0, y: 50 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
