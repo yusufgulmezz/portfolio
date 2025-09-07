@@ -56,7 +56,7 @@ const DesignEveryThinkSection = () => {
 
         {/* Horizontal Line */}
         <motion.div 
-          className="w-full h-px bg-[#AFAFAF] mb-16"
+          className="w-full h-px bg-[#AFAFAF] mb-14"
           initial={{ scaleX: 0 }}
           animate={isLoaded ? { scaleX: 1 } : { scaleX: 0 }}
           transition={{ duration: 1, delay: 1 }}
@@ -77,7 +77,7 @@ const DesignEveryThinkSection = () => {
 
       {/* Animated Scroll Down Button */}
       <motion.div 
-        className="absolute left-1/2 transform -translate-x-1/2 bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12"
+        className="absolute left-1/2 transform -translate-x-1/2 bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-6"
         initial={{ opacity: 0, y: 20 }}
         animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 1, delay: 2 }}
