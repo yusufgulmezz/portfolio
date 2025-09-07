@@ -64,7 +64,7 @@ const DesignEveryThinkSection = () => {
 
         {/* Description Text */}
         <motion.p 
-          className="text-[24px] font-normal text-[#1A1A1A] leading-relaxed text-left mx-auto"
+          className="text-[16px] sm:text-[20px] md:text-[24px] font-normal text-[#1A1A1A] leading-relaxed text-left mx-auto"
           style={{ fontFamily: 'var(--font-roboto)' }}
           initial={{ opacity: 0, y: 30 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
