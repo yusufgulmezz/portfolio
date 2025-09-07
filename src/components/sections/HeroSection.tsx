@@ -29,7 +29,7 @@ const HeroSection = () => {
                 alt="Background visual"
                 loading="eager"
                 decoding="async"
-                className="w-full h-64 sm:h-80 md:h-96 object-cover object-top mb-8 grayscale opacity-40 lg:absolute lg:left-0 lg:-right-[10%] lg:top-1/2 lg:-translate-y-1/2 lg:w-[80vw] lg:sm:w-[75vw] lg:md:w-[70vw] lg:w-[65vw] lg:xl:w-[60vw] lg:max-w-none lg:object-contain lg:object-left lg:select-none lg:h-auto lg:mb-0"
+                className="w-full h-64 sm:h-80 md:h-96 object-cover object-top mb-8 grayscale opacity-40 lg:absolute lg:left-0 lg:-right-[10%] lg:top-1/2 lg:-translate-y-6/16 lg:w-[80vw] lg:sm:w-[75vw] lg:md:w-[70vw] lg:w-[65vw] lg:xl:w-[60vw] lg:max-w-none lg:object-contain lg:object-left lg:select-none lg:h-auto lg:mb-0"
                 draggable={false}
               />
             </div>
@@ -52,11 +52,14 @@ const HeroSection = () => {
                   {/* <span className="text-lg sm:text-xl lg:text-2xl font-normal text-orange-500">
                     Yusuf Gülmez
                   </span> */}
-                  <span className="text-3xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900">
+                  <span 
+                    className="text-[52px] sm:text-[80px] md:text-[104px] lg:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] text-right"
+                    style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
+                  >
                     DIGITAL
                   </span>
                 </div>
-                <h1 className="text-3xl sm:text-54xl lg:text-5xl xl:text-6xl font-bold text-gray-600 text-right">
+                <h1 className="text-[24px] sm:text-[24px] md:text-[24px] lg:text-[39px] font-Regular text-[#4E4E4E] leading-[0.95] text-right">
                 DESIGNER & DEVELOPER
                 </h1>
               </motion.div>
@@ -68,7 +71,10 @@ const HeroSection = () => {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="mb-8"
               >
-                <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-2xl ml-auto text-right">
+                <p 
+                  className="text-[16px] sm:text-[20px] md:text-[24px] font-normal text-[#1A1A1A] leading-relaxed max-w-2xl ml-auto text-right"
+                  style={{ fontFamily: 'var(--font-roboto)' }}
+                >
                   I design and develop high-end digital experiences for design-driven companies that value attention to detail.
                 </p>
               </motion.div>
