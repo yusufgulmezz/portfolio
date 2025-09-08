@@ -291,7 +291,7 @@ const CategoriesSection = () => {
   };
 
   return (
-    <section className="py-20 bg-[#edede9]">
+    <section id="categories" className="py-20 bg-[#edede9]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
