@@ -16,7 +16,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-[#edede9]">
+    <section id="hero" className="relative min-h-screen bg-[#edede9]">
       {/* Main Content Container */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="min-h-screen flex items-start pt-8 sm:pt-12 lg:pt-32">
