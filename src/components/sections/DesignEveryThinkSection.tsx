@@ -1,19 +1,46 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const DesignEveryThinkSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [sectionMinHeight, setSectionMinHeight] = useState<number | null>(null);
+  const [typedText, setTypedText] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 1000);
+    }, 2800);
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Typewriter animation for description (inspired by text-type patterns)
+  const descriptionFullText = useMemo(
+    () =>
+      'Where creativity meets technology.\nFrom pixels to prototypes, from code to canvas - every project tells a story.',
+    []
+  );
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    let currentIndex = 0;
+    const typingSpeedMs = 28; // smooth & fast
+
+    // Ensure we always start from the very beginning when visible
+    setTypedText('');
+    const interval = setInterval(() => {
+      currentIndex += 1;
+      setTypedText(descriptionFullText.slice(0, currentIndex));
+      if (currentIndex >= descriptionFullText.length) {
+        clearInterval(interval);
+      }
+    }, typingSpeedMs);
+
+    return () => clearInterval(interval);
+  }, [isLoaded, descriptionFullText]);
 
   // Set section height to viewport minus header height so the whole block is visible
   useEffect(() => {
@@ -62,17 +89,20 @@ const DesignEveryThinkSection = () => {
           transition={{ duration: 1, delay: 1 }}
         />
 
-        {/* Description Text */}
-        <motion.p 
+        {/* Description Text with typewriter animation */}
+        <motion.div 
           className="text-[16px] sm:text-[20px] md:text-[24px] font-normal text-[#1A1A1A] leading-relaxed text-left mx-auto"
           style={{ fontFamily: 'var(--font-roboto)' }}
           initial={{ opacity: 0, y: 30 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 1, delay: 1.5 }}
+          transition={{ duration: 1, delay: 0 }}
         >
-          Where creativity meets technology.<br />
-          From pixels to prototypes, from code to canvas - every project tells a story.
-        </motion.p>
+          {typedText.split('\n').map((line, idx) => (
+            <span key={idx} className="block">
+              {line}
+            </span>
+          ))}
+        </motion.div>
       </div>
 
       {/* Animated Scroll Down Button */}
