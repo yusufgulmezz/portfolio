@@ -65,6 +65,7 @@ const DesignEveryThinkSection = () => {
 
   return (
     <section
+      id="design-every-think"
       className="relative bg-[#edede9] flex flex-col justify-center items-center"
       style={{ minHeight: sectionMinHeight ? `${sectionMinHeight}px` : '100vh' }}
     >
