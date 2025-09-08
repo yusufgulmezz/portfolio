@@ -3,6 +3,7 @@ import { Roboto, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import VerticalNav from "@/components/layout/VerticalNav";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${geistMono.variable} antialiased`}
       >
+        <VerticalNav />
         <Header />
         <main className="pt-20 sm:pt-24 lg:pt-18">
           {children}
