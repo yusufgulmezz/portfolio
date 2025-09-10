@@ -39,10 +39,9 @@ const Header = () => {
               onClick={handleLogoClick} 
               className="block cursor-pointer hover:opacity-80 transition-opacity duration-200"
             >
-              <div className="leading-tight">
+              <div className="leading-tight text-left">
                                  <span className="block text-lg sm:text-xl font-bold text-gray-900">
-                   <span className="font-normal">DesignEvery</span>
-                   <span className="font-bold">Think</span>
+                   <span className="font-bold">DET</span>
                  </span>
                  <div className="h-4 sm:h-5 overflow-hidden text-left">
                   <AnimatePresence mode="wait">
