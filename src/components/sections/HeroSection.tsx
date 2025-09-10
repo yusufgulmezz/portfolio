@@ -21,25 +21,32 @@ const HeroSection = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="min-h-screen flex items-start pt-8 sm:pt-12 lg:pt-32">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
-            
-            {/* Mobile: Image at top, Desktop: Background image */}
-            <div className="lg:absolute lg:inset-0 lg:pointer-events-none lg:overflow-hidden">
-              <img
-                src="./images/ProfilePhoto.png"
-                alt="Background visual"
-                loading="eager"
-                decoding="async"
-                className="w-full h-64 sm:h-80 md:h-96 object-cover object-top mb-8 grayscale opacity-40 lg:absolute lg:left-0 lg:-right-[10%] lg:top-1/2 lg:-translate-y-6/16 lg:w-[80vw] lg:sm:w-[75vw] lg:md:w-[70vw] lg:w-[65vw] lg:xl:w-[60vw] lg:max-w-none lg:object-contain lg:object-left lg:select-none lg:h-auto lg:mb-0"
-                draggable={false}
-              />
-            </div>
+
+            {/* Image: Foreground column (top on mobile, left on desktop) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="lg:col-span-5 order-1"
+            >
+              <div className="relative w-full overflow-hidden rounded-2xl bg-white/40 backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.08)]">
+                <img
+                  src="./images/ProfilePhoto.png"
+                  alt="Profile photo"
+                  loading="eager"
+                  decoding="async"
+                  className="w-full h-[340px] sm:h-[420px] md:h-[500px] lg:h-[560px] object-cover object-center grayscale-[40%]"
+                  draggable={false}
+                />
+              </div>
+            </motion.div>
 
             {/* Mobile: Text below image, Desktop: Text on right */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative z-10 lg:col-span-8 lg:col-start-6 text-right"
+              className="relative z-10 lg:col-span-7 lg:col-start-6 text-right order-2"
             >
               {/* Main Heading with Name and Designer on same line */}
               <motion.div
@@ -91,13 +98,12 @@ const HeroSection = () => {
                   whileTap={{ scale: 0.98 }}
                   className="px-8 py-4 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-600 transition-colors duration-300"
                 >
-                  Contact me
+                  See My Works
                 </motion.button>
               </motion.div>
             </motion.div>
 
-            {/* Left spacer to keep text on the right */}
-            <div className="hidden lg:block lg:col-span-4" />
+            
           </div>
         </div>
       </div>
