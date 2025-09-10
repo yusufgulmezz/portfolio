@@ -72,7 +72,7 @@ export default function BlobCursor({
           x: x - left,
           y: y - top,
           duration: isLead ? fastDuration : slowDuration,
-          ease: isLead ? (fastEase as any) : (slowEase as any),
+          ease: isLead ? fastEase : slowEase,
         });
       });
     },
@@ -81,13 +81,15 @@ export default function BlobCursor({
 
   useEffect(() => {
     const onResize = () => updateOffset();
+    const onMouseMove = (e: MouseEvent) => handleMove(e);
+    const onTouchMove = (e: TouchEvent) => handleMove(e);
     window.addEventListener('resize', onResize);
-    window.addEventListener('mousemove', handleMove as any, { passive: true } as any);
-    window.addEventListener('touchmove', handleMove as any, { passive: true } as any);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
     return () => {
       window.removeEventListener('resize', onResize);
-      window.removeEventListener('mousemove', handleMove as any);
-      window.removeEventListener('touchmove', handleMove as any);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('touchmove', onTouchMove);
     };
   }, [updateOffset, handleMove]);
 
