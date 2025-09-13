@@ -61,7 +61,7 @@ const VerticalNav = () => {
         }
       });
     };
-  }, []);
+  }, [navItems]);
 
   return (
     <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block">

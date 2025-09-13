@@ -269,26 +269,6 @@ const CategoriesSection = () => {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
 
   return (
     <section id="categories" className="py-20 bg-[#edede9]">
@@ -407,7 +387,7 @@ const CategoriesSection = () => {
               Ready to work together?
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Let's create something amazing together. Get in touch to discuss your project.
+              Let&apos;s create something amazing together. Get in touch to discuss your project.
             </p>
             <Link href="/contact">
               <motion.button

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 
 const Header = () => {
   const rotatingTexts = [
@@ -19,7 +18,7 @@ const Header = () => {
       setCurrentIndex((prev) => (prev + 1) % rotatingTexts.length);
     }, 2000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [rotatingTexts.length]);
 
   const handleLogoClick = () => {
     window.location.reload();

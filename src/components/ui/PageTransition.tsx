@@ -48,7 +48,7 @@ const PageTransition = () => {
     return () => {
       clearTimeout(startInterval);
     };
-  }, []);
+  }, [rotatingTexts]);
 
   return (
     <AnimatePresence>
