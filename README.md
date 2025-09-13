@@ -55,8 +55,8 @@ src/
    ```
 
 3. **Geliştirme sunucusunu başlatın**
-   ```bash
-   npm run dev
+```bash
+npm run dev
    ```
 
 4. **Tarayıcıda açın**
