@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import Link from 'next/link';
+import { useState, useRef, useEffect } from 'react';
 
 const CategoriesSection = () => {
 
@@ -12,7 +13,33 @@ const CategoriesSection = () => {
       description: 'Creative and impressive poster designs',
       number: '01',
       color: 'from-red-500 to-pink-500',
-      count: 12
+      count: 12,
+      projects: [
+        {
+          id: 1,
+          title: 'Lewis Hamilton Poster Design',
+          date: '12/09/2025',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
+          image: '/api/placeholder/300/400',
+          tags: ['Poster', 'Design']
+        },
+        {
+          id: 2,
+          title: 'Charles Leclerc Poster Design',
+          date: '12/09/2025',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
+          image: '/api/placeholder/300/400',
+          tags: ['Poster', 'Design']
+        },
+        {
+          id: 3,
+          title: 'Max Verstappen Poster Design',
+          date: '12/09/2025',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
+          image: '/api/placeholder/300/400',
+          tags: ['Poster', 'Design']
+        }
+      ]
     },
     {
       id: 'pixel-art',
@@ -20,7 +47,25 @@ const CategoriesSection = () => {
       description: 'Retro-style pixel art works',
       number: '02',
       color: 'from-green-500 to-teal-500',
-      count: 8
+      count: 8,
+      projects: [
+        {
+          id: 4,
+          title: 'Retro Gaming Character',
+          date: '10/09/2025',
+          description: 'Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.',
+          image: '/api/placeholder/300/400',
+          tags: ['Pixel Art', 'Character']
+        },
+        {
+          id: 5,
+          title: 'Cyberpunk Cityscape',
+          date: '08/09/2025',
+          description: 'Maecenas eget condimentum velit, sit amet feugiat lectus.',
+          image: '/api/placeholder/300/400',
+          tags: ['Pixel Art', 'Landscape']
+        }
+      ]
     },
     {
       id: '3d',
@@ -28,7 +73,25 @@ const CategoriesSection = () => {
       description: 'Modern 3D modeling and rendering projects',
       number: '03',
       color: 'from-blue-500 to-indigo-500',
-      count: 15
+      count: 15,
+      projects: [
+        {
+          id: 6,
+          title: 'Architectural Visualization',
+          date: '03/09/2025',
+          description: 'Modern building design with realistic lighting and materials.',
+          image: '/api/placeholder/300/400',
+          tags: ['3D', 'Architecture']
+        },
+        {
+          id: 7,
+          title: 'Product Render',
+          date: '01/09/2025',
+          description: 'High-quality product visualization for e-commerce.',
+          image: '/api/placeholder/300/400',
+          tags: ['3D', 'Product']
+        }
+      ]
     },
     {
       id: 'ui-ux',
@@ -36,7 +99,25 @@ const CategoriesSection = () => {
       description: 'User experience focused interface designs',
       number: '04',
       color: 'from-purple-500 to-pink-500',
-      count: 20
+      count: 20,
+      projects: [
+        {
+          id: 8,
+          title: 'Mobile App Interface',
+          date: '28/08/2025',
+          description: 'Clean and intuitive mobile app design with modern UI patterns.',
+          image: '/api/placeholder/300/400',
+          tags: ['UI/UX', 'Mobile']
+        },
+        {
+          id: 9,
+          title: 'Dashboard Design',
+          date: '25/08/2025',
+          description: 'Data visualization dashboard with interactive elements.',
+          image: '/api/placeholder/300/400',
+          tags: ['UI/UX', 'Dashboard']
+        }
+      ]
     },
     {
       id: 'coding',
@@ -44,10 +125,236 @@ const CategoriesSection = () => {
       description: 'Web and mobile application development projects',
       number: '05',
       color: 'from-orange-500 to-red-500',
-      count: 25
+      count: 25,
+      projects: [
+        {
+          id: 10,
+          title: 'E-commerce Website',
+          date: '20/08/2025',
+          description: 'Full-stack e-commerce solution with modern technologies.',
+          image: '/api/placeholder/300/400',
+          tags: ['Web', 'E-commerce']
+        },
+        {
+          id: 11,
+          title: 'Portfolio Website',
+          date: '15/08/2025',
+          description: 'Responsive portfolio website with smooth animations.',
+          image: '/api/placeholder/300/400',
+          tags: ['Web', 'Portfolio']
+        }
+      ]
     }
   ];
 
+  // AnimatedSection component for each category
+  const AnimatedSection = ({ designs, title, subtitle }: { 
+    designs: Array<{
+      id: number;
+      title: string;
+      date: string;
+      description: string;
+      image: string;
+      tags: string[];
+    }>, 
+    title: string, 
+    subtitle: string
+  }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+      target: containerRef,
+      offset: ["start center", "end start"]
+    });
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isHeaderVisible, setIsHeaderVisible] = useState(false);
+
+    // Header görünürlüğünü kontrol et
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsHeaderVisible(entry.isIntersecting);
+        },
+        { threshold: 0.5 }
+      );
+
+      if (headerRef.current) {
+        observer.observe(headerRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
+
+    // Scroll progress'e göre hangi tasarımın aktif olacağını belirle (sadece ilk tasarımı göster)
+    useEffect(() => {
+      const unsubscribe = scrollYProgress.on("change", (latest) => {
+        // Sadece header görünürse ve scroll başladıysa ilk tasarımı göster
+        if (isHeaderVisible && latest > 0) {
+          setCurrentIndex(0);
+        }
+      });
+
+      return () => unsubscribe();
+    }, [scrollYProgress, isHeaderVisible]);
+
+    // Tasarım değiştirme fonksiyonu
+    const goToProject = (index: number) => {
+      console.log('Tıklanan tasarım index:', index, 'Toplam tasarım sayısı:', designs.length);
+      if (index >= 0 && index < designs.length) {
+        setCurrentIndex(index);
+      }
+    };
+
+    return (
+      <section ref={containerRef} className="py-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div ref={headerRef} className="mb-8">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">{title}</h2>
+            <p className="text-xl text-gray-600 max-w-3xl">{subtitle}</p>
+            <div className="w-full h-px bg-gray-300 mt-6"></div>
+            {/* Debug info */}
+            <div className="text-sm text-gray-500 mt-2">
+              Aktif Tasarım: {currentIndex + 1} / {designs.length}
+            </div>
+          </div>
+
+          <div className="relative h-[600px] overflow-hidden">
+            {designs.map((design, index) => {
+              // Ana tasarım için animasyon değerleri
+              const isActive = index === currentIndex;
+              const isNext = index === currentIndex + 1;
+              const isPrevious = index === currentIndex - 1;
+
+              let x = "100%";
+              let scale = 0.6;
+              let opacity = 0;
+              let zIndex = 1;
+
+              if (isActive) {
+                x = "0%";
+                scale = 1;
+                opacity = 1;
+                zIndex = 50;
+              } else if (isNext) {
+                x = "70%";
+                scale = 0.6;
+                opacity = 0.8;
+                zIndex = 5;
+              } else if (isPrevious) {
+                x = "-100%";
+                scale = 0.6;
+                opacity = 0;
+                zIndex = 1;
+              }
+
+              return (
+                <motion.div
+                  key={design.id}
+                  className="absolute inset-0 flex items-center"
+                  style={{ zIndex }}
+                  animate={{
+                    x,
+                    scale,
+                    opacity
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 30,
+                    mass: 1
+                  }}
+                >
+                  <div className="flex items-center gap-8 w-full">
+                    {/* Sol taraf - Tasarım görüntüsü */}
+                    <motion.div 
+                      className="flex-shrink-0"
+                      animate={{
+                        scale: isActive ? 1 : 0.8
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 30
+                      }}
+                    >
+                      <div className="w-80 h-96 bg-gray-200 rounded-lg border border-gray-300 shadow-lg flex items-center justify-center">
+                        <div className="text-gray-500 text-sm">Design Preview</div>
+                      </div>
+                    </motion.div>
+
+                    {/* Sağ taraf - İçerik */}
+                    <motion.div 
+                      className="flex-1 max-w-md"
+                      animate={{
+                        opacity: isActive ? 1 : 0.6,
+                        x: isActive ? 0 : 50
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 30
+                      }}
+                    >
+                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{design.title}</h3>
+                      <p className="text-gray-500 text-sm mb-6">{design.date}</p>
+                      <p className="text-gray-700 text-base leading-relaxed mb-4">{design.description}</p>
+                      <p className="text-gray-700 text-base leading-relaxed mb-6">
+                        Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus.
+                      </p>
+                      
+                      {/* Tags */}
+                      <div className="flex gap-2 flex-wrap">
+                        {design.tags.map((tag: string, tagIndex: number) => (
+                          <span
+                            key={tagIndex}
+                            className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-200"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              );
+            })}
+
+            {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
+            {currentIndex < designs.length - 1 && (
+              <div className="absolute top-1/2 right-4 -translate-y-1/2 z-20">
+                <motion.button
+                  onClick={() => {
+                    console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
+                    goToProject(currentIndex + 1);
+                  }}
+                  className="w-20 h-28 bg-gray-200 rounded-lg border border-gray-300 shadow-md flex flex-col items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 30
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className="text-gray-500 text-center px-2">
+                    <div className="font-medium text-xs leading-tight">
+                      {designs[currentIndex + 1]?.title.split(' ')[0] || 'Next'}
+                    </div>
+                    <div className="text-xs mt-1 opacity-75">
+                      {designs[currentIndex + 1]?.date || ''}
+                    </div>
+                  </div>
+                </motion.button>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    );
+  };
 
 
   return (
@@ -69,85 +376,16 @@ const CategoriesSection = () => {
           </p>
         </motion.div>
 
-        {/* Categories Sections */}
-        <div className="space-y-16">
-          {categories.map((category, index) => (
-            <motion.div
-              key={category.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="group relative"
-            >
-              {/* Category Header */}
-              <div className="mb-8">
-                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-                  {category.name}
-                </h3>
-                <p className="text-lg text-gray-600 mb-6">
-                  Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more
-                </p>
-                <div className="w-full h-px bg-gray-300"></div>
-              </div>
 
-              {/* Category Content */}
-              <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100 relative overflow-hidden">
-                <div className="relative z-10">
-                  {/* Sample Work Items */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[...Array(3)].map((_, itemIndex) => (
-                      <motion.div
-                        key={itemIndex}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: itemIndex * 0.1 }}
-                        className="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-300"
-                      >
-                        {/* Image Placeholder */}
-                        <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-                          <div className="text-gray-500 text-sm">Work Preview</div>
-                        </div>
-                        
-                        {/* Content */}
-                        <h4 className="text-lg font-semibold text-gray-900 mb-2">
-                          {category.name} Project {itemIndex + 1}
-                        </h4>
-                        <p className="text-sm text-gray-600 mb-3">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        </p>
-                        
-                        {/* Tags */}
-                        <div className="flex gap-2 flex-wrap">
-                          <span className="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded">
-                            {category.name}
-                          </span>
-                          <span className="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded">
-                            Design
-                          </span>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  {/* View More Button */}
-                  <div className="mt-8 text-center">
-                    <Link href={`/projects?category=${category.id}`}>
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-300"
-                      >
-                        View All {category.name} ({category.count} projects)
-                      </motion.button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Animated Categories Sections */}
+        {categories.map((category, index) => (
+          <AnimatedSection
+            key={category.id}
+            designs={category.projects || []}
+            title={category.name}
+            subtitle="Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more"
+          />
+        ))}
 
         {/* Bottom CTA */}
         <motion.div
