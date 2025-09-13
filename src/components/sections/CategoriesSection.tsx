@@ -309,81 +309,116 @@ const CategoriesSection = () => {
           </p>
         </motion.div>
 
-        {/* Categories Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 gap-8"
-        >
-          {categories.map((category) => (
+        {/* Categories Sections */}
+        <div className="space-y-16">
+          {categories.map((category, index) => (
             <motion.div
               key={category.id}
-              variants={itemVariants}
-              whileHover={{ y: -8 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
               className="group relative"
               onMouseEnter={() => setHoveredCategory(category.id)}
               onMouseLeave={() => setHoveredCategory(null)}
             >
-              <Link href={`/projects?category=${category.id}`}>
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border border-gray-100 group-hover:border-gray-200 relative overflow-hidden">
-                  {/* Hover Effect */}
-                  {hoveredCategory === category.id && renderHoverEffect(category.hoverEffect)}
-                  
-                  <div className="flex items-center gap-6 relative z-10">
-                    {/* Number - standalone */}
-                    <span className="text-4xl font-bold text-gray-300 group-hover:text-gray-400 transition-colors duration-300 flex-shrink-0">
-                      {category.number}
-                    </span>
+              {/* Category Header */}
+              <div className="mb-8">
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+                  {category.name}
+                </h3>
+                <p className="text-lg text-gray-600 mb-6">
+                  Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more
+                </p>
+                <div className="w-full h-px bg-gray-300"></div>
+              </div>
 
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
-                        {category.name}
-                      </h3>
-                      <p className="text-gray-600 leading-relaxed mb-4">
-                        {category.description}
-                      </p>
-                      
-                      {/* Project Count */}
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500">
-                          {category.count} projects
-                        </span>
-                        <motion.div
-                          initial={{ x: 0 }}
-                          whileHover={{ x: 5 }}
-                          className="text-blue-600 font-semibold"
-                        >
-                          View →
-                        </motion.div>
-                      </div>
-                    </div>
+              {/* Category Content */}
+              <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100 group-hover:border-gray-200 relative overflow-hidden">
+                {/* Hover Effect */}
+                {hoveredCategory === category.id && renderHoverEffect(category.hoverEffect)}
+                
+                <div className="relative z-10">
+                  {/* Sample Work Items */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[...Array(3)].map((_, itemIndex) => (
+                      <motion.div
+                        key={itemIndex}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: itemIndex * 0.1 }}
+                        className="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-300"
+                      >
+                        {/* Image Placeholder */}
+                        <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+                          <div className="text-gray-500 text-sm">Work Preview</div>
+                        </div>
+                        
+                        {/* Content */}
+                        <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                          {category.name} Project {itemIndex + 1}
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-3">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </p>
+                        
+                        {/* Tags */}
+                        <div className="flex gap-2 flex-wrap">
+                          <span className="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded">
+                            {category.name}
+                          </span>
+                          <span className="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded">
+                            Design
+                          </span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* View More Button */}
+                  <div className="mt-8 text-center">
+                    <Link href={`/projects?category=${category.id}`}>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-300"
+                      >
+                        View All {category.name} ({category.count} projects)
+                      </motion.button>
+                    </Link>
                   </div>
                 </div>
-              </Link>
+              </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* View All Button */}
+        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center mt-12"
+          className="text-center mt-16"
         >
-          <Link href="/projects">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              View All Projects
-            </motion.button>
-          </Link>
+          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Ready to work together?
+            </h3>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Let's create something amazing together. Get in touch to discuss your project.
+            </p>
+            <Link href="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300"
+              >
+                Get In Touch
+              </motion.button>
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>
