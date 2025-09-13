@@ -1,24 +1,24 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const PageTransition = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [currentText, setCurrentText] = useState(0);
   const [showEveryThink, setShowEveryThink] = useState(false);
 
-  const rotatingTexts = [
+  const rotatingTexts = useMemo(() => [
     "3D Object", 
     "UI/UX Prototype",
     "Poster",
     "Pixel Art",
     "Code Process"
-  ];
+  ], []);
 
   useEffect(() => {
-    // İlk 0.3 saniye sadece "Design" göster, sonra text'ler başlasın
-    const startInterval = setTimeout(() => {
+    // İlk 0.5 saniye sadece "Design" göster, sonra text'ler başlasın
+    const startTimer = setTimeout(() => {
       // Text'leri sırayla göster
       const timers: NodeJS.Timeout[] = [];
       
@@ -26,27 +26,27 @@ const PageTransition = () => {
       rotatingTexts.forEach((_, index) => {
         const timer = setTimeout(() => {
           setCurrentText(index + 1);
-        }, index * 400); // 700ms → 400ms (daha hızlı)
+        }, index * 600); // Her text 600ms gösterilsin
         timers.push(timer);
       });
 
       // Son text'ten sonra EveryThink'i göster
       const everyThinkTimer = setTimeout(() => {
         setShowEveryThink(true);
-      }, rotatingTexts.length * 400);
+      }, rotatingTexts.length * 600 + 200); // +200ms extra
 
       // Ana animasyonu gizle
       const hideTimer = setTimeout(() => {
         setIsVisible(false);
-      }, (rotatingTexts.length + 1) * 400 + 100); // +100ms extra
+      }, rotatingTexts.length * 600 + 800); // +800ms extra
 
       return () => {
         [...timers, everyThinkTimer, hideTimer].forEach(clearTimeout);
       };
-    }, 300); // 500ms → 300ms (daha hızlı)
+    }, 500); // İlk 500ms sadece "Design"
 
     return () => {
-      clearTimeout(startInterval);
+      clearTimeout(startTimer);
     };
   }, [rotatingTexts]);
 
@@ -72,18 +72,32 @@ const PageTransition = () => {
             <div className="mb-6 sm:mb-8">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
                 <span className="font-normal">Design</span>
-                <span className="inline-block ml-4">
-                  {currentText > 0 && !showEveryThink && (
-                    <span className="font-bold text-gray-400">
-                      a {rotatingTexts[currentText - 1]}
-                    </span>
-                  )}
-                  {showEveryThink && (
-                    <>
-                      <span className="font-normal text-white">Every</span>
-                      <span className="font-bold text-white">Think</span>
-                    </>
-                  )}
+                <span className="inline-block ml-4 min-w-[200px] h-[1.2em]">
+                  <AnimatePresence mode="wait">
+                    {currentText > 0 && !showEveryThink && (
+                      <motion.span
+                        key={currentText}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="font-bold text-gray-400"
+                      >
+                        a {rotatingTexts[currentText - 1]}
+                      </motion.span>
+                    )}
+                    {showEveryThink && (
+                      <motion.span
+                        key="everythink"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                      >
+                        <span className="font-normal text-white">Every</span>
+                        <span className="font-bold text-white">Think</span>
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </span>
               </h1>
             </div>
