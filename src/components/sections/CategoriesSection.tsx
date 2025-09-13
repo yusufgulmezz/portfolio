@@ -299,14 +299,13 @@ const CategoriesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-left mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            My Work Areas
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            My Works
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Creating creative projects in different design and development areas. 
-            Each category reflects my unique approach.
+          <p className="text-xl text-gray-600 max-w-3xl">
+            Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more
           </p>
         </motion.div>
 
