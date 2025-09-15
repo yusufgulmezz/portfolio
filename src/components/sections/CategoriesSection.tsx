@@ -200,7 +200,7 @@ const CategoriesSection = () => {
                 x = "0%";
                 scale = 1;
                 opacity = 1;
-                zIndex = 50;
+                zIndex = 10;
               } else if (isNext) {
                 // Ghost overlap'ı önlemek için sonraki slaytı gizle
                 x = "100%";
@@ -288,7 +288,7 @@ const CategoriesSection = () => {
 
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
             {currentIndex < designs.length - 1 && (
-              <div className="absolute top-1/2 right-4 -translate-y-1/2 z-[60]">
+              <div className="absolute top-1/2 right-4 -translate-y-1/2 z-10">
                 <motion.button
                   onClick={() => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
@@ -315,7 +315,7 @@ const CategoriesSection = () => {
             )}
 
             {/* Navigation Controls */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-[60]">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-10">
               <button
                 onClick={() => goToProject(currentIndex - 1)}
                 disabled={currentIndex === 0}
@@ -333,7 +333,7 @@ const CategoriesSection = () => {
             </div>
 
             {/* Design indicators */}
-            <div className="absolute bottom-4 right-4 flex gap-2 z-[60]">
+            <div className="absolute bottom-4 right-4 flex gap-2 z-10">
               {designs.map((_, index) => (
                 <button
                   key={index}
