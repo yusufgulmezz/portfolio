@@ -1,8 +1,8 @@
 'use client';
 
-import { motion, useScroll } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 
 const CategoriesSection = () => {
 
@@ -160,43 +160,8 @@ const CategoriesSection = () => {
     title: string, 
     subtitle: string
   }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const headerRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-      target: containerRef,
-      offset: ["start center", "end start"]
-    });
-
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isHeaderVisible, setIsHeaderVisible] = useState(false);
 
-    // Header görünürlüğünü kontrol et
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          setIsHeaderVisible(entry.isIntersecting);
-        },
-        { threshold: 0.5 }
-      );
-
-      if (headerRef.current) {
-        observer.observe(headerRef.current);
-      }
-
-      return () => observer.disconnect();
-    }, []);
-
-    // Scroll progress'e göre hangi tasarımın aktif olacağını belirle (sadece ilk tasarımı göster)
-    useEffect(() => {
-      const unsubscribe = scrollYProgress.on("change", (latest) => {
-        // Sadece header görünürse ve scroll başladıysa ilk tasarımı göster
-        if (isHeaderVisible && latest > 0) {
-          setCurrentIndex(0);
-        }
-      });
-
-      return () => unsubscribe();
-    }, [scrollYProgress, isHeaderVisible]);
 
     // Tasarım değiştirme fonksiyonu
     const goToProject = (index: number) => {
