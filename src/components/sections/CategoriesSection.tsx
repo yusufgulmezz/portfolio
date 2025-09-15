@@ -172,15 +172,14 @@ const CategoriesSection = () => {
     };
 
     return (
-      <section className="py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-8">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">{title}</h2>
-            <p className="text-xl text-gray-600 max-w-3xl">{subtitle}</p>
+      <section className="py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-2">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#4E4E4E] mb-4">{title}</h2>
             <div className="w-full h-px bg-gray-300 mt-6"></div>
-            {/* Debug info */}
+            {/* Design counter */}
             <div className="text-sm text-gray-500 mt-2">
-              Aktif Tasarım: {currentIndex + 1} / {designs.length}
+              {currentIndex + 1} / {designs.length}
             </div>
           </div>
 
@@ -244,8 +243,18 @@ const CategoriesSection = () => {
                         damping: 30
                       }}
                     >
-                      <div className="w-80 h-96 bg-gray-200 rounded-lg border border-gray-300 shadow-lg flex items-center justify-center">
-                        <div className="text-gray-500 text-sm">Design Preview</div>
+                      <div className="w-full max-w-sm aspect-[4/5] bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden">
+                        {design.image ? (
+                          <img
+                            src={design.image}
+                            alt={design.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <div className="text-gray-500 text-sm">Design Preview</div>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
 
@@ -333,7 +342,7 @@ const CategoriesSection = () => {
             </div>
 
             {/* Design indicators */}
-            <div className="absolute bottom-4 right-4 flex gap-2 z-10">
+            {/* <div className="absolute bottom-4 right-4 flex gap-2 z-10">
               {designs.map((_, index) => (
                 <button
                   key={index}
@@ -346,7 +355,7 @@ const CategoriesSection = () => {
                   aria-label={`Go to design ${index + 1}`}
                 />
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -366,7 +375,7 @@ const CategoriesSection = () => {
           className="text-left mb-16"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            My Works
+            MY WORKS
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl">
             Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more
