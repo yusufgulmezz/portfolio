@@ -81,7 +81,7 @@ const PageTransition = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="font-bold text-gray-400"
+                        className="font-bold text-gray-200 bg-blue-500/30 rounded px-2 py-0.5"
                       >
                         a {rotatingTexts[currentText - 1]}
                       </motion.span>
