@@ -20,7 +20,7 @@ const CategoriesSection = () => {
           title: 'Lewis Hamilton Poster Design',
           date: '12/09/2025',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/c159ee233024129.68a77e3a9374c.png',
           tags: ['Poster', 'Design']
         },
         {
@@ -28,15 +28,15 @@ const CategoriesSection = () => {
           title: 'Charles Leclerc Poster Design',
           date: '12/09/2025',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/fd0b2e232152585.68964e11b1ccc.png',
           tags: ['Poster', 'Design']
         },
         {
           id: 3,
-          title: 'Max Verstappen Poster Design',
+          title: 'The Witcher 3 Eredin Poster Design',
           date: '12/09/2025',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840_webp/3af7cb197406813.68ab11122767b.png',
           tags: ['Poster', 'Design']
         }
       ]
@@ -243,7 +243,7 @@ const CategoriesSection = () => {
                         damping: 30
                       }}
                     >
-                      <div className="w-full max-w-sm aspect-[4/5] bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden">
+                      <div className="w-80 h-96 bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden">
                         {design.image ? (
                           <img
                             src={design.image}
@@ -303,7 +303,7 @@ const CategoriesSection = () => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
                     goToProject(currentIndex + 1);
                   }}
-                  className="w-28 h-36 bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30"
+                  className="w-36 h-48 bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30"
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{
@@ -325,20 +325,24 @@ const CategoriesSection = () => {
 
             {/* Navigation Controls */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-10">
-              <button
+              <motion.button
                 onClick={() => goToProject(currentIndex - 1)}
                 disabled={currentIndex === 0}
-                className="px-5 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 Previous
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 onClick={() => goToProject(currentIndex + 1)}
                 disabled={currentIndex === designs.length - 1}
-                className="px-5 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 Next
-              </button>
+              </motion.button>
             </div>
 
             {/* Design indicators */}
