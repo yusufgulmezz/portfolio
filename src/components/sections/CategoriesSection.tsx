@@ -172,9 +172,9 @@ const CategoriesSection = () => {
     };
 
     return (
-      <section ref={containerRef} className="py-12">
+      <section className="py-12">
         <div className="max-w-6xl mx-auto px-6">
-          <div ref={headerRef} className="mb-8">
+          <div className="mb-8">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">{title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl">{subtitle}</p>
             <div className="w-full h-px bg-gray-300 mt-6"></div>
@@ -202,10 +202,11 @@ const CategoriesSection = () => {
                 opacity = 1;
                 zIndex = 50;
               } else if (isNext) {
-                x = "70%";
+                // Ghost overlap'ı önlemek için sonraki slaytı gizle
+                x = "100%";
                 scale = 0.6;
-                opacity = 0.8;
-                zIndex = 5;
+                opacity = 0;
+                zIndex = 1;
               } else if (isPrevious) {
                 x = "-100%";
                 scale = 0.6;
@@ -216,7 +217,7 @@ const CategoriesSection = () => {
               return (
                 <motion.div
                   key={design.id}
-                  className="absolute inset-0 flex items-center"
+                  className="absolute inset-0 flex items-center pointer-events-none"
                   style={{ zIndex }}
                   animate={{
                     x,
@@ -287,13 +288,13 @@ const CategoriesSection = () => {
 
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
             {currentIndex < designs.length - 1 && (
-              <div className="absolute top-1/2 right-4 -translate-y-1/2 z-20">
+              <div className="absolute top-1/2 right-4 -translate-y-1/2 z-[60]">
                 <motion.button
                   onClick={() => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
                     goToProject(currentIndex + 1);
                   }}
-                  className="w-20 h-28 bg-gray-200 rounded-lg border border-gray-300 shadow-md flex flex-col items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30"
+                  className="w-28 h-36 bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30"
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{
@@ -304,17 +305,48 @@ const CategoriesSection = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <div className="text-gray-500 text-center px-2">
-                    <div className="font-medium text-xs leading-tight">
-                      {designs[currentIndex + 1]?.title.split(' ')[0] || 'Next'}
-                    </div>
-                    <div className="text-xs mt-1 opacity-75">
-                      {designs[currentIndex + 1]?.date || ''}
-                    </div>
-                  </div>
+                  <img
+                    src={designs[currentIndex + 1]?.image}
+                    alt={designs[currentIndex + 1]?.title}
+                    className="w-full h-full object-cover"
+                  />
                 </motion.button>
               </div>
             )}
+
+            {/* Navigation Controls */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-[60]">
+              <button
+                onClick={() => goToProject(currentIndex - 1)}
+                disabled={currentIndex === 0}
+                className="px-5 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => goToProject(currentIndex + 1)}
+                disabled={currentIndex === designs.length - 1}
+                className="px-5 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+
+            {/* Design indicators */}
+            <div className="absolute bottom-4 right-4 flex gap-2 z-[60]">
+              {designs.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToProject(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentIndex 
+                      ? 'bg-gray-900' 
+                      : 'bg-gray-400/40 hover:bg-gray-500/60'
+                  }`}
+                  aria-label={`Go to design ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
