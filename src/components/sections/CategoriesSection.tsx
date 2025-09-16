@@ -51,18 +51,18 @@ const CategoriesSection = () => {
       projects: [
         {
           id: 4,
-          title: 'Retro Gaming Character',
+          title: 'Camp Fire Gif',
           date: '10/09/2025',
           description: 'Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/source/4c5350173548789.649217fa63368.gif',
           tags: ['Pixel Art', 'Character']
         },
         {
           id: 5,
-          title: 'Cyberpunk Cityscape',
+          title: 'Lethal Company',
           date: '08/09/2025',
           description: 'Maecenas eget condimentum velit, sit amet feugiat lectus.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/6c0699191220265.65c7a14f5ad97.png',
           tags: ['Pixel Art', 'Landscape']
         }
       ]
@@ -80,7 +80,7 @@ const CategoriesSection = () => {
           title: 'Architectural Visualization',
           date: '03/09/2025',
           description: 'Modern building design with realistic lighting and materials.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-cdn.behance.net/v1/rendition/project_modules/fs_webp/cac3a2195317861.660bcb1df1365.png',
           tags: ['3D', 'Architecture']
         },
         {
@@ -88,7 +88,7 @@ const CategoriesSection = () => {
           title: 'Product Render',
           date: '01/09/2025',
           description: 'High-quality product visualization for e-commerce.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-cdn.behance.net/v1/rendition/project_modules/fs_webp/7416cf192858185.65e20fb417470.png',
           tags: ['3D', 'Product']
         }
       ]
@@ -216,7 +216,7 @@ const CategoriesSection = () => {
               return (
                 <motion.div
                   key={design.id}
-                  className="absolute inset-0 flex items-center pointer-events-none"
+                  className="absolute inset-0 flex items-start pointer-events-none mt-6"
                   style={{ zIndex }}
                   animate={{
                     x,
@@ -230,7 +230,7 @@ const CategoriesSection = () => {
                     mass: 1
                   }}
                 >
-                  <div className="flex items-center gap-8 w-full">
+                  <div className="flex items-start gap-8 w-full">
                     {/* Sol taraf - Tasarım görüntüsü */}
                     <motion.div 
                       className="flex-shrink-0"
@@ -243,7 +243,7 @@ const CategoriesSection = () => {
                         damping: 30
                       }}
                     >
-                      <div className="w-80 h-96 bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden">
+                      <div className="w-[420px] h-[520px] bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden">
                         {design.image ? (
                           <img
                             src={design.image}
@@ -297,13 +297,13 @@ const CategoriesSection = () => {
 
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
             {currentIndex < designs.length - 1 && (
-              <div className="absolute top-1/2 right-4 -translate-y-1/2 z-10">
+              <div className="absolute top-32 right-4 z-10">
                 <motion.button
                   onClick={() => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
                     goToProject(currentIndex + 1);
                   }}
-                  className="w-36 h-48 bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30"
+                  className="w-44 h-60 bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30"
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{
@@ -324,7 +324,7 @@ const CategoriesSection = () => {
             )}
 
             {/* Navigation Controls */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-10">
+            <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-4 z-10">
               <motion.button
                 onClick={() => goToProject(currentIndex - 1)}
                 disabled={currentIndex === 0}
