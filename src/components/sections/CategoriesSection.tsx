@@ -216,7 +216,7 @@ const CategoriesSection = () => {
               return (
                 <motion.div
                   key={design.id}
-                  className="absolute inset-0 flex items-start pointer-events-none mt-6"
+                  className="absolute inset-0 flex flex-col lg:flex-row items-start mt-6"
                   style={{ zIndex }}
                   animate={{
                     x,
@@ -230,10 +230,10 @@ const CategoriesSection = () => {
                     mass: 1
                   }}
                 >
-                  <div className="flex items-start gap-8 w-full">
+                  <div className="flex flex-col lg:flex-row items-start gap-6 w-full">
                     {/* Sol taraf - Tasarım görüntüsü */}
                     <motion.div 
-                      className="flex-shrink-0"
+                      className="flex-shrink-0 mx-auto lg:mx-0"
                       animate={{
                         scale: isActive ? 1 : 0.8
                       }}
@@ -243,7 +243,7 @@ const CategoriesSection = () => {
                         damping: 30
                       }}
                     >
-                      <div className="w-[420px] h-[520px] bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden">
+                      <div className="w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px] bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden">
                         {design.image ? (
                           <img
                             src={design.image}
@@ -258,9 +258,31 @@ const CategoriesSection = () => {
                       </div>
                     </motion.div>
 
+                    {/* Mobile/Tablet buttons - under image */}
+                    <div className="lg:hidden mt-4 flex justify-center gap-4 w-full">
+                      <motion.button
+                        onClick={() => goToProject(currentIndex - 1)}
+                        disabled={currentIndex === 0}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="px-5 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Previous
+                      </motion.button>
+                      <motion.button
+                        onClick={() => goToProject(currentIndex + 1)}
+                        disabled={currentIndex === designs.length - 1}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="px-5 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Next
+                      </motion.button>
+                    </div>
+
                     {/* Sağ taraf - İçerik */}
                     <motion.div 
-                      className="flex-1 max-w-md"
+                      className="flex-1 w-full lg:max-w-md mt-6 lg:mt-0"
                       animate={{
                         opacity: isActive ? 1 : 0.6,
                         x: isActive ? 0 : 50
@@ -274,9 +296,9 @@ const CategoriesSection = () => {
                       <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{design.title}</h3>
                       <p className="text-gray-500 text-sm mb-6">{design.date}</p>
                       <p className="text-gray-700 text-base leading-relaxed mb-4">{design.description}</p>
-                      <p className="text-gray-700 text-base leading-relaxed mb-6">
+                      {/* <p className="text-gray-700 text-base leading-relaxed mb-6">
                         Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus.
-                      </p>
+                      </p> */}
                       
                       {/* Tags */}
                       <div className="flex gap-2 flex-wrap">
@@ -297,7 +319,7 @@ const CategoriesSection = () => {
 
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
             {currentIndex < designs.length - 1 && (
-              <div className="absolute top-32 right-4 z-10">
+              <div className="hidden lg:block absolute top-32 right-4 z-10">
                 <motion.button
                   onClick={() => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
@@ -324,7 +346,8 @@ const CategoriesSection = () => {
             )}
 
             {/* Navigation Controls */}
-            <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-4 z-10">
+            {/* Desktop (lg+) buttons - absolute */}
+            <div className="hidden lg:flex absolute bottom-24 left-1/2 -translate-x-1/2 gap-4 z-10">
               <motion.button
                 onClick={() => goToProject(currentIndex - 1)}
                 disabled={currentIndex === 0}
@@ -344,6 +367,8 @@ const CategoriesSection = () => {
                 Next
               </motion.button>
             </div>
+
+            
 
             {/* Design indicators */}
             {/* <div className="absolute bottom-4 right-4 flex gap-2 z-10">
