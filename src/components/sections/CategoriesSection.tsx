@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const CategoriesSection = () => {
 
@@ -148,6 +148,26 @@ const CategoriesSection = () => {
   ];
 
   const [activeCategoryId, setActiveCategoryId] = useState<string>('poster');
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const scrollToCategory = (categoryId: string) => {
+    const el = sectionRefs.current[categoryId];
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const currentY = window.pageYOffset || document.documentElement.scrollTop;
+    const headerEl = document.querySelector('header') as HTMLElement | null;
+    const headerHeight = headerEl?.offsetHeight ?? 80;
+    const targetY = currentY + rect.top - headerHeight - 16; // 16px tampon
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
+
+  const handleCategoryOpen = (categoryId: string) => {
+    setActiveCategoryId(categoryId);
+    // Açılan içeriğin ölçüleri yerleşsin diye bir frame bekleyip kaydır
+    requestAnimationFrame(() => {
+      scrollToCategory(categoryId);
+    });
+  };
 
   // AnimatedSection component for each category
   const AnimatedSection = ({ designs, title, subtitle, count, collapsed, onHeaderClick }: { 
@@ -444,15 +464,16 @@ const CategoriesSection = () => {
 
         {/* Animated Categories Sections */}
         {categories.map((category) => (
-          <AnimatedSection
-            key={category.id}
-            designs={category.projects || []}
-            title={category.name}
-            subtitle="Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more"
-            count={category.projects?.length || 0}
-            collapsed={activeCategoryId !== category.id}
-            onHeaderClick={() => setActiveCategoryId(category.id)}
-          />
+          <div key={category.id} ref={(el) => { sectionRefs.current[category.id] = el; }}>
+            <AnimatedSection
+              designs={category.projects || []}
+              title={category.name}
+              subtitle="Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more"
+              count={category.projects?.length || 0}
+              collapsed={activeCategoryId !== category.id}
+              onHeaderClick={() => handleCategoryOpen(category.id)}
+            />
+          </div>
         ))}
 
         {/* Bottom CTA */}
