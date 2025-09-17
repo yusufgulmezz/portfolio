@@ -43,10 +43,10 @@ export default function BlobCursor({
   filterStdDeviation = 30,
   filterColorMatrixValues = '1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 35 -10',
   useFilter = true,
-  fastDuration = 0.1,
-  slowDuration = 0.5,
-  fastEase = 'power3.out',
-  slowEase = 'power1.out',
+  fastDuration = 0.02,
+  slowDuration = 0.1,
+  fastEase = 'linear',
+  slowEase = 'power2.out',
   zIndex = 100,
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
