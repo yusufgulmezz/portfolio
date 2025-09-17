@@ -147,8 +147,10 @@ const CategoriesSection = () => {
     }
   ];
 
+  const [activeCategoryId, setActiveCategoryId] = useState<string>('poster');
+
   // AnimatedSection component for each category
-  const AnimatedSection = ({ designs, title, subtitle }: { 
+  const AnimatedSection = ({ designs, title, subtitle, count, collapsed, onHeaderClick }: { 
     designs: Array<{
       id: number;
       title: string;
@@ -158,7 +160,10 @@ const CategoriesSection = () => {
       tags: string[];
     }>, 
     title: string, 
-    subtitle: string
+    subtitle: string,
+    count: number,
+    collapsed: boolean,
+    onHeaderClick: () => void
   }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const isPixelArt = title.toLowerCase().includes('pixel');
@@ -172,11 +177,35 @@ const CategoriesSection = () => {
       }
     };
 
+    if (collapsed) {
+      return (
+        <section className="py-6">
+          <div className="max-w-7xl mx-auto">
+            <button
+              onClick={onHeaderClick}
+              className="w-full text-left group"
+            >
+              <div className="flex items-end justify-between">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#4E4E4E] group-hover:text-gray-900 transition-colors">
+                  {title}
+                </h2>
+                <span className="text-sm sm:text-base text-gray-500">{count}</span>
+              </div>
+              <div className="w-full h-px bg-gray-300 mt-4" />
+            </button>
+          </div>
+        </section>
+      );
+    }
+
     return (
       <section className="py-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-2">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#4E4E4E] mb-4">{title}</h2>
+            <div className="flex items-end justify-between">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#4E4E4E] mb-4 cursor-pointer" onClick={onHeaderClick}>{title}</h2>
+              <span className="text-sm text-gray-500 mb-2">{designs.length}</span>
+            </div>
             <div className="w-full h-px bg-gray-300 mt-6"></div>
             {/* Design counter */}
             <div className="text-sm text-gray-500 mt-2">
@@ -414,12 +443,15 @@ const CategoriesSection = () => {
 
 
         {/* Animated Categories Sections */}
-        {categories.map((category, index) => (
+        {categories.map((category) => (
           <AnimatedSection
             key={category.id}
             designs={category.projects || []}
             title={category.name}
             subtitle="Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more"
+            count={category.projects?.length || 0}
+            collapsed={activeCategoryId !== category.id}
+            onHeaderClick={() => setActiveCategoryId(category.id)}
           />
         ))}
 
