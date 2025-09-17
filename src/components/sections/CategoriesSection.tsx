@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 
@@ -187,6 +187,7 @@ const CategoriesSection = () => {
   }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const isPixelArt = title.toLowerCase().includes('pixel');
+    const [expandedDesign, setExpandedDesign] = useState<null | { image: string; title: string; pixel: boolean }>(null);
 
 
     // Tasarım değiştirme fonksiyonu
@@ -293,7 +294,17 @@ const CategoriesSection = () => {
                         damping: 30
                       }}
                     >
-                      <div className={`${isPixelArt ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden`}>
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.99 }}
+                        onClick={() => {
+                          if (isActive) {
+                            const d = designs[currentIndex];
+                            setExpandedDesign({ image: d.image, title: d.title, pixel: isPixelArt });
+                          }
+                        }}
+                        className={`${isPixelArt ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in`}
+                      >
                         {design.image ? (
                           <img
                             src={design.image}
@@ -305,7 +316,7 @@ const CategoriesSection = () => {
                             <div className="text-gray-500 text-sm">Design Preview</div>
                           </div>
                         )}
-                      </div>
+                      </motion.div>
                     </motion.div>
 
                     {/* Mobile/Tablet buttons - under image */}
@@ -436,6 +447,43 @@ const CategoriesSection = () => {
               ))}
             </div> */}
           </div>
+          {/* Lightbox */}
+          <AnimatePresence>
+            {expandedDesign && (
+              <motion.div
+                key="lightbox"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center px-4"
+                onClick={() => setExpandedDesign(null)}
+              >
+                <motion.div
+                  initial={{ scale: 0.96, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.98, opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+                  className="relative max-w-[90vw] max-h-[85vh] w-auto h-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    onClick={() => setExpandedDesign(null)}
+                    aria-label="Close"
+                    className="absolute -top-3 -right-3 z-[61] bg-white/90 text-gray-900 rounded-full w-9 h-9 shadow-md hover:bg-white"
+                  >
+                    <span className="block leading-none text-xl">×</span>
+                  </button>
+                  <div className="bg-white rounded-xl overflow-hidden shadow-2xl">
+                    <img
+                      src={expandedDesign.image}
+                      alt={expandedDesign.title}
+                      className={`max-w-[90vw] max-h-[85vh] ${expandedDesign.pixel ? 'object-contain bg-black' : 'object-contain'}`}
+                    />
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
     );
