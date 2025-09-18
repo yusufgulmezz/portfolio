@@ -219,6 +219,7 @@ const CategoriesSection = () => {
   }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const isPixelArt = title.toLowerCase().includes('pixel');
+    const is3D = title.toLowerCase().includes('3d');
     const [expandedDesign, setExpandedDesign] = useState<null | { image: string; title: string; pixel: boolean }>(null);
 
 
@@ -332,16 +333,16 @@ const CategoriesSection = () => {
                         onClick={() => {
                           if (isActive) {
                             const d = designs[currentIndex];
-                            setExpandedDesign({ image: d.image, title: d.title, pixel: isPixelArt });
+                            setExpandedDesign({ image: d.image, title: d.title, pixel: isPixelArt || is3D });
                           }
                         }}
-                        className={`${isPixelArt ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in`}
+                        className={`${isPixelArt || is3D ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in`}
                       >
                         {design.image ? (
                           <img
                             src={design.image}
                             alt={design.title}
-                            className={`w-full h-full ${isPixelArt ? 'object-contain bg-black' : 'object-cover'}`}
+                            className={`w-full h-full ${isPixelArt ? 'object-contain bg-black' : is3D ? 'object-cover' : 'object-cover'}`}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
@@ -418,7 +419,7 @@ const CategoriesSection = () => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
                     goToProject(currentIndex + 1);
                   }}
-                  className={`${isPixelArt ? 'w-44 h-44' : 'w-44 h-60'} bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
+                  className={`${isPixelArt || is3D ? 'w-44 h-44' : 'w-44 h-60'} bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{
