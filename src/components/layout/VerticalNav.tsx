@@ -1,4 +1,4 @@
-'use client';
+/*'use client';
 
 import { useState, useEffect } from 'react';
 
@@ -104,3 +104,4 @@ const VerticalNav = () => {
 };
 
 export default VerticalNav;
+*/

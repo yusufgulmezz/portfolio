@@ -3,7 +3,6 @@ import { Roboto, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import VerticalNav from "@/components/layout/VerticalNav";
 import BlobCursor from "@/components/ui/BlobCursor";
 
 const roboto = Roboto({
@@ -50,7 +49,6 @@ export default function RootLayout({
           slowDuration={0.5}
           zIndex={100}
         />
-        <VerticalNav />
         <Header />
         <main className="pt-20 sm:pt-24 lg:pt-18">
           {children}
