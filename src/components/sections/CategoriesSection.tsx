@@ -73,14 +73,14 @@ const CategoriesSection = () => {
       description: 'Modern 3D modeling and rendering projects',
       number: '03',
       color: 'from-blue-500 to-indigo-500',
-      count: 15,
+      count: 6,
       projects: [
         {
           id: 6,
           title: 'Architectural Visualization',
           date: '03/09/2025',
           description: 'Modern building design with realistic lighting and materials.',
-          image: 'https://mir-cdn.behance.net/v1/rendition/project_modules/fs_webp/cac3a2195317861.660bcb1df1365.png',
+          image: 'https://mir-cdn.behance.net/v1/rendition/project_modules/hd_webp/3378c9195317861.68cc44e3d42fe.png',
           tags: ['3D', 'Architecture']
         },
         {
@@ -88,8 +88,40 @@ const CategoriesSection = () => {
           title: 'Product Render',
           date: '01/09/2025',
           description: 'High-quality product visualization for e-commerce.',
-          image: 'https://mir-cdn.behance.net/v1/rendition/project_modules/fs_webp/7416cf192858185.65e20fb417470.png',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/93eed3192858185.68cc45e2f0d38.png',
           tags: ['3D', 'Product']
+        },
+        {
+          id: 12,
+          title: '3D Character Design',
+          date: '30/08/2025',
+          description: 'Detailed character modeling with realistic textures and animations.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/bae6aa187036695.68cc43844c8e1.jpg',
+          tags: ['3D', 'Character']
+        },
+        {
+          id: 13,
+          title: 'Interior Design Visualization',
+          date: '28/08/2025',
+          description: 'Modern interior space with photorealistic lighting and materials.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/37d30f234905769.68cc3e70f0c0c.jpg',
+          tags: ['3D', 'Interior']
+        },
+        {
+          id: 14,
+          title: 'Vehicle Modeling',
+          date: '25/08/2025',
+          description: 'High-poly vehicle model with detailed textures and realistic materials.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/66b26f207669509.68cc45a6dea73.jpg',
+          tags: ['3D', 'Vehicle']
+        },
+        {
+          id: 15,
+          title: 'Abstract 3D Art',
+          date: '22/08/2025',
+          description: 'Creative abstract 3D composition with experimental lighting.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/e75e98207675585.68cc412ba6a1c.png',
+          tags: ['3D', 'Abstract']
         }
       ]
     },
@@ -499,7 +531,7 @@ const CategoriesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-left mb-16"
+          className="text-left mb-8"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
             MY WORKS
