@@ -72,7 +72,12 @@ const PageTransition = () => {
             <div className="mb-6 sm:mb-8">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
                 <span className="font-normal">Design</span>
-                <span className="inline-block ml-4 min-w-[200px] h-[1.2em]">
+                {(() => {
+                  const hasRightText = (currentText > 0 && !showEveryThink) || showEveryThink;
+                  return (
+                    <span
+                      className={`inline-block ${hasRightText ? 'ml-2 sm:ml-4' : ''} min-w-0 sm:min-w-[200px] h-[1.2em] whitespace-nowrap align-middle`}
+                    >
                   <AnimatePresence mode="wait">
                     {currentText > 0 && !showEveryThink && (
                       <motion.span
@@ -98,7 +103,9 @@ const PageTransition = () => {
                       </motion.span>
                     )}
                   </AnimatePresence>
-                </span>
+                    </span>
+                  );
+                })()}
               </h1>
             </div>
 
