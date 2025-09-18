@@ -64,6 +64,54 @@ const CategoriesSection = () => {
           description: 'Maecenas eget condimentum velit, sit amet feugiat lectus.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/6c0699191220265.65c7a14f5ad97.png',
           tags: ['Pixel Art', 'Landscape']
+        },
+        {
+          id: 16,
+          title: 'Retro Cityscape',
+          date: '05/09/2025',
+          description: 'Nostalgic pixel art city with neon lights and retro atmosphere.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/bfb9f8153649027.633386fc1b0a6.png',
+          tags: ['Pixel Art', 'Cityscape']
+        },
+        {
+          id: 17,
+          title: 'Fantasy Character',
+          date: '03/09/2025',
+          description: 'Detailed pixel art character with medieval fantasy theme.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/e6e3c0201088071.666d9d6546b2e.png',
+          tags: ['Pixel Art', 'Fantasy']
+        },
+        {
+          id: 18,
+          title: 'Space Adventure',
+          date: '01/09/2025',
+          description: 'Sci-fi pixel art scene with spaceships and alien planets.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/10393c158503857.638d2b93e0ed1.png',
+          tags: ['Pixel Art', 'Sci-Fi']
+        },
+        {
+          id: 19,
+          title: 'Pixel Animation',
+          date: '29/08/2025',
+          description: 'Smooth pixel art animation with fluid character movement.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e0dee5181781743.6521cca9d06d7.png',
+          tags: ['Pixel Art', 'Animation']
+        },
+        {
+          id: 20,
+          title: 'Retro Game UI',
+          date: '27/08/2025',
+          description: 'Classic game interface design with pixel art elements.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/3e4d56201862729.667c0a739ea40.jpg',
+          tags: ['Pixel Art', 'UI']
+        },
+        {
+          id: 21,
+          title: 'Nature Scene',
+          date: '25/08/2025',
+          description: 'Peaceful pixel art nature landscape with trees and mountains.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/68a907191056269.65c4c74d29a2c.png',
+          tags: ['Pixel Art', 'Nature']
         }
       ]
     },
