@@ -76,7 +76,7 @@ const PageTransition = () => {
                   const hasRightText = (currentText > 0 && !showEveryThink) || showEveryThink;
                   return (
                     <span
-                      className={`inline-block ${hasRightText ? 'ml-2 sm:ml-4' : ''} min-w-0 sm:min-w-[200px] h-[1.2em] whitespace-nowrap align-middle`}
+                      className={`inline-block ${hasRightText ? 'ml-2 sm:ml-4' : ''} min-w-0 sm:min-w-[200px] h-[1.2em] whitespace-nowrap align-baseline`}
                     >
                   <AnimatePresence mode="wait">
                     {currentText > 0 && !showEveryThink && (
@@ -86,7 +86,7 @@ const PageTransition = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="font-bold text-gray-200 bg-blue-500/30 rounded px-2 py-0.5"
+                        className="font-bold text-gray-200 bg-blue-500/30 rounded px-2 py-0.5 leading-none"
                       >
                         a {rotatingTexts[currentText - 1]}
                       </motion.span>
