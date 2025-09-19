@@ -268,7 +268,20 @@ const CategoriesSection = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const isPixelArt = title.toLowerCase().includes('pixel');
     const is3D = title.toLowerCase().includes('3d');
-    const [expandedDesign, setExpandedDesign] = useState<null | { image: string; title: string; pixel: boolean }>(null);
+    const [expandedDesign, setExpandedDesign] = useState<null | { 
+      image: string; 
+      title: string; 
+      pixel: boolean; 
+      currentIndex: number;
+      designs: Array<{
+        id: number;
+        title: string;
+        date: string;
+        description: string;
+        image: string;
+        tags: string[];
+      }>;
+    }>(null);
 
 
     // Tasarım değiştirme fonksiyonu
@@ -381,7 +394,13 @@ const CategoriesSection = () => {
                         onClick={() => {
                           if (isActive) {
                             const d = designs[currentIndex];
-                            setExpandedDesign({ image: d.image, title: d.title, pixel: isPixelArt || is3D });
+                            setExpandedDesign({ 
+                              image: d.image, 
+                              title: d.title, 
+                              pixel: isPixelArt || is3D,
+                              currentIndex: currentIndex,
+                              designs: designs
+                            });
                           }
                         }}
                         className={`${isPixelArt || is3D ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in`}
@@ -547,6 +566,7 @@ const CategoriesSection = () => {
                   className="relative max-w-[90vw] max-h-[85vh] w-auto h-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
+                  {/* Close button */}
                   <button
                     onClick={() => setExpandedDesign(null)}
                     aria-label="Close"
@@ -554,12 +574,63 @@ const CategoriesSection = () => {
                   >
                     <span className="block leading-none text-xl">×</span>
                   </button>
+
+                  {/* Left arrow */}
+                  {expandedDesign.currentIndex > 0 && (
+                    <button
+                      onClick={() => {
+                        const newIndex = expandedDesign.currentIndex - 1;
+                        const newDesign = expandedDesign.designs[newIndex];
+                        setExpandedDesign({
+                          ...expandedDesign,
+                          currentIndex: newIndex,
+                          image: newDesign.image,
+                          title: newDesign.title
+                        });
+                        setCurrentIndex(newIndex);
+                      }}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 z-[61] bg-white/90 text-gray-900 rounded-full w-12 h-12 shadow-md hover:bg-white flex items-center justify-center"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
+                  )}
+
+                  {/* Right arrow */}
+                  {expandedDesign.currentIndex < expandedDesign.designs.length - 1 && (
+                    <button
+                      onClick={() => {
+                        const newIndex = expandedDesign.currentIndex + 1;
+                        const newDesign = expandedDesign.designs[newIndex];
+                        setExpandedDesign({
+                          ...expandedDesign,
+                          currentIndex: newIndex,
+                          image: newDesign.image,
+                          title: newDesign.title
+                        });
+                        setCurrentIndex(newIndex);
+                      }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 z-[61] bg-white/90 text-gray-900 rounded-full w-12 h-12 shadow-md hover:bg-white flex items-center justify-center"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  )}
+
+                  {/* Image container */}
                   <div className="bg-white rounded-xl overflow-hidden shadow-2xl">
                     <img
                       src={expandedDesign.image}
                       alt={expandedDesign.title}
                       className={`max-w-[90vw] max-h-[85vh] ${expandedDesign.pixel ? 'object-contain bg-black' : 'object-contain'}`}
                     />
+                  </div>
+
+                  {/* Image counter */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                    {expandedDesign.currentIndex + 1} / {expandedDesign.designs.length}
                   </div>
                 </motion.div>
               </motion.div>
@@ -586,7 +657,7 @@ const CategoriesSection = () => {
             MY WORKS
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl">
-            Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more
+            Pixel Art, Poster Designs, UI/UX, 3D, Coding,.. and more
           </p>
         </motion.div>
 
