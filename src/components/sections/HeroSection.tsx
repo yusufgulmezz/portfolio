@@ -31,12 +31,9 @@ const HeroSection = () => {
               className="lg:col-span-5 order-1"
             >
               <div className="relative w-full overflow-hidden rounded-2xl bg-white/40 backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.08)]">
-                <Image
-                  src="/images/ProfilePhoto.png"
+                <img
+                  src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ProfilePhoto.png`}
                   alt="Profile photo"
-                  width={600}
-                  height={560}
-                  priority
                   className="w-full h-[340px] sm:h-[420px] md:h-[500px] lg:h-[560px] object-cover object-center grayscale-[40%]"
                   draggable={false}
                 />
