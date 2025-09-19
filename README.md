@@ -1,6 +1,6 @@
 # Portfolio - Tasarım & Geliştirme
 
-live => https://developrimbor.github.io/portfolio/
+live => https://yusufgulmezz.github.io/portfolio/
 
 Modern ve responsive bir portföy web sitesi. Poster tasarımları, pixel art, 3D çalışmalar, UI/UX tasarımları ve kodlama projelerini sergilemek için geliştirilmiştir.
 
