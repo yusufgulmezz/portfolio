@@ -1,19 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type SectionImageProps = {
   src: string;
   alt: string;
   className?: string;
   withAppear?: boolean;
+  width?: number;
+  height?: number;
 };
 
-const SectionImage = ({ src, alt, className = "", withAppear = true }: SectionImageProps) => {
+const SectionImage = ({ src, alt, className = "", withAppear = true, width = 800, height = 600 }: SectionImageProps) => {
   const content = (
-    <img
+    <Image
       src={src}
       alt={alt}
+      width={width}
+      height={height}
       className={`w-full h-auto object-contain ${className}`}
       draggable={false}
     />
