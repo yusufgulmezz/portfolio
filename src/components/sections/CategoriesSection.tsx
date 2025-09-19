@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 
 const CategoriesSection = () => {
 
@@ -250,7 +251,7 @@ const CategoriesSection = () => {
   };
 
   // AnimatedSection component for each category
-  const AnimatedSection = ({ designs, title, subtitle, count, collapsed, onHeaderClick }: { 
+  const AnimatedSection = ({ designs, title, count, collapsed, onHeaderClick }: { 
     designs: Array<{
       id: number;
       title: string;
@@ -260,7 +261,6 @@ const CategoriesSection = () => {
       tags: string[];
     }>, 
     title: string, 
-    subtitle: string,
     count: number,
     collapsed: boolean,
     onHeaderClick: () => void
@@ -406,9 +406,11 @@ const CategoriesSection = () => {
                         className={`${isPixelArt || is3D ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in`}
                       >
                         {design.image ? (
-                          <img
+                          <Image
                             src={design.image}
                             alt={design.title}
+                            width={400}
+                            height={300}
                             className={`w-full h-full ${isPixelArt ? 'object-contain bg-black' : is3D ? 'object-cover' : 'object-cover'}`}
                           />
                         ) : (
@@ -497,9 +499,11 @@ const CategoriesSection = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <img
-                    src={designs[currentIndex + 1]?.image}
-                    alt={designs[currentIndex + 1]?.title}
+                  <Image
+                    src={designs[currentIndex + 1]?.image || ''}
+                    alt={designs[currentIndex + 1]?.title || ''}
+                    width={400}
+                    height={300}
                     className="w-full h-full object-cover"
                   />
                 </motion.button>
@@ -555,7 +559,7 @@ const CategoriesSection = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center px-4"
+                className="fixed inset-0 bg-black/90 z-[60] flex items-center justify-center px-4"
                 onClick={() => setExpandedDesign(null)}
               >
                 <motion.div
@@ -619,14 +623,14 @@ const CategoriesSection = () => {
                     </button>
                   )}
 
-                  {/* Image container */}
-                  <div className="bg-white rounded-xl overflow-hidden shadow-2xl">
-                    <img
-                      src={expandedDesign.image}
-                      alt={expandedDesign.title}
-                      className={`max-w-[90vw] max-h-[85vh] ${expandedDesign.pixel ? 'object-contain bg-black' : 'object-contain'}`}
-                    />
-                  </div>
+                  {/* Image */}
+                  <Image
+                    src={expandedDesign.image}
+                    alt={expandedDesign.title}
+                    width={1200}
+                    height={800}
+                    className={`max-w-[90vw] max-h-[85vh] ${expandedDesign.pixel ? 'object-contain' : 'object-contain'}`}
+                  />
 
                   {/* Image counter */}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
@@ -668,7 +672,6 @@ const CategoriesSection = () => {
             <AnimatedSection
               designs={category.projects || []}
               title={category.name}
-              subtitle="Pixel Art, Poster Designs, UI/UX Design, 3D Design,.. and more"
               count={category.projects?.length || 0}
               collapsed={activeCategoryId !== category.id}
               onHeaderClick={() => handleCategoryOpen(category.id)}

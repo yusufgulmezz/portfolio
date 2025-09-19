@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -30,11 +31,12 @@ const HeroSection = () => {
               className="lg:col-span-5 order-1"
             >
               <div className="relative w-full overflow-hidden rounded-2xl bg-white/40 backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.08)]">
-                <img
-                  src="./images/ProfilePhoto.png"
+                <Image
+                  src="/images/ProfilePhoto.png"
                   alt="Profile photo"
-                  loading="eager"
-                  decoding="async"
+                  width={600}
+                  height={560}
+                  priority
                   className="w-full h-[340px] sm:h-[420px] md:h-[500px] lg:h-[560px] object-cover object-center grayscale-[40%]"
                   draggable={false}
                 />
