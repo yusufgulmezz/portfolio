@@ -1,14 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Palette } from 'lucide-react';
+import { Github, Linkedin, Mail, Palette, Instagram } from 'lucide-react';
 import Link from 'next/link';
 
 const Footer = () => {
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: 'https://github.com/Developrimbor' },
+    { name: 'GitHub', icon: Github, href: 'https://github.com/yusufgulmezz' },
     { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/yusufglmz/' },
     { name: 'Behance', icon: Palette, href: 'https://behance.net/designeverythink' },
+    { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/design.everythink/' },
     { name: 'Email', icon: Mail, href: 'mailto:designeverythink.co@gmail.com' },
   ];
 
