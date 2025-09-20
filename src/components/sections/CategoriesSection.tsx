@@ -403,7 +403,7 @@ const CategoriesSection = () => {
                             });
                           }
                         }}
-                        className={`${isPixelArt || is3D ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in`}
+                        className={`${isPixelArt || is3D ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in relative group`}
                       >
                         {design.image ? (
                           <Image
@@ -411,13 +411,25 @@ const CategoriesSection = () => {
                             alt={design.title}
                             width={400}
                             height={300}
-                            className={`w-full h-full ${isPixelArt ? 'object-contain bg-black' : is3D ? 'object-cover' : 'object-cover'}`}
+                            className={`w-full h-full ${isPixelArt ? 'object-contain bg-black' : is3D ? 'object-cover' : 'object-cover'} transition-transform duration-300 group-hover:scale-105`}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
                             <div className="text-gray-500 text-sm">Design Preview</div>
                           </div>
                         )}
+                        
+                        {/* Hover Overlay - Click to Expand */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                          <div className="bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                            <div className="flex items-center gap-2 text-gray-800 font-medium text-sm">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                              </svg>
+                              Click to Expand
+                            </div>
+                          </div>
+                        </div>
                       </motion.div>
                     </motion.div>
 
