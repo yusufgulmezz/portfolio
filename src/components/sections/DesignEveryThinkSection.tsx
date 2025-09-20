@@ -57,10 +57,30 @@ const DesignEveryThinkSection = () => {
   }, []);
 
   const scrollToNext = () => {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: 'smooth'
-    });
+    const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const targetScrollY = currentScrollY + window.innerHeight;
+    
+    // Smooth scroll animation with custom timing
+    const startTime = performance.now();
+    const duration = 1000; // 1.5 saniye - daha yavaş
+    
+    const animateScroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation (ease-out)
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      
+      const currentPosition = currentScrollY + (targetScrollY - currentScrollY) * easeOut;
+      
+      window.scrollTo(0, currentPosition);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      }
+    };
+    
+    requestAnimationFrame(animateScroll);
   };
 
   return (
