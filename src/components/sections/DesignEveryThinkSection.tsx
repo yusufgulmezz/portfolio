@@ -126,7 +126,7 @@ const DesignEveryThinkSection = () => {
         </motion.div>
       </div>
 
-      {/* Animated Scroll Down Button */}
+      {/* Animated Scroll Down Button with Text */}
       <motion.div 
         className="absolute left-1/2 transform -translate-x-1/2 bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-6"
         initial={{ opacity: 0, y: 20 }}
@@ -135,10 +135,21 @@ const DesignEveryThinkSection = () => {
       >
         <motion.button
           onClick={scrollToNext}
-          className="group flex flex-col items-center cursor-pointer"
-          whileHover={{ scale: 1.1 }}
+          className="group flex items-center gap-3 cursor-pointer"
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
+          {/* Left Text - Click To */}
+          <motion.span 
+            className="text-[#4E4E4E] text-sm font-medium tracking-wide"
+            style={{ fontFamily: 'var(--font-roboto)' }}
+            initial={{ opacity: 0, x: -10 }}
+            animate={isLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+            transition={{ duration: 0.8, delay: 2.2 }}
+          >
+            Click To
+          </motion.span>
+
           {/* Modern Scroll Down Icon */}
           <motion.div
             className="w-8 h-12 border-2 border-[#1A1A1A] rounded-full flex justify-center items-start pt-2"
@@ -164,6 +175,17 @@ const DesignEveryThinkSection = () => {
               }}
             />
           </motion.div>
+
+          {/* Right Text - Scroll */}
+          <motion.span 
+            className="text-[#4E4E4E] text-sm font-medium tracking-wide"
+            style={{ fontFamily: 'var(--font-roboto)' }}
+            initial={{ opacity: 0, x: 10 }}
+            animate={isLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: 10 }}
+            transition={{ duration: 0.8, delay: 2.2 }}
+          >
+            Scroll
+          </motion.span>
         </motion.button>
       </motion.div>
     </section>
