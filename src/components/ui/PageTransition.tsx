@@ -9,44 +9,44 @@ const PageTransition = () => {
   const [showEveryThink, setShowEveryThink] = useState(false);
 
   const rotatingTexts = useMemo(() => [
-    "3D Object", 
-    "UI/UX Prototype",
+    "UI/UX",
     "Poster",
     "Pixel Art",
-    "Code Process"
+    "3D", 
+    "Coding"
   ], []);
 
   useEffect(() => {
-    // İlk 0.5 saniye sadece "Design" göster, sonra text'ler başlasın
-    const startTimer = setTimeout(() => {
-      // Text'leri sırayla göster
-      const timers: NodeJS.Timeout[] = [];
-      
-      // Her text için ayrı timer
-      rotatingTexts.forEach((_, index) => {
+    // İlk text hemen başlasın
+    const timers: NodeJS.Timeout[] = [];
+    
+    // İlk text hemen başlasın
+    const firstTimer = setTimeout(() => {
+      setCurrentText(1);
+    }, 100); // Çok kısa delay
+    
+    // Diğer textler için timer'lar
+    rotatingTexts.forEach((_, index) => {
+      if (index > 0) { // İlk text'i atla
         const timer = setTimeout(() => {
           setCurrentText(index + 1);
-        }, index * 600); // Her text 600ms gösterilsin
+        }, index * 900 + 100); // Her text 900ms gösterilsin
         timers.push(timer);
-      });
+      }
+    });
 
-      // Son text'ten sonra EveryThink'i göster
-      const everyThinkTimer = setTimeout(() => {
-        setShowEveryThink(true);
-      }, rotatingTexts.length * 600 + 200); // +200ms extra
+    // Son text'ten sonra EveryThink'i göster
+    const everyThinkTimer = setTimeout(() => {
+      setShowEveryThink(true);
+    }, rotatingTexts.length * 900 + 300); // +300ms extra
 
-      // Ana animasyonu gizle
-      const hideTimer = setTimeout(() => {
-        setIsVisible(false);
-      }, rotatingTexts.length * 600 + 800); // +800ms extra
-
-      return () => {
-        [...timers, everyThinkTimer, hideTimer].forEach(clearTimeout);
-      };
-    }, 500); // İlk 500ms sadece "Design"
+    // Ana animasyonu gizle
+    const hideTimer = setTimeout(() => {
+      setIsVisible(false);
+    }, rotatingTexts.length * 900 + 1000); // +1000ms extra
 
     return () => {
-      clearTimeout(startTimer);
+      [firstTimer, ...timers, everyThinkTimer, hideTimer].forEach(clearTimeout);
     };
   }, [rotatingTexts]);
 
@@ -59,25 +59,13 @@ const PageTransition = () => {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[9999] bg-black flex items-center justify-center"
         >
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 border border-white/20 rounded-full" />
-            <div className="absolute bottom-1/4 right-1/4 w-24 h-24 border border-white/20 rounded-full" />
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 border border-white/20 rounded-full" />
-          </div>
 
           {/* Main content */}
           <div className="relative text-center px-4 sm:px-6 lg:px-8 w-full max-w-6xl mx-auto">
-            {/* Main text with "Design" + rotating text */}
+            {/* Rotating texts and final Design Every Think */}
             <div className="mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight">
-                <span className="font-normal">Design</span>
-                {(() => {
-                  const hasRightText = (currentText > 0 && !showEveryThink) || showEveryThink;
-                  return (
-                    <span
-                      className={`inline-block ${hasRightText ? 'ml-2 sm:ml-4' : ''} min-w-0 sm:min-w-[200px] h-[1.2em] whitespace-nowrap align-baseline`}
-                    >
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+                <div className="min-w-0 sm:min-w-[300px] h-[1.2em] whitespace-nowrap flex items-center justify-center">
                   <AnimatePresence mode="wait">
                     {currentText > 0 && !showEveryThink && (
                       <motion.span
@@ -85,10 +73,10 @@ const PageTransition = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="font-bold text-gray-200 bg-blue-500/30 rounded px-2 py-0.5 leading-none"
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        className="font-bold text-white leading-none"
                       >
-                        a {rotatingTexts[currentText - 1]}
+                        {rotatingTexts[currentText - 1]}
                       </motion.span>
                     )}
                     {showEveryThink && (
@@ -96,16 +84,16 @@ const PageTransition = () => {
                         key="everythink"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                        className="text-white"
                       >
-                        <span className="font-normal text-white">Every</span>
-                        <span className="font-bold text-white">Think</span>
+                        <span className="font-normal">Design</span>
+                        <span className="font-bold"> Every </span>
+                        <span className="font-bold">Think</span>
                       </motion.span>
                     )}
                   </AnimatePresence>
-                    </span>
-                  );
-                })()}
+                </div>
               </h1>
             </div>
 
