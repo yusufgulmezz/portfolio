@@ -699,7 +699,7 @@ const CategoriesSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-center mt-16"
         >
-          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+          {/* <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               Ready to work together?
             </h3>
@@ -715,7 +715,7 @@ const CategoriesSection = () => {
                 Get In Touch
               </motion.button>
             </Link>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </section>
