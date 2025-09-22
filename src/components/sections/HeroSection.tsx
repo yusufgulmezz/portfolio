@@ -98,9 +98,28 @@ const HeroSection = () => {
                   className="px-8 py-4 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-600 transition-colors duration-300"
                   onClick={() => {
                     const el = document.getElementById('tech-logos');
-                    if (el) {
-                      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
+                    if (!el) return;
+
+                    const startY = window.pageYOffset || document.documentElement.scrollTop;
+                    const rect = el.getBoundingClientRect();
+                    const elementTopRelative = rect.top; // relative to viewport
+                    // Center the element in viewport similar to block: 'center'
+                    const offsetToCenter = (window.innerHeight - rect.height) / 2;
+                    const targetY = startY + elementTopRelative - Math.max(0, offsetToCenter);
+
+                    const startTime = performance.now();
+                    const duration = 1000; // match DesignEveryThink smoothness
+
+                    const animate = (currentTime: number) => {
+                      const elapsed = currentTime - startTime;
+                      const progress = Math.min(elapsed / duration, 1);
+                      const easeOut = 1 - Math.pow(1 - progress, 3);
+                      const currentPos = startY + (targetY - startY) * easeOut;
+                      window.scrollTo(0, currentPos);
+                      if (progress < 1) requestAnimationFrame(animate);
+                    };
+
+                    requestAnimationFrame(animate);
                   }}
                 >
                   Keep Scrolling
