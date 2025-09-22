@@ -33,7 +33,7 @@ const TechLogosSection = () => {
   ];
 
   return (
-    <section className="py-16">
+    <section id="tech-logos" className="py-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-medium text-gray-800 mb-4">

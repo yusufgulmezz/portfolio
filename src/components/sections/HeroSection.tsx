@@ -96,8 +96,14 @@ const HeroSection = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="px-8 py-4 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-600 transition-colors duration-300"
+                  onClick={() => {
+                    const el = document.getElementById('tech-logos');
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                  }}
                 >
-                  See My Works
+                  Keep Scrolling
                 </motion.button>
               </motion.div>
             </motion.div>
