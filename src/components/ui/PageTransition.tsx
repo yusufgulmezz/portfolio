@@ -43,6 +43,11 @@ const PageTransition = () => {
     // Ana animasyonu gizle
     const hideTimer = setTimeout(() => {
       setIsVisible(false);
+      // Page transition tamamen bittiğinde global olay yayınla
+      try {
+        const evt = new CustomEvent('page-transition:done');
+        window.dispatchEvent(evt);
+      } catch {}
     }, rotatingTexts.length * 900 + 1000); // +1000ms extra
 
     return () => {
