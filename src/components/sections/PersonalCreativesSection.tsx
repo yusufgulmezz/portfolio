@@ -37,11 +37,11 @@ const PersonalCreativesSection = () => {
   return (
     <section id="personal-creatives" className="py-20 bg-[#edede9]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-medium text-gray-800 mb-3">
-            Personal Works
+        <div className="text-left mb-10">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            PERSONAL WORKS
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl">
             Beyond professional projects, I share photos, drawings, and short notes.
           </p>
         </div>

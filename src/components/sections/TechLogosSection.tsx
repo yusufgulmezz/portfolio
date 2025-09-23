@@ -39,7 +39,7 @@ const TechLogosSection = () => {
           <h2 className="text-2xl md:text-3xl font-medium text-gray-800 mb-4">
             Technologies I Work With
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Modern tools and technologies I use to create exceptional digital experiences
           </p>
         </div>
