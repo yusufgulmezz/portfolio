@@ -5,15 +5,19 @@ import { useEffect, useMemo, useState } from 'react';
 
 const DesignEveryThinkSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
   const [sectionMinHeight, setSectionMinHeight] = useState<number | null>(null);
   const [typedText, setTypedText] = useState('');
 
+  // PageTransition bitmeden render etme
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 2800);
-
-    return () => clearTimeout(timer);
+    const onDone = () => {
+      setShouldRender(true);
+      // Render edilir edilmez animasyonları başlat
+      setTimeout(() => setIsLoaded(true), 50);
+    };
+    window.addEventListener('page-transition:done', onDone as EventListener);
+    return () => window.removeEventListener('page-transition:done', onDone as EventListener);
   }, []);
 
   // Typewriter animation for description (inspired by text-type patterns)
@@ -81,6 +85,7 @@ const DesignEveryThinkSection = () => {
     requestAnimationFrame(animate);
   };
 
+  if (!shouldRender) return null;
   return (
     <section
       id="design-every-think"
