@@ -35,10 +35,10 @@ const PersonalCreativesSection = () => {
   const items = contentByTab[activeTab];
 
   return (
-    <section id="personal-creatives" className="py-20 bg-[#edede9]">
+    <section id="personal-creatives" className="pt-4 pb-20 bg-[#edede9]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-left mb-10">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+        <div className="text-left mb-8">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
             PERSONAL WORKS
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl">
