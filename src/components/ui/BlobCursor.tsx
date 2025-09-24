@@ -25,6 +25,8 @@ type Props = {
   fastEase?: string;
   slowEase?: string;
   zIndex?: number;
+  borderColor?: string;
+  borderWidth?: number;
 };
 
 export default function BlobCursor({
@@ -48,6 +50,8 @@ export default function BlobCursor({
   fastEase = 'linear',
   slowEase = 'power2.out',
   zIndex = 100,
+  borderColor,
+  borderWidth,
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const blobsRef = useRef<Array<HTMLDivElement | null>>([]);
@@ -121,6 +125,7 @@ export default function BlobCursor({
               backgroundColor: fillColor,
               opacity: opacities[i],
               boxShadow: `${shadowOffsetX}px ${shadowOffsetY}px ${shadowBlur}px 0 ${shadowColor}`,
+              border: borderWidth ? `${borderWidth}px solid ${borderColor ?? 'rgba(255,255,255,0.6)'}` : undefined,
             }}
           >
             <div
