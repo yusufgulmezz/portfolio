@@ -20,3 +20,9 @@ body {
   font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
   cursor: none !important;
 }
+
+/* Lightbox açıkken sayfa kaydırmasını kapat */
+.no-scroll {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
