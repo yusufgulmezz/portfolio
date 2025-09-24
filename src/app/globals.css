@@ -26,3 +26,7 @@ body {
   overflow: hidden !important;
   touch-action: none !important;
 }
+
+html.no-scroll, body.no-scroll {
+  overflow: hidden !important;
+}
