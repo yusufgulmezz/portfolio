@@ -282,16 +282,46 @@ const CategoriesSection = () => {
       }>;
     }>(null);
 
-    // Lightbox açıkken sayfa kaydırmasını kilitle (CSS sınıfı ile)
+    // Lightbox açıkken sayfa kaydırmasını kilitle (html ve body + position: fixed tekniği)
     useEffect(() => {
       const body = document.body;
+      const html = document.documentElement;
       if (expandedDesign) {
+        const scrollY = window.scrollY;
+        html.classList.add('no-scroll');
         body.classList.add('no-scroll');
+        body.style.position = 'fixed';
+        body.style.top = `-${scrollY}px`;
+        body.style.left = '0';
+        body.style.right = '0';
+        body.style.width = '100%';
       } else {
+        const top = body.style.top;
+        html.classList.remove('no-scroll');
         body.classList.remove('no-scroll');
+        body.style.position = '';
+        body.style.top = '';
+        body.style.left = '';
+        body.style.right = '';
+        body.style.width = '';
+        if (top) {
+          const y = Math.abs(parseInt(top, 10)) || 0;
+          window.scrollTo(0, y);
+        }
       }
       return () => {
+        const top = body.style.top;
+        html.classList.remove('no-scroll');
         body.classList.remove('no-scroll');
+        body.style.position = '';
+        body.style.top = '';
+        body.style.left = '';
+        body.style.right = '';
+        body.style.width = '';
+        if (top) {
+          const y = Math.abs(parseInt(top, 10)) || 0;
+          window.scrollTo(0, y);
+        }
       };
     }, [expandedDesign]);
 
