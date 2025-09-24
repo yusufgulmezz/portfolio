@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 
@@ -283,21 +282,16 @@ const CategoriesSection = () => {
       }>;
     }>(null);
 
-    // Lightbox açıkken sayfa kaydırmasını kilitle
+    // Lightbox açıkken sayfa kaydırmasını kilitle (CSS sınıfı ile)
     useEffect(() => {
       const body = document.body;
-      const previousOverflow = body.style.overflow;
-      const previousTouchAction = (body.style as any).touchAction as string | undefined;
       if (expandedDesign) {
-        body.style.overflow = 'hidden';
-        (body.style as any).touchAction = 'none';
+        body.classList.add('no-scroll');
       } else {
-        body.style.overflow = previousOverflow || '';
-        (body.style as any).touchAction = previousTouchAction || '';
+        body.classList.remove('no-scroll');
       }
       return () => {
-        body.style.overflow = previousOverflow || '';
-        (body.style as any).touchAction = previousTouchAction || '';
+        body.classList.remove('no-scroll');
       };
     }, [expandedDesign]);
 
