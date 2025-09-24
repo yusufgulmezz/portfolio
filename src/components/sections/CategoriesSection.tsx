@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const CategoriesSection = () => {
@@ -283,6 +283,24 @@ const CategoriesSection = () => {
       }>;
     }>(null);
 
+    // Lightbox açıkken sayfa kaydırmasını kilitle
+    useEffect(() => {
+      const body = document.body;
+      const previousOverflow = body.style.overflow;
+      const previousTouchAction = (body.style as any).touchAction as string | undefined;
+      if (expandedDesign) {
+        body.style.overflow = 'hidden';
+        (body.style as any).touchAction = 'none';
+      } else {
+        body.style.overflow = previousOverflow || '';
+        (body.style as any).touchAction = previousTouchAction || '';
+      }
+      return () => {
+        body.style.overflow = previousOverflow || '';
+        (body.style as any).touchAction = previousTouchAction || '';
+      };
+    }, [expandedDesign]);
+
 
     // Tasarım değiştirme fonksiyonu
     const goToProject = (index: number) => {
@@ -426,7 +444,7 @@ const CategoriesSection = () => {
                               <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                               </svg>
-                              Click to Expand
+                              Click For Fullsize
                             </div>
                           </div>
                         </div>
