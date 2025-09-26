@@ -56,7 +56,7 @@ const PersonalCreativesSection = () => {
     const [idx, setIdx] = useState<number>(0);
     const current = data[Math.min(idx, data.length - 1)] ?? data[0];
     return (
-      <div className="relative rounded-3xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
+      <div className="relative mx-auto w-full max-w-[260px] sm:max-w-[280px] md:max-w-[260px] lg:max-w-[280px] xl:max-w-[300px] rounded-3xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
         <div className="relative w-full aspect-[3/5] bg-gray-100">
           <AnimatePresence mode="wait">
             <motion.div
@@ -81,8 +81,8 @@ const PersonalCreativesSection = () => {
           </AnimatePresence>
 
           {/* Alt overlay thumbnail şeridi */}
-          <div className="absolute inset-x-0 bottom-0 p-3">
-            <div className="mx-auto flex w-full items-center gap-2 rounded-xl bg-black/30 backdrop-blur-md px-2 py-2">
+          <div className="absolute inset-x-0 bottom-0 p-2">
+            <div className="mx-auto flex w-full items-center gap-2 rounded-xl bg-black/30 backdrop-blur-md px-2 py-1.5">
               {data.map((it, i) => {
                 const active = i === idx;
                 return (
@@ -93,10 +93,10 @@ const PersonalCreativesSection = () => {
                     className={`relative flex-shrink-0 overflow-hidden rounded-md transition-all ${
                       active ? 'ring-2 ring-white/80 ring-offset-[2px] ring-offset-black/10' : 'opacity-90 hover:opacity-100'
                     }`}
-                    style={{ width: 44, height: 44 }}
+                    style={{ width: 36, height: 36 }}
                     aria-label={`Show ${it.title}`}
                   >
-                    <Image src={it.src} alt={it.title} width={88} height={88} className="h-full w-full object-cover" />
+                    <Image src={it.src} alt={it.title} width={72} height={72} className="h-full w-full object-cover" />
                   </button>
                 );
               })}
