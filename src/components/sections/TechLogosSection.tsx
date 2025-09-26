@@ -1,6 +1,7 @@
 'use client';
 
 import LogoLoop from '@/components/ui/LogoLoop';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { 
   SiReact, 
@@ -50,16 +51,31 @@ const TechLogosSection = () => {
   return (
     <section id="tech-logos" className="py-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
           <h2 className="text-2xl md:text-3xl font-medium text-gray-800 mb-4">
             Technologies I Work With
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-gray-600 max-w-2xl mx-auto"
+          >
             Modern tools and technologies I use to create exceptional digital experiences
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
         
-        <div style={{ height: `${containerHeight}px`, position: 'relative', overflow: 'hidden' }}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          style={{ height: `${containerHeight}px`, position: 'relative', overflow: 'hidden' }}
+        >
           <LogoLoop
             logos={techLogos}
             speed={80}
@@ -72,7 +88,7 @@ const TechLogosSection = () => {
             fadeOutColor="#edede9"
             ariaLabel="Technology partners"
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
