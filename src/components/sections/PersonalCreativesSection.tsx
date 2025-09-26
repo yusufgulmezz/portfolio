@@ -19,20 +19,22 @@ const PersonalCreativesSection = () => {
   type Item = { title: string; description: string; src: string; width: number; height: number };
   const contentByTab: Record<TabKey, Item[]> = {
     photos: [
-      { title: 'City Lights', description: 'Night shot, street photography.', src: '/images/personal/city-lights.jpg', width: 1080, height: 1620 },
-      { title: 'Morning Hike', description: 'Forest scenery in morning fog.', src: '/images/personal/morning-hike.jpg', width: 1080, height: 1620 },
-      { title: 'Minimal Shadow', description: 'Composition with light and shadow.', src: '/images/personal/minimal-shadow.jpg', width: 1080, height: 1620 },
-      { title: 'Soft Portrait', description: 'Available light portrait.', src: '/images/personal/soft-portrait.jpg', width: 1080, height: 1620 }
+      { title: 'City Lights', description: 'Night shot, street photography.', src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Morning Hike', description: 'Forest scenery in morning fog.', src: 'https://images.unsplash.com/photo-1500534314209-a26db0f5d8f0?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Minimal Shadow', description: 'Composition with light and shadow.', src: 'https://images.unsplash.com/photo-1529625050350-2f8b1bfcdd55?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Soft Portrait', description: 'Available light portrait.', src: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Urban Walk', description: 'Muted tones, vertical frame.', src: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Golden Leaf', description: 'Close-up, warm light.', src: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 }
     ],
     drawings: [
-      { title: 'Portrait Study', description: 'Quick sketch with pencil.', src: '/images/personal/draw-portrait.jpg', width: 1080, height: 1620 },
-      { title: 'Space Perspective', description: 'Two-point perspective practice.', src: '/images/personal/draw-space.jpg', width: 1080, height: 1620 },
-      { title: 'Figure Studies', description: 'Selections from short poses.', src: '/images/personal/draw-figure.jpg', width: 1080, height: 1620 }
+      { title: 'Portrait Study', description: 'Quick sketch with pencil.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Space Perspective', description: 'Two-point perspective practice.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Figure Studies', description: 'Selections from short poses.', src: 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 }
     ],
     blog: [
-      { title: 'Workflow Notes', description: 'Design → prototype → development pipeline.', src: '/images/personal/blog-1.jpg', width: 1080, height: 1620 },
-      { title: 'Color & Typography', description: 'Daily picks and references.', src: '/images/personal/blog-2.jpg', width: 1080, height: 1620 },
-      { title: 'Toolbox', description: 'Tools I use and quick remarks.', src: '/images/personal/blog-3.jpg', width: 1080, height: 1620 }
+      { title: 'Workflow Notes', description: 'Design → prototype → development pipeline.', src: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Color & Typography', description: 'Daily picks and references.', src: 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
+      { title: 'Toolbox', description: 'Tools I use and quick remarks.', src: 'https://images.unsplash.com/photo-1517511620798-cec17d428bc0?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 }
     ]
   };
 
