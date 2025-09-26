@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
@@ -40,6 +40,18 @@ const PersonalCreativesSection = () => {
 
   const items = contentByTab[activeTab];
   const activeItem = useMemo(() => items[Math.min(activeIndex, items.length - 1)] ?? items[0], [items, activeIndex]);
+  const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
+
+  const scrollToTab = (key: TabKey) => {
+    const el = rowRefs.current[key];
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const currentY = window.pageYOffset || document.documentElement.scrollTop;
+    const headerEl = document.querySelector('header') as HTMLElement | null;
+    const headerHeight = headerEl?.offsetHeight ?? 80;
+    const targetY = currentY + rect.top - headerHeight - 16;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
 
   // Yardımcı: diziyi n parçaya böl
   const chunk = <T,>(arr: T[], parts: number): T[][] => {
@@ -125,9 +137,14 @@ const PersonalCreativesSection = () => {
             const itemsOfTab = contentByTab[tab.key];
             const isActive = activeTab === tab.key;
             return (
-              <div key={`pc-head-${tab.key}`} className="py-6">
+              <div key={`pc-head-${tab.key}`} ref={(el) => { rowRefs.current[tab.key] = el; }} className="py-6">
                 <button
-                  onClick={() => setActiveTab(tab.key)}
+                  onClick={() => {
+                    const willOpen = activeTab !== tab.key;
+                    setActiveTab(tab.key);
+                    requestAnimationFrame(() => scrollToTab(tab.key));
+                    if (willOpen) setTimeout(() => scrollToTab(tab.key), 60);
+                  }}
                   className="w-full text-left group"
                 >
                   <div className="flex items-end justify-between">
