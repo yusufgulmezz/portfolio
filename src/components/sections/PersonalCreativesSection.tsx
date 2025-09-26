@@ -119,55 +119,59 @@ const PersonalCreativesSection = () => {
           </p>
         </div>
 
-        <div className="flex justify-center gap-3 mb-10">
+        {/* CategoriesSection başlık stili ile akordeon */}
+        <div className="mb-6">
           {TABS.map((tab) => {
+            const itemsOfTab = contentByTab[tab.key];
             const isActive = activeTab === tab.key;
             return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`px-4 py-2 rounded-lg border transition-colors duration-200 ${
-                  isActive
-                    ? 'bg-gray-900 text-white border-gray-900'
-                    : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'
-                }`}
-              >
-                {tab.label}
-              </button>
+              <div key={`pc-head-${tab.key}`} className="py-6">
+                <button
+                  onClick={() => setActiveTab(tab.key)}
+                  className="w-full text-left group"
+                >
+                  <div className="flex items-end justify-between">
+                    <h3 className={`font-bold transition-colors ${isActive ? 'text-4xl sm:text-5xl lg:text-6xl text-[#4E4E4E]' : 'text-3xl sm:text-4xl lg:text-5xl text-[#4E4E4E] group-hover:text-gray-900'}`}>{tab.label}</h3>
+                    <span className="text-sm sm:text-base text-gray-500">{itemsOfTab.length}</span>
+                  </div>
+                  <div className="w-full h-px bg-gray-300 mt-4" />
+                </button>
+                {/* İçerik sadece aktif başlıkta gösterilir */}
+                {isActive && (
+                  <div className="mt-6">
+                    {tab.key === 'photos' ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {photoGroups.map((group, i) => (
+                          <VerticalGalleryCard key={`col-${i}`} data={group} />
+                        ))}
+                      </div>
+                    ) : (
+                      <motion.div
+                        key={tab.key}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.35 }}
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                      >
+                        {contentByTab[tab.key].map((item, idx) => (
+                          <div
+                            key={`${tab.key}-${idx}`}
+                            className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-5 hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
+                          >
+                            <div className="aspect-[4/3] w-full rounded-xl bg-gray-100 mb-4 overflow-hidden" />
+                            <h4 className="text-lg font-medium text-gray-900 mb-1">{item.title}</h4>
+                            <p className="text-sm text-gray-600">{item.description}</p>
+                          </div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
-
-        {/* Photo sekmesi: 3 dikey kart yan yana */}
-        {activeTab === 'photos' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {photoGroups.map((group, i) => (
-              <VerticalGalleryCard key={`col-${i}`} data={group} />
-            ))}
-          </div>
-        )}
-
-        {/* Diğer sekmeler için basit grid (geçici) */}
-        {activeTab !== 'photos' && (
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {items.map((item, idx) => (
-              <div
-                key={`${activeTab}-${idx}`}
-                className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-5 hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
-              >
-                <div className="aspect-[4/3] w-full rounded-xl bg-gray-100 mb-4 overflow-hidden" />
-                <h3 className="text-lg font-medium text-gray-900 mb-1">{item.title}</h3>
-                <p className="text-sm text-gray-600">{item.description}</p>
-              </div>
-            ))}
-          </motion.div>
-        )}
+        {/* İçerikler başlık altında render edildiği için ayrıca genel grid yok */}
       </div>
     </section>
   );
