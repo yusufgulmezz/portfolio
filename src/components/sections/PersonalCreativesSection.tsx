@@ -61,14 +61,14 @@ const PersonalCreativesSection = () => {
     return out;
   };
 
-  // 3 sütun için foto içeriklerini gruplandır
-  const photoGroups = useMemo(() => chunk(contentByTab.photos, 3), [contentByTab.photos]);
+  // 4 sütun için foto içeriklerini gruplandır
+  const photoGroups = useMemo(() => chunk(contentByTab.photos, 4), [contentByTab.photos]);
 
   const VerticalGalleryCard = ({ data }: { data: Item[] }) => {
     const [idx, setIdx] = useState<number>(0);
     const current = data[Math.min(idx, data.length - 1)] ?? data[0];
     return (
-      <div className="relative mx-auto w-full max-w-[260px] sm:max-w-[280px] md:max-w-[260px] lg:max-w-[280px] xl:max-w-[300px] rounded-3xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
+      <div className="relative mx-auto w-full max-w-[220px] sm:max-w-[240px] md:max-w-[220px] lg:max-w-[240px] xl:max-w-[260px] rounded-3xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
         <div className="relative w-full aspect-[3/5] bg-gray-100">
           <AnimatePresence mode="wait">
             <motion.div
@@ -167,9 +167,11 @@ const PersonalCreativesSection = () => {
                 {isActive && (
                   <div className="mt-6">
                     {tab.key === 'photos' ? (
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                         {photoGroups.map((group, i) => (
-                          <VerticalGalleryCard key={`col-${i}`} data={group} />
+                          <div key={`col-${i}`} className={`flex justify-center ${i === 0 ? 'lg:justify-start' : i === photoGroups.length - 1 ? 'lg:justify-end' : ''}`}>
+                            <VerticalGalleryCard data={group} />
+                          </div>
                         ))}
                       </div>
                     ) : (
