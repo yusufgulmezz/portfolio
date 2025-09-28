@@ -402,19 +402,12 @@ const CategoriesSection = () => {
 
               return (
                 <motion.div
-                  key={design.id}
+                  key={`${title}-${design.id}`}
                   className="absolute inset-0 flex flex-col lg:flex-row items-start mt-6"
-                  style={{ zIndex }}
-                  animate={{
-                    x,
-                    scale,
-                    opacity
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 30,
-                    mass: 1
+                  style={{
+                    transform: `translateX(${x}) scale(${scale})`,
+                    opacity: opacity,
+                    zIndex: zIndex
                   }}
                 >
                   <div className="flex flex-col lg:flex-row items-start gap-6 w-full">
