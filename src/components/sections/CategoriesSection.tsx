@@ -543,13 +543,6 @@ const CategoriesSection = () => {
                     goToProject(currentIndex + 1);
                   }}
                   className={`${isPixelArt || is3D ? 'w-44 h-44' : 'w-44 h-60'} bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 30
-                  }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
