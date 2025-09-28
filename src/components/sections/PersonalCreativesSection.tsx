@@ -7,9 +7,9 @@ import Image from 'next/image';
 type TabKey = 'photos' | 'drawings' | 'blog';
 
 const TABS: { key: TabKey; label: string }[] = [
-  { key: 'photos', label: 'Photos' },
-  { key: 'drawings', label: 'Drawings' },
-  { key: 'blog', label: 'Blog Posts' }
+  { key: 'photos', label: 'Photographs' },
+  { key: 'drawings', label: 'Drawing' },
+  { key: 'blog', label: 'Blog' }
 ];
 
 const PersonalCreativesSection = () => {
@@ -122,14 +122,24 @@ const PersonalCreativesSection = () => {
   return (
     <section id="personal-creatives" className="pt-4 pb-20 bg-[#edede9]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-left mb-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-left mb-8"
+        >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
             PERSONAL WORKS
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-gray-600 max-w-3xl"
+          >
             Beyond professional projects, I share photos, drawings, and short notes.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* CategoriesSection başlık stili ile akordeon */}
         <div className="mb-6">
