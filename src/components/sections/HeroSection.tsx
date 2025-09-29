@@ -1,20 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+ 
 
 const HeroSection = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    // Page transition'dan sonra animasyonları başlat
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 2500); // Adjusted to match PageTransition duration (2.5 seconds)
-
-    return () => clearTimeout(timer);
-  }, []);
+  
 
   return (
     <section id="hero" className="relative min-h-screen bg-[#edede9]">
@@ -26,8 +16,9 @@ const HeroSection = () => {
             {/* Image: Foreground column (top on mobile, left on desktop) */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
+              viewport={{ once: false, amount: 0.5 }}
               className="lg:col-span-5 order-1"
             >
               <div className="relative w-full overflow-hidden rounded-2xl bg-white/40 backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.08)]">
@@ -43,15 +34,17 @@ const HeroSection = () => {
             {/* Mobile: Text below image, Desktop: Text on right */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: false, amount: 0.5 }}
               className="relative z-10 lg:col-span-7 lg:col-start-6 text-right order-2"
             >
               {/* Main Heading with Name and Designer on same line */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: false, amount: 0.5 }}
                 className="mb-6"
               >
                 <div className="flex items-baseline gap-4 mb-2 justify-end">
@@ -73,8 +66,9 @@ const HeroSection = () => {
               {/* Description */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
+                viewport={{ once: false, amount: 0.5 }}
                 className="mb-8"
               >
                 <p 
@@ -88,8 +82,9 @@ const HeroSection = () => {
               {/* CTA Button - Orange like in reference */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
+                viewport={{ once: false, amount: 0.5 }}
                 className="flex justify-end"
               >
                 <motion.button
