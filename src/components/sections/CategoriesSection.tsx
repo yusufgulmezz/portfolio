@@ -679,12 +679,10 @@ const CategoriesSection = () => {
                   )}
 
                   {/* Image */}
-                  <Image
+                  <img
                     src={expandedDesign.image}
                     alt={expandedDesign.title}
-                    width={1200}
-                    height={800}
-                    className={`max-w-[90vw] max-h-[85vh] ${expandedDesign.pixel ? 'object-contain' : 'object-contain'}`}
+                    className={`max-w-[90vw] max-h-[85vh] w-auto h-auto ${expandedDesign.pixel ? 'object-contain' : 'object-contain'}`}
                   />
 
                   {/* Image counter */}
