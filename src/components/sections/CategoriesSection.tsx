@@ -356,9 +356,19 @@ const CategoriesSection = () => {
     }
 
     return (
-      <section className="py-8">
+      <motion.section
+        className="py-8"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="max-w-7xl mx-auto">
-          <div className="mb-2">
+          <motion.div
+            className="mb-2"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="flex items-end justify-between">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#4E4E4E] mb-4 cursor-pointer" onClick={onHeaderClick}>{title}</h2>
               <span className="text-sm text-gray-500 mb-2">{designs.length}</span>
@@ -368,9 +378,14 @@ const CategoriesSection = () => {
             <div className="text-sm text-gray-500 mt-2">
               {currentIndex + 1} / {designs.length}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="relative h-[600px] overflow-hidden">
+          <motion.div
+            className="relative h-[600px] overflow-hidden"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          >
             {designs.map((design, index) => {
               // Ana tasarım için animasyon değerleri
               const isActive = index === currentIndex;
@@ -590,7 +605,7 @@ const CategoriesSection = () => {
                 />
               ))}
             </div> */}
-          </div>
+          </motion.div>
           {/* Lightbox */}
           <AnimatePresence>
             {expandedDesign && (
@@ -681,7 +696,7 @@ const CategoriesSection = () => {
             )}
           </AnimatePresence>
         </div>
-      </section>
+      </motion.section>
     );
   };
 
