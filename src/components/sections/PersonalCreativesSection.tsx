@@ -68,7 +68,7 @@ const PersonalCreativesSection = () => {
     const [idx, setIdx] = useState<number>(0);
     const current = data[Math.min(idx, data.length - 1)] ?? data[0];
     return (
-      <div className="relative mx-auto w-full max-w-[220px] sm:max-w-[240px] md:max-w-[220px] lg:max-w-[240px] xl:max-w-[260px] rounded-3xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
+      <div className="relative mx-auto w-full max-w-[220px] sm:max-w-[240px] md:max-w-[220px] lg:max-w-[240px] xl:max-w-[260px] rounded-2xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
         <div className="relative w-full aspect-[3/5] bg-gray-100">
           <AnimatePresence mode="wait">
             <motion.div
