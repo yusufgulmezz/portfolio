@@ -381,7 +381,7 @@ const CategoriesSection = () => {
           </motion.div>
 
           <motion.div
-            className="relative min-h-[600px] overflow-hidden"
+            className="relative h-[600px] overflow-hidden"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
@@ -520,9 +520,7 @@ const CategoriesSection = () => {
                     >
                       <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{design.title}</h3>
                       <p className="text-gray-500 text-sm mb-6">{design.date}</p>
-                      <div className="text-gray-700 text-base leading-relaxed mb-4 min-h-0">
-                        <p className="whitespace-pre-wrap break-words">{design.description}</p>
-                      </div>
+                      <p className="text-gray-700 text-base leading-relaxed mb-4">{design.description}</p>
                       {/* <p className="text-gray-700 text-base leading-relaxed mb-6">
                         Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus.
                       </p> */}
