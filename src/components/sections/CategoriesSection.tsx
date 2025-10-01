@@ -17,7 +17,7 @@ const CategoriesSection = () => {
       projects: [
         {
           id: 1,
-          title: 'Lewis Hamilton Poster Design',
+          title: 'Lewis Hamilton',
           date: '12/09/2025',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/c159ee233024129.68a77e3a9374c.png',
@@ -25,7 +25,7 @@ const CategoriesSection = () => {
         },
         {
           id: 2,
-          title: 'Charles Leclerc Poster Design',
+          title: 'Charles Leclerc',
           date: '12/09/2025',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/fd0b2e232152585.68964e11b1ccc.png',
@@ -33,7 +33,7 @@ const CategoriesSection = () => {
         },
         {
           id: 3,
-          title: 'The Witcher 3 Eredin Poster Design',
+          title: 'The Witcher 3 Eredin',
           date: '12/09/2025',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840_webp/3af7cb197406813.68ab11122767b.png',
@@ -67,7 +67,7 @@ const CategoriesSection = () => {
         },
         {
           id: 16,
-          title: 'Retro Cityscape',
+          title: 'Demon Slayer Zenitsu',
           date: '05/09/2025',
           description: 'Nostalgic pixel art city with neon lights and retro atmosphere.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/bfb9f8153649027.633386fc1b0a6.png',
@@ -75,7 +75,7 @@ const CategoriesSection = () => {
         },
         {
           id: 17,
-          title: 'Fantasy Character',
+          title: 'Banana For Every Taste',
           date: '03/09/2025',
           description: 'Detailed pixel art character with medieval fantasy theme.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/e6e3c0201088071.666d9d6546b2e.png',
@@ -83,7 +83,7 @@ const CategoriesSection = () => {
         },
         {
           id: 18,
-          title: 'Space Adventure',
+          title: 'Star Wars: Jedi Fallen Order',
           date: '01/09/2025',
           description: 'Sci-fi pixel art scene with spaceships and alien planets.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/10393c158503857.638d2b93e0ed1.png',
@@ -91,7 +91,7 @@ const CategoriesSection = () => {
         },
         {
           id: 19,
-          title: 'Pixel Animation',
+          title: 'Cat Punch',
           date: '29/08/2025',
           description: 'Smooth pixel art animation with fluid character movement.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e0dee5181781743.6521cca9d06d7.png',
@@ -99,7 +99,7 @@ const CategoriesSection = () => {
         },
         {
           id: 20,
-          title: 'Retro Game UI',
+          title: 'Jon Snow',
           date: '27/08/2025',
           description: 'Classic game interface design with pixel art elements.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/3e4d56201862729.667c0a739ea40.jpg',
@@ -107,7 +107,7 @@ const CategoriesSection = () => {
         },
         {
           id: 21,
-          title: 'Nature Scene',
+          title: 'Xbox Controller',
           date: '25/08/2025',
           description: 'Peaceful pixel art nature landscape with trees and mountains.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/68a907191056269.65c4c74d29a2c.png',
@@ -125,7 +125,7 @@ const CategoriesSection = () => {
       projects: [
         {
           id: 6,
-          title: 'Architectural Visualization',
+          title: 'Lamb',
           date: '03/09/2025',
           description: 'Modern building design with realistic lighting and materials.',
           image: 'https://mir-cdn.behance.net/v1/rendition/project_modules/hd_webp/3378c9195317861.68cc44e3d42fe.png',
@@ -133,7 +133,7 @@ const CategoriesSection = () => {
         },
         {
           id: 7,
-          title: 'Product Render',
+          title: 'Mini TV',
           date: '01/09/2025',
           description: 'High-quality product visualization for e-commerce.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/93eed3192858185.68cc45e2f0d38.png',
@@ -141,7 +141,7 @@ const CategoriesSection = () => {
         },
         {
           id: 12,
-          title: '3D Character Design',
+          title: 'Shotgun',
           date: '30/08/2025',
           description: 'Detailed character modeling with realistic textures and animations.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/bae6aa187036695.68cc43844c8e1.jpg',
@@ -149,7 +149,7 @@ const CategoriesSection = () => {
         },
         {
           id: 13,
-          title: 'Interior Design Visualization',
+          title: 'Guitar',
           date: '28/08/2025',
           description: 'Modern interior space with photorealistic lighting and materials.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/37d30f234905769.68cc3e70f0c0c.jpg',
@@ -157,7 +157,7 @@ const CategoriesSection = () => {
         },
         {
           id: 14,
-          title: 'Vehicle Modeling',
+          title: 'Paperclips',
           date: '25/08/2025',
           description: 'High-poly vehicle model with detailed textures and realistic materials.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/66b26f207669509.68cc45a6dea73.jpg',
@@ -165,7 +165,7 @@ const CategoriesSection = () => {
         },
         {
           id: 15,
-          title: 'Abstract 3D Art',
+          title: 'Vase Plate Cup',
           date: '22/08/2025',
           description: 'Creative abstract 3D composition with experimental lighting.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/e75e98207675585.68cc412ba6a1c.png',
@@ -209,7 +209,7 @@ const CategoriesSection = () => {
       projects: [
         {
           id: 10,
-          title: 'E-commerce Website',
+          title: 'Green World',
           date: '20/08/2025',
           description: 'Full-stack e-commerce solution with modern technologies.',
           image: '/api/placeholder/300/400',
