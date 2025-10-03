@@ -19,7 +19,7 @@ const CategoriesSection = () => {
           id: 1,
           title: 'Lewis Hamilton',
           date: '12/09/2025',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
+          description: 'Poster design for Formula 1 Ferrari driver Lewis Hamilton. The “Glassy Effect” was chosen for this design created for Hamilton, a seven-time world champion. The font used is “Formula1”.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/c159ee233024129.68a77e3a9374c.png',
           tags: ['Poster', 'Design']
         },
@@ -27,7 +27,7 @@ const CategoriesSection = () => {
           id: 2,
           title: 'Charles Leclerc',
           date: '12/09/2025',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
+          description: 'This poster design for Charles Leclerc, another Ferrari F1 driver, uses the “Threshold” method. It predominantly features shades of red, white, and black. The Ferrari logo stands out among the textures used in the background. The font used is again “Formula1.”',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/fd0b2e232152585.68964e11b1ccc.png',
           tags: ['Poster', 'Design']
         },
@@ -35,7 +35,7 @@ const CategoriesSection = () => {
           id: 3,
           title: 'The Witcher 3 Eredin',
           date: '12/09/2025',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.',
+          description: 'Poster design of Eredin Bréacc Glas, king of the Wild Hunt, the main villain in The Witcher universe. The background features different images of Geralt, Ciri, and Eredin. Content is supported by some texts from the in-game lore.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840_webp/3af7cb197406813.68ab11122767b.png',
           tags: ['Poster', 'Design']
         }
