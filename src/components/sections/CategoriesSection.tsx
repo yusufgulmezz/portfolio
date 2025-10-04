@@ -25,10 +25,10 @@ const CategoriesSection = () => {
         },
         {
           id: 2,
-          title: 'Charles Leclerc',
+          title: 'RIFF',
           date: '12/09/2025',
-          description: 'This poster design for Charles Leclerc, another Ferrari F1 driver, uses the “Threshold” method. It predominantly features shades of red, white, and black. The Ferrari logo stands out among the textures used in the background. The font used is again “Formula1.”',
-          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/fd0b2e232152585.68964e11b1ccc.png',
+          description: 'Modern poster design featuring bold typography and striking visual elements. This design showcases contemporary graphic design principles with a focus on clean composition and impactful messaging.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/b816cb235880157.68e1995cd1b62.jpg',
           tags: ['Poster', 'Design']
         },
         {
@@ -37,6 +37,14 @@ const CategoriesSection = () => {
           date: '12/09/2025',
           description: 'Poster design of Eredin Bréacc Glas, king of the Wild Hunt, the main villain in The Witcher universe. The background features different images of Geralt, Ciri, and Eredin. Content is supported by some texts from the in-game lore.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840_webp/3af7cb197406813.68ab11122767b.png',
+          tags: ['Poster', 'Design']
+        },
+        {
+          id: 4,
+          title: 'Charles Leclerc',
+          date: '12/09/2025',
+          description: 'This poster design for Charles Leclerc, another Ferrari F1 driver, uses the "Threshold" method. It predominantly features shades of red, white, and black. The Ferrari logo stands out among the textures used in the background. The font used is again "Formula1."',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/fd0b2e232152585.68964e11b1ccc.png',
           tags: ['Poster', 'Design']
         }
       ]
