@@ -25,9 +25,9 @@ const CategoriesSection = () => {
         },
         {
           id: 2,
-          title: 'RIFF',
+          title: 'Max Verstappen',
           date: '12/09/2025',
-          description: 'Modern poster design featuring bold typography and striking visual elements. This design showcases contemporary graphic design principles with a focus on clean composition and impactful messaging.',
+          description: 'This poster design for Red Bull Racing driver Verstappen, one of the first drivers that comes to mind when you think of F1, aimed to achieve a more effective image by adding textures to a white background. Three different images of the driver were used. The colors predominantly feature red and orange tones specific to the Red Bull Racing brand, while the background is white. This design has made the poster stand out even more.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/b816cb235880157.68e1995cd1b62.jpg',
           tags: ['Poster', 'Design']
         },
