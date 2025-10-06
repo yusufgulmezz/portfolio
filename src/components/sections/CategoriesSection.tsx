@@ -183,7 +183,7 @@ const CategoriesSection = () => {
     },
     {
       id: 'ui-ux',
-      name: 'UI/UX Designs',
+      name: 'UI/UX',
       description: 'User experience focused interface designs',
       number: '04',
       color: 'from-purple-500 to-pink-500',
@@ -191,10 +191,10 @@ const CategoriesSection = () => {
       projects: [
         {
           id: 8,
-          title: 'Mobile App Interface',
+          title: 'Green World App',
           date: '28/08/2025',
           description: 'Clean and intuitive mobile app design with modern UI patterns.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/58b4f6229631387.68e3ed896f619.png',
           tags: ['UI/UX', 'Mobile']
         },
         {
@@ -275,6 +275,7 @@ const CategoriesSection = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const isPixelArt = title.toLowerCase().includes('pixel');
     const is3D = title.toLowerCase().includes('3d');
+    const isUIUX = title.toLowerCase().includes('ui/ux');
     const [expandedDesign, setExpandedDesign] = useState<null | { 
       image: string; 
       title: string; 
@@ -461,7 +462,10 @@ const CategoriesSection = () => {
                             });
                           }
                         }}
-                        className={`${isPixelArt || is3D ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'} bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in relative group`}
+                        className={`${isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app'))
+                          ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]'
+                          : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'
+                        } bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in relative group`}
                       >
                         {design.image ? (
                           <Image
@@ -469,7 +473,11 @@ const CategoriesSection = () => {
                             alt={design.title}
                             width={400}
                             height={300}
-                            className={`w-full h-full ${isPixelArt ? 'object-contain bg-black' : is3D ? 'object-cover' : 'object-cover'} transition-transform duration-300 group-hover:scale-105`}
+                            className={`w-full h-full ${
+                              (isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app')))
+                                ? 'object-contain bg-black'
+                                : 'object-cover'
+                            } transition-transform duration-300 group-hover:scale-105`}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
