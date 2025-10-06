@@ -195,6 +195,16 @@ const CategoriesSection = () => {
           date: '28/08/2025',
           description: 'Clean and intuitive mobile app design with modern UI patterns.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/58b4f6229631387.68e3ed896f619.png',
+          gallery: [
+            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/58b4f6229631387.68e3ed896f619.png',
+            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/192d40229631387.68e3ed896ec5f.png',
+            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/6f2eed229631387.68e3ed896fd83.png',
+            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/40bf2a229631387.68e3ed897089f.png',
+            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/135097229631387.68e3ed896f163.png',
+            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9aa7a0229631387.68e3ed8970f08.png',
+            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/20bf19229631387.68e3ed89713d6.png',
+            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/4fe56a229631387.68e3f468ac446.png'
+          ],
           tags: ['UI/UX', 'Mobile']
         },
         {
@@ -219,9 +229,10 @@ const CategoriesSection = () => {
           id: 10,
           title: 'Green World',
           date: '20/08/2025',
-          description: 'Full-stack e-commerce solution with modern technologies.',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. Built with React Native and Firebase; includes map/reporting, ranking, notifications and profiles.',
           image: '/api/placeholder/300/400',
-          tags: ['Web', 'E-commerce']
+          tags: ['Mobile', 'React Native', 'Firebase'],
+          link: 'https://github.com/yusufgulmezz/GreenWorld'
         },
         {
           id: 11,
@@ -266,6 +277,8 @@ const CategoriesSection = () => {
       description: string;
       image: string;
       tags: string[];
+      link?: string;
+      gallery?: string[];
     }>, 
     title: string, 
     count: number,
@@ -276,6 +289,7 @@ const CategoriesSection = () => {
     const isPixelArt = title.toLowerCase().includes('pixel');
     const is3D = title.toLowerCase().includes('3d');
     const isUIUX = title.toLowerCase().includes('ui/ux');
+    const [galleryImageByDesignId, setGalleryImageByDesignId] = useState<Record<number, string>>({});
     const [expandedDesign, setExpandedDesign] = useState<null | { 
       image: string; 
       title: string; 
@@ -288,6 +302,7 @@ const CategoriesSection = () => {
         description: string;
         image: string;
         tags: string[];
+        gallery?: string[];
       }>;
     }>(null);
 
@@ -469,7 +484,7 @@ const CategoriesSection = () => {
                       >
                         {design.image ? (
                           <Image
-                            src={design.image}
+                            src={(isUIUX && design.title === 'Green World App' && galleryImageByDesignId[design.id]) ? galleryImageByDesignId[design.id] : design.image}
                             alt={design.title}
                             width={400}
                             height={300}
@@ -484,6 +499,8 @@ const CategoriesSection = () => {
                             <div className="text-gray-500 text-sm">Design Preview</div>
                           </div>
                         )}
+
+                        {/* Thumbnail bar moved to Lightbox */}
                         
                         {/* Click to Expand Message - Inside design, at bottom */}
                         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
@@ -542,7 +559,7 @@ const CategoriesSection = () => {
                       </p> */}
                       
                       {/* Tags */}
-                      <div className="flex gap-2 flex-wrap">
+                      <div className="flex gap-2 flex-wrap items-center">
                         {design.tags.map((tag: string, tagIndex: number) => (
                           <span
                             key={tagIndex}
@@ -551,6 +568,22 @@ const CategoriesSection = () => {
                             {tag}
                           </span>
                         ))}
+                        {design.link && (
+                          <a
+                            href={design.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ml-1 inline-flex items-center gap-1 px-3 py-1 bg-gray-900 text-white text-sm rounded-full hover:bg-gray-800 transition-colors"
+                          >
+                            View on GitHub
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M14 3h7v7" />
+                              <path d="M10 14L21 3" />
+                              <path d="M21 14v7h-7" />
+                              <path d="M3 10l11 11" />
+                            </svg>
+                          </a>
+                        )}
                       </div>
                     </motion.div>
                   </div>
@@ -698,8 +731,26 @@ const CategoriesSection = () => {
                   <img
                     src={expandedDesign.image}
                     alt={expandedDesign.title}
-                    className={`max-w-[90vw] max-h-[85vh] w-auto h-auto ${expandedDesign.pixel ? 'object-contain' : 'object-contain'}`}
+                    className={`max-w-[90vw] max-h-[75vh] w-auto h-auto ${expandedDesign.pixel ? 'object-contain' : 'object-contain'}`}
                   />
+
+                  {/* Lightbox thumbnails bar for Green World App */}
+                  {expandedDesign.title === 'Green World App' && expandedDesign.designs && expandedDesign.designs.length > 0 && (
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/40 backdrop-blur-sm rounded-xl px-2 py-2 flex items-center gap-2 overflow-x-auto max-w-[90vw]">
+                      {expandedDesign.designs[expandedDesign.currentIndex]?.gallery?.map((thumbUrl: string, idx: number) => (
+                        <button
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedDesign((prev) => prev ? { ...prev, image: thumbUrl } : prev);
+                          }}
+                          className={`shrink-0 w-12 h-12 rounded-md overflow-hidden border ${thumbUrl === expandedDesign.image ? 'border-white' : 'border-white/40'} focus:outline-none focus:ring-2 focus:ring-white/60`}
+                        >
+                          <img src={thumbUrl} alt={`Green World App ${idx + 1}`} className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Image counter */}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
