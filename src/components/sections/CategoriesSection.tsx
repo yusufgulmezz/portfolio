@@ -36,7 +36,7 @@ const CategoriesSection = () => {
           title: 'The Witcher 3 Eredin',
           date: '12/09/2025',
           description: 'Poster design of Eredin Bréacc Glas, king of the Wild Hunt, the main villain in The Witcher universe. The background features different images of Geralt, Ciri, and Eredin. Content is supported by some texts from the in-game lore.',
-          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840_webp/3af7cb197406813.68ab11122767b.png',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/edad57197406813.68e44ba1ca748.jpg',
           tags: ['Poster', 'Design']
         },
         {
