@@ -194,7 +194,7 @@ const CategoriesSection = () => {
           title: 'Green World App',
           date: '28/08/2025',
           description: 'Clean and intuitive mobile app design with modern UI patterns.',
-          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/58b4f6229631387.68e3ed896f619.png',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9aa126229631387.68e57c6e5c355.jpg',
           gallery: [
             'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/58b4f6229631387.68e3ed896f619.png',
             'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/192d40229631387.68e3ed896ec5f.png',
@@ -440,7 +440,7 @@ const CategoriesSection = () => {
                           className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6"
                         >
                           <div className="w-full">
-                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'aspect-square bg-black' : 'aspect-[3/4]' } overflow-hidden`}
+                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'aspect-[3/4] bg-black max-w-sm' : 'aspect-[3/4]' } overflow-hidden`}
                             >
                               <Image
                                 src={design.image}
@@ -450,10 +450,10 @@ const CategoriesSection = () => {
                               />
                             </div>
                           </div>
-                          <div className="w-full lg:max-w-xl">
+                          <div className="w-full lg:max-w-xl text-left">
                             <p className="text-gray-500 text-sm mb-3">{design.date}</p>
                             <p className="text-gray-700 leading-relaxed mb-4">{design.description}</p>
-                            <div className="flex gap-2 flex-wrap items-center">
+                            <div className="flex gap-2 flex-wrap items-start">
                               {design.tags.map((tag, tagIndex) => (
                                 <span key={tagIndex} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
                                   {tag}
