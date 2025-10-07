@@ -16,15 +16,15 @@ const PersonalCreativesSection = () => {
   const [activeTab, setActiveTab] = useState<TabKey>('photos');
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  type Item = { title: string; description: string; src: string; width: number; height: number };
+  type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string };
   const contentByTab: Record<TabKey, Item[]> = {
     photos: [
-      { title: 'City Lights', description: 'Night shot, street photography.', src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Morning Hike', description: 'Forest scenery in morning fog.', src: 'https://images.unsplash.com/photo-1500534314209-a26db0f5d8f0?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Minimal Shadow', description: 'Composition with light and shadow.', src: 'https://images.unsplash.com/photo-1529625050350-2f8b1bfcdd55?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Soft Portrait', description: 'Available light portrait.', src: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Urban Walk', description: 'Muted tones, vertical frame.', src: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Golden Leaf', description: 'Close-up, warm light.', src: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 }
+      { title: 'Swiss Alpine Lake', description: '', src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Travel', location: 'Interlaken, Switzerland', date: '15/08/2025' },
+      { title: 'Street Life in Prague', description: '', src: 'https://images.unsplash.com/photo-1556196148-1fb724238998?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Street', location: 'Prague, Czech Republic', date: '22/07/2025' },
+      { title: 'Mystical Forest Path', description: '', src: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Nature', location: 'Black Forest, Germany', date: '05/09/2025' },
+      { title: 'Modern Barcelona', description: '', src: 'https://images.unsplash.com/photo-1486324466559-0226613b4a43?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Architecture', location: 'Barcelona, Spain', date: '12/06/2025' },
+      { title: 'Aegean Sunset', description: '', src: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Landscape', location: 'Aegean Sea, Türkiye', date: '28/06/2025' },
+      { title: 'Venice Canals', description: '', src: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Travel', location: 'Venice, Italy', date: '03/05/2025' }
     ],
     drawings: [
       { title: 'Portrait Study', description: 'Quick sketch with pencil.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
@@ -61,15 +61,49 @@ const PersonalCreativesSection = () => {
     return out;
   };
 
-  // 4 sütun için foto içeriklerini gruplandır
-  const photoGroups = useMemo(() => chunk(contentByTab.photos, 4), [contentByTab.photos]);
+  // Photos filtre chip'leri (Figma'daki gibi)
+  type PhotoFilterKey = 'all' | 'travel' | 'street' | 'nature' | 'architecture' | 'landscape' | 'portrait' | 'night';
+  const [activePhotoFilter, setActivePhotoFilter] = useState<PhotoFilterKey>('all');
 
-  const VerticalGalleryCard = ({ data }: { data: Item[] }) => {
-    const [idx, setIdx] = useState<number>(0);
-    const current = data[Math.min(idx, data.length - 1)] ?? data[0];
+  const photoFilters: { key: PhotoFilterKey; label: string }[] = [
+    { key: 'all', label: 'All Photos' },
+    { key: 'travel', label: 'Travel' },
+    { key: 'street', label: 'Street' },
+    { key: 'nature', label: 'Nature' },
+    { key: 'architecture', label: 'Architecture' },
+    { key: 'landscape', label: 'Landscape' },
+    { key: 'portrait', label: 'Portrait' },
+    { key: 'night', label: 'Night' }
+  ];
+
+  const filteredPhotos = useMemo(() => {
+    if (activePhotoFilter === 'all') return contentByTab.photos;
+    const map: Record<PhotoFilterKey, string> = {
+      all: '',
+      travel: 'Travel',
+      street: 'Street',
+      nature: 'Nature',
+      architecture: 'Architecture',
+      landscape: 'Landscape',
+      portrait: 'Portrait',
+      night: 'Night'
+    };
+    const want = map[activePhotoFilter];
+    return contentByTab.photos.filter((p) => (p.category || '').toLowerCase() === want.toLowerCase());
+  }, [activePhotoFilter, contentByTab.photos]);
+
+  const VerticalGalleryCard = ({ data, label }: { data: Item[]; label?: string }) => {
+    const current = data[0];
     return (
       <div className="relative mx-auto w-full max-w-[220px] sm:max-w-[240px] md:max-w-[220px] lg:max-w-[240px] xl:max-w-[260px] rounded-2xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
         <div className="relative w-full aspect-[3/5] bg-gray-100">
+          {label && (
+            <div className="absolute left-2 top-2 z-[1]">
+              <span className="inline-block rounded-md bg-black/35 text-white px-2 py-1 text-xs sm:text-sm font-medium backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.18)]">
+                {label}
+              </span>
+            </div>
+          )}
           <AnimatePresence mode="wait">
             <motion.div
               key={current?.src}
@@ -91,29 +125,6 @@ const PersonalCreativesSection = () => {
               )}
             </motion.div>
           </AnimatePresence>
-
-          {/* Alt overlay thumbnail şeridi */}
-          <div className="absolute inset-x-0 bottom-0 p-2">
-            <div className="mx-auto flex w-full items-center gap-2 rounded-xl bg-black/30 backdrop-blur-md px-2 py-1.5">
-              {data.map((it, i) => {
-                const active = i === idx;
-                return (
-                  <button
-                    key={`thumb-${it.src}-${i}`}
-                    type="button"
-                    onClick={() => setIdx(i)}
-                    className={`relative flex-shrink-0 overflow-hidden rounded-md transition-all ${
-                      active ? 'ring-2 ring-white/80 ring-offset-[2px] ring-offset-black/10' : 'opacity-90 hover:opacity-100'
-                    }`}
-                    style={{ width: 36, height: 36 }}
-                    aria-label={`Show ${it.title}`}
-                  >
-                    <Image src={it.src} alt={it.title} width={72} height={72} className="h-full w-full object-cover" />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
         </div>
       </div>
     );
@@ -167,12 +178,50 @@ const PersonalCreativesSection = () => {
                 {isActive && (
                   <div className="mt-6">
                     {tab.key === 'photos' ? (
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-                        {photoGroups.map((group, i) => (
-                          <div key={`col-${i}`} className={`flex justify-center ${i === 0 ? 'lg:justify-start' : i === photoGroups.length - 1 ? 'lg:justify-end' : ''}`}>
-                            <VerticalGalleryCard data={group} />
-                          </div>
-                        ))}
+                      <div>
+                        {/* Filter chips */}
+                        <div className="mb-6 flex flex-wrap items-center gap-2">
+                          {photoFilters.map((f) => {
+                            const active = f.key === activePhotoFilter;
+                            return (
+                              <button
+                                key={f.key}
+                                type="button"
+                                onClick={() => setActivePhotoFilter(f.key)}
+                                className={`px-3 py-1.5 rounded-full border transition-colors ${
+                                  active ? 'bg-gray-900 text-white border-gray-900' : 'bg-white/70 text-gray-700 border-gray-300 hover:bg-white'
+                                }`}
+                              >
+                                {f.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Cards grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                          {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
+                            <div key={`photo-card-${idx}`} className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden">
+                              <div className="relative w-full aspect-[16/10]">
+                                <Image src={item.src} alt={item.title} fill sizes="(max-width: 1280px) 90vw, 720px" className="object-cover" />
+                                {item.category && (
+                                  <span className="absolute left-3 top-3 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium">
+                                    {item.category}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="px-4 pt-3 pb-4">
+                                <h4 className="text-base sm:text-lg font-medium text-gray-900">{item.title}</h4>
+                                {(item.location || item.date) && (
+                                  <div className="mt-1 text-sm text-gray-600">
+                                    {item.location && <div>{item.location}</div>}
+                                    {item.date && <div className="mt-0.5">{item.date}</div>}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     ) : (
                       <motion.div
