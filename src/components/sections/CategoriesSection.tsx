@@ -734,24 +734,6 @@ const CategoriesSection = () => {
                     className={`max-w-[90vw] max-h-[75vh] w-auto h-auto ${expandedDesign.pixel ? 'object-contain' : 'object-contain'}`}
                   />
 
-                  {/* Lightbox thumbnails bar for Green World App */}
-                  {expandedDesign.title === 'Green World App' && expandedDesign.designs && expandedDesign.designs.length > 0 && (
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/40 backdrop-blur-sm rounded-xl px-2 py-2 flex items-center gap-2 overflow-x-auto max-w-[90vw]">
-                      {expandedDesign.designs[expandedDesign.currentIndex]?.gallery?.map((thumbUrl: string, idx: number) => (
-                        <button
-                          key={idx}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setExpandedDesign((prev) => prev ? { ...prev, image: thumbUrl } : prev);
-                          }}
-                          className={`shrink-0 w-12 h-12 rounded-md overflow-hidden border ${thumbUrl === expandedDesign.image ? 'border-white' : 'border-white/40'} focus:outline-none focus:ring-2 focus:ring-white/60`}
-                        >
-                          <img src={thumbUrl} alt={`Green World App ${idx + 1}`} className="w-full h-full object-cover" />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
                   {/* Image counter */}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
                     {expandedDesign.currentIndex + 1} / {expandedDesign.designs.length}
