@@ -40,6 +40,7 @@ const PersonalCreativesSection = () => {
 
   const items = contentByTab[activeTab];
   const activeItem = useMemo(() => items[Math.min(activeIndex, items.length - 1)] ?? items[0], [items, activeIndex]);
+  const [selectedPhoto, setSelectedPhoto] = useState<Item | null>(null);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
 
   const scrollToTab = (key: TabKey) => {
@@ -188,7 +189,7 @@ const PersonalCreativesSection = () => {
                                 key={f.key}
                                 type="button"
                                 onClick={() => setActivePhotoFilter(f.key)}
-                                className={`px-3 py-1.5 rounded-full border transition-colors ${
+                                className={`px-4 py-2 rounded-md border text-sm capitalize transition-colors ${
                                   active ? 'bg-gray-900 text-white border-gray-900' : 'bg-white/70 text-gray-700 border-gray-300 hover:bg-white'
                                 }`}
                               >
@@ -201,7 +202,11 @@ const PersonalCreativesSection = () => {
                         {/* Cards grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                           {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
-                            <div key={`photo-card-${idx}`} className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden">
+                            <div
+                              key={`photo-card-${idx}`}
+                              className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer"
+                              onClick={() => setSelectedPhoto(item)}
+                            >
                               <div className="relative w-full aspect-[16/10]">
                                 <Image src={item.src} alt={item.title} fill sizes="(max-width: 1280px) 90vw, 720px" className="object-cover" />
                                 {item.category && (
@@ -222,6 +227,56 @@ const PersonalCreativesSection = () => {
                             </div>
                           ))}
                         </div>
+                        {/* Detail Modal */}
+                        <AnimatePresence>
+                          {selectedPhoto && (
+                            <motion.div
+                              key="photo-modal"
+                              className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              onClick={() => setSelectedPhoto(null)}
+                            >
+                              <motion.div
+                                className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden"
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.95, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <div className="relative aspect-[16/10]">
+                                  <Image src={selectedPhoto.src} alt={selectedPhoto.title} fill className="object-cover" />
+                                  <button
+                                    onClick={() => setSelectedPhoto(null)}
+                                    className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
+                                    aria-label="Close"
+                                  >
+                                    ×
+                                  </button>
+                                </div>
+                                <div className="p-6">
+                                  <div className="flex items-start justify-between mb-4">
+                                    <div>
+                                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{selectedPhoto.title}</h3>
+                                      {selectedPhoto.location && <p className="text-gray-600 mb-1">{selectedPhoto.location}</p>}
+                                      {selectedPhoto.date && <p className="text-sm text-gray-600">{selectedPhoto.date}</p>}
+                                    </div>
+                                    {selectedPhoto.category && (
+                                      <span className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg capitalize border border-gray-200">
+                                        {selectedPhoto.category}
+                                      </span>
+                                    )}
+                                  </div>
+                                  {selectedPhoto.description && (
+                                    <p className="text-gray-700 leading-relaxed">{selectedPhoto.description}</p>
+                                  )}
+                                </div>
+                              </motion.div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     ) : (
                       <motion.div
