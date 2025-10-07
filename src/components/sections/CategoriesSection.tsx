@@ -289,6 +289,14 @@ const CategoriesSection = () => {
     const isPixelArt = title.toLowerCase().includes('pixel');
     const is3D = title.toLowerCase().includes('3d');
     const isUIUX = title.toLowerCase().includes('ui/ux');
+    const [openUiuxId, setOpenUiuxId] = useState<number | null>(null);
+
+    // UI/UX açıldığında üstteki proje (Green World App) varsayılan açık gelsin
+    useEffect(() => {
+      if (isUIUX && !collapsed && openUiuxId === null && designs.length > 0) {
+        setOpenUiuxId(designs[0].id);
+      }
+    }, [isUIUX, collapsed, designs, openUiuxId]);
     const [galleryImageByDesignId, setGalleryImageByDesignId] = useState<Record<number, string>>({});
     const [expandedDesign, setExpandedDesign] = useState<null | { 
       image: string; 
@@ -405,12 +413,62 @@ const CategoriesSection = () => {
           </motion.div>
 
           <motion.div
-            className="relative h-[600px] overflow-hidden"
+            className={`relative ${isUIUX ? 'h-auto' : 'h-[600px]'} overflow-hidden`}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            {designs.map((design, index) => {
+            {isUIUX ? (
+              <div className="flex flex-col gap-8 mt-6">
+                {designs.map((design) => (
+                  <div key={`${title}-${design.id}`} className="p-0">
+                    <button
+                      onClick={() => setOpenUiuxId(openUiuxId === design.id ? null : design.id)}
+                      className="w-full text-left flex items-center justify-between"
+                    >
+                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900">{design.title}</h3>
+                      <span className="text-sm text-gray-500">{openUiuxId === design.id ? 'Hide' : 'Show'}</span>
+                    </button>
+                    <div className="w-full h-px bg-gray-300 mt-3" />
+                    <AnimatePresence initial={false}>
+                      {openUiuxId === design.id && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -6 }}
+                          transition={{ duration: 0.25 }}
+                          className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6"
+                        >
+                          <div className="w-full">
+                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'aspect-square bg-black' : 'aspect-[3/4]' } overflow-hidden`}
+                            >
+                              <Image
+                                src={design.image}
+                                alt={design.title}
+                                fill
+                                className={`${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
+                              />
+                            </div>
+                          </div>
+                          <div className="w-full lg:max-w-xl">
+                            <p className="text-gray-500 text-sm mb-3">{design.date}</p>
+                            <p className="text-gray-700 leading-relaxed mb-4">{design.description}</p>
+                            <div className="flex gap-2 flex-wrap items-center">
+                              {design.tags.map((tag, tagIndex) => (
+                                <span key={tagIndex} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            ) : (
+            designs.map((design, index) => {
               // Ana tasarım için animasyon değerleri
               const isActive = index === currentIndex;
               const isNext = index === currentIndex + 1;
@@ -589,8 +647,11 @@ const CategoriesSection = () => {
                   </div>
                 </motion.div>
               );
-            })}
+            })
+            )}
 
+            {!isUIUX && (
+            <>
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
             {currentIndex < designs.length - 1 && (
               <div className="hidden lg:block absolute top-32 right-4 z-10">
@@ -636,6 +697,8 @@ const CategoriesSection = () => {
                 Next
               </motion.button>
             </div>
+            </>
+            )}
 
             
 
