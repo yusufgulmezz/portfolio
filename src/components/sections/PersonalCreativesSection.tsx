@@ -7,7 +7,7 @@ import Image from 'next/image';
 type TabKey = 'photos' | 'drawings' | 'blog';
 
 const TABS: { key: TabKey; label: string }[] = [
-  { key: 'photos', label: 'Photographs' },
+  { key: 'photos', label: 'Photos' },
   { key: 'drawings', label: 'Drawing' },
   { key: 'blog', label: 'Blog' }
 ];
