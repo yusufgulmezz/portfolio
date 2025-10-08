@@ -211,8 +211,8 @@ const CategoriesSection = () => {
           id: 9,
           title: 'Dashboard Design',
           date: '25/08/2025',
-          description: 'Data visualization dashboard with interactive elements.',
-          image: '/api/placeholder/300/400',
+          description: 'Modern dashboard interface with clean data visualization and intuitive user experience.',
+          image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&crop=center',
           tags: ['UI/UX', 'Dashboard']
         }
       ]
@@ -427,7 +427,6 @@ const CategoriesSection = () => {
                       className="w-full text-left flex items-center justify-between"
                     >
                       <h3 className="text-2xl lg:text-3xl font-bold text-gray-900">{design.title}</h3>
-                      <span className="text-sm text-gray-500">{openUiuxId === design.id ? 'Hide' : 'Show'}</span>
                     </button>
                     <div className="w-full h-px bg-gray-300 mt-3" />
                     <AnimatePresence initial={false}>
@@ -437,10 +436,10 @@ const CategoriesSection = () => {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -6 }}
                           transition={{ duration: 0.25 }}
-                          className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6"
+                          className="mt-4 flex flex-col lg:flex-row items-start gap-6"
                         >
-                          <div className="w-full">
-                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'aspect-[3/4] bg-black max-w-sm' : 'aspect-[3/4]' } overflow-hidden`}
+                          <div className="flex-shrink-0">
+                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'aspect-[3/4] bg-black w-72' : 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' } overflow-hidden`}
                             >
                               <Image
                                 src={design.image}
@@ -450,7 +449,7 @@ const CategoriesSection = () => {
                               />
                             </div>
                           </div>
-                          <div className="w-full lg:max-w-xl text-left">
+                          <div className="flex-1 w-full lg:max-w-md text-left">
                             <p className="text-gray-500 text-sm mb-3">{design.date}</p>
                             <p className="text-gray-700 leading-relaxed mb-4">{design.description}</p>
                             <div className="flex gap-2 flex-wrap items-start">
