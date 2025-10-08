@@ -239,7 +239,7 @@ const CategoriesSection = () => {
           title: 'Portfolio Website',
           date: '15/08/2025',
           description: 'Responsive portfolio website with smooth animations.',
-          image: '/api/placeholder/300/400',
+          image: 'https://raw.githubusercontent.com/yusufgulmezz/yusufgulmezz/refs/heads/main/DET_Mockup-2.jpg',
           tags: ['Web', 'Portfolio'],
           link: 'https://github.com/yusufgulmezz/portfolio'
         }
