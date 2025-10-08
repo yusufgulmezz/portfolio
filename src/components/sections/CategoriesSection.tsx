@@ -230,7 +230,7 @@ const CategoriesSection = () => {
           title: 'Green World',
           date: '20/08/2025',
           description: 'Location-based mobile app to report, track and clean waste with community-driven actions. Built with React Native and Firebase; includes map/reporting, ranking, notifications and profiles.',
-          image: '/api/placeholder/300/400',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9aa126229631387.68e57c6e5c355.jpg',
           tags: ['Mobile', 'React Native', 'Firebase'],
           link: 'https://github.com/yusufgulmezz/GreenWorld'
         },
@@ -240,7 +240,8 @@ const CategoriesSection = () => {
           date: '15/08/2025',
           description: 'Responsive portfolio website with smooth animations.',
           image: '/api/placeholder/300/400',
-          tags: ['Web', 'Portfolio']
+          tags: ['Web', 'Portfolio'],
+          link: 'https://github.com/yusufgulmezz/portfolio'
         }
       ]
     }
@@ -436,10 +437,10 @@ const CategoriesSection = () => {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -6 }}
                           transition={{ duration: 0.25 }}
-                          className="mt-4 flex flex-col lg:flex-row items-start gap-6"
+                          className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6"
                         >
-                          <div className="flex-shrink-0">
-                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'aspect-[3/4] bg-black w-72' : 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]' } overflow-hidden`}
+                          <div className="w-full">
+                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'aspect-[3/4] bg-black max-w-sm' : 'aspect-[3/4]' } overflow-hidden`}
                             >
                               <Image
                                 src={design.image}
@@ -449,7 +450,7 @@ const CategoriesSection = () => {
                               />
                             </div>
                           </div>
-                          <div className="flex-1 w-full lg:max-w-md text-left">
+                          <div className="w-full lg:max-w-xl text-left">
                             <p className="text-gray-500 text-sm mb-3">{design.date}</p>
                             <p className="text-gray-700 leading-relaxed mb-4">{design.description}</p>
                             <div className="flex gap-2 flex-wrap items-start">
@@ -525,13 +526,17 @@ const CategoriesSection = () => {
                         onClick={() => {
                           if (isActive) {
                             const d = designs[currentIndex];
-                            setExpandedDesign({ 
-                              image: d.image, 
-                              title: d.title, 
-                              pixel: isPixelArt || is3D,
-                              currentIndex: currentIndex,
-                              designs: designs
-                            });
+                            if (d.link) {
+                              window.open(d.link, '_blank', 'noopener,noreferrer');
+                            } else {
+                              setExpandedDesign({ 
+                                image: d.image, 
+                                title: d.title, 
+                                pixel: isPixelArt || is3D,
+                                currentIndex: currentIndex,
+                                designs: designs
+                              });
+                            }
                           }
                         }}
                         className={`${isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app'))
@@ -625,22 +630,6 @@ const CategoriesSection = () => {
                             {tag}
                           </span>
                         ))}
-                        {design.link && (
-                          <a
-                            href={design.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="ml-1 inline-flex items-center gap-1 px-3 py-1 bg-gray-900 text-white text-sm rounded-full hover:bg-gray-800 transition-colors"
-                          >
-                            View on GitHub
-                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M14 3h7v7" />
-                              <path d="M10 14L21 3" />
-                              <path d="M21 14v7h-7" />
-                              <path d="M3 10l11 11" />
-                            </svg>
-                          </a>
-                        )}
                       </div>
                     </motion.div>
                   </div>
