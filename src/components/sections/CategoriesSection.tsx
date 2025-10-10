@@ -46,6 +46,14 @@ const CategoriesSection = () => {
           description: 'This poster design for Charles Leclerc, another Ferrari F1 driver, uses the "Threshold" method. It predominantly features shades of red, white, and black. The Ferrari logo stands out among the textures used in the background. The font used is again "Formula1."',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/fd0b2e232152585.68964e11b1ccc.png',
           tags: ['Poster', 'Design']
+        },
+        {
+          id: 5,
+          title: 'Modern Design',
+          date: '15/09/2025',
+          description: 'Contemporary poster design featuring modern aesthetics and clean composition. This design showcases innovative visual elements with a focus on typography and layout.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/32ac63236326711.68e92b5558330.jpg',
+          tags: ['Poster', 'Modern']
         }
       ]
     },
