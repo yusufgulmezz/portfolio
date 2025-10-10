@@ -49,7 +49,7 @@ const CategoriesSection = () => {
         },
         {
           id: 5,
-          title: 'Modern Design',
+          title: 'Butterfly Effect',
           date: '15/09/2025',
           description: 'Contemporary poster design featuring modern aesthetics and clean composition. This design showcases innovative visual elements with a focus on typography and layout.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/32ac63236326711.68e92b5558330.jpg',
