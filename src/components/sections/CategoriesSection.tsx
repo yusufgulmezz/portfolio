@@ -422,7 +422,7 @@ const CategoriesSection = () => {
           </motion.div>
 
           <motion.div
-            className={`relative ${isUIUX ? 'h-auto' : 'h-[600px]'} overflow-hidden`}
+            className={`relative ${isUIUX ? 'h-auto' : 'h-[700px] sm:h-[600px]'} overflow-hidden`}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
@@ -515,7 +515,7 @@ const CategoriesSection = () => {
                     zIndex: zIndex
                   }}
                 >
-                  <div className="flex flex-col lg:flex-row items-start gap-6 w-full">
+                  <div className="flex flex-col lg:flex-row items-start gap-6 w-full min-h-[500px] lg:min-h-auto">
                     {/* Sol taraf - Tasarım görüntüsü */}
                     <motion.div 
                       className="flex-shrink-0 mx-auto lg:mx-0"
@@ -610,7 +610,7 @@ const CategoriesSection = () => {
 
                     {/* Sağ taraf - İçerik */}
                     <motion.div 
-                      className="flex-1 w-full lg:max-w-md mt-6 lg:mt-0"
+                      className="flex-1 w-full lg:max-w-md mt-6 lg:mt-0 px-4 lg:px-0"
                       animate={{
                         opacity: isActive ? 1 : 0.6,
                         x: isActive ? 0 : 50
@@ -621,9 +621,9 @@ const CategoriesSection = () => {
                         damping: 30
                       }}
                     >
-                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{design.title}</h3>
-                      <p className="text-gray-500 text-sm mb-6">{design.date}</p>
-                      <p className="text-gray-700 text-base leading-relaxed mb-4">{design.description}</p>
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{design.title}</h3>
+                      <p className="text-gray-500 text-sm mb-4 lg:mb-6">{design.date}</p>
+                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">{design.description}</p>
                       {/* <p className="text-gray-700 text-base leading-relaxed mb-6">
                         Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus.
                       </p> */}
@@ -633,7 +633,7 @@ const CategoriesSection = () => {
                         {design.tags.map((tag: string, tagIndex: number) => (
                           <span
                             key={tagIndex}
-                            className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-200"
+                            className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs sm:text-sm rounded-full border border-gray-200"
                           >
                             {tag}
                           </span>
