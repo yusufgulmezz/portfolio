@@ -42,6 +42,13 @@ const PersonalCreativesSection = () => {
   const activeItem = useMemo(() => items[Math.min(activeIndex, items.length - 1)] ?? items[0], [items, activeIndex]);
   const [selectedPhoto, setSelectedPhoto] = useState<Item | null>(null);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
+  
+  // Horizontal scroll için state'ler
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToTab = (key: TabKey) => {
     const el = rowRefs.current[key];
@@ -52,6 +59,45 @@ const PersonalCreativesSection = () => {
     const headerHeight = headerEl?.offsetHeight ?? 80;
     const targetY = currentY + rect.top - headerHeight - 16;
     window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
+
+  // Horizontal scroll fonksiyonları
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const scrollToDirection = (direction: 'left' | 'right') => {
+    if (!scrollContainerRef.current) return;
+    const scrollAmount = 300;
+    const currentScroll = scrollContainerRef.current.scrollLeft;
+    const targetScroll = direction === 'left' 
+      ? Math.max(0, currentScroll - scrollAmount)
+      : currentScroll + scrollAmount;
+    
+    scrollContainerRef.current.scrollTo({
+      left: targetScroll,
+      behavior: 'smooth'
+    });
   };
 
   // Yardımcı: diziyi n parçaya böl
@@ -199,33 +245,66 @@ const PersonalCreativesSection = () => {
                           })}
                         </div>
 
-                        {/* Cards grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                          {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
-                            <div
-                              key={`photo-card-${idx}`}
-                              className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer"
-                              onClick={() => setSelectedPhoto(item)}
+                        {/* Horizontal Scrollable Gallery */}
+                        <div className="relative">
+                          {/* Scroll Container */}
+                          <div
+                            ref={scrollContainerRef}
+                            className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
+                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                            onMouseDown={handleMouseDown}
+                            onMouseMove={handleMouseMove}
+                            onMouseUp={handleMouseUp}
+                            onMouseLeave={handleMouseLeave}
+                          >
+                            {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
+                              <div
+                                key={`photo-card-${idx}`}
+                                className="group flex-shrink-0 w-80 sm:w-96 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
+                                onClick={() => setSelectedPhoto(item)}
+                              >
+                                <div className="relative w-full aspect-[16/10]">
+                                  <Image src={item.src} alt={item.title} fill sizes="320px" className="object-cover" />
+                                  {item.category && (
+                                    <span className="absolute left-3 top-3 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium">
+                                      {item.category}
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="px-4 pt-3 pb-4">
+                                  <h4 className="text-base sm:text-lg font-medium text-gray-900">{item.title}</h4>
+                                  {(item.location || item.date) && (
+                                    <div className="mt-1 text-sm text-gray-600">
+                                      {item.location && <div>{item.location}</div>}
+                                      {item.date && <div className="mt-0.5">{item.date}</div>}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Navigation Buttons */}
+                          <div className="flex justify-center gap-4 mt-6">
+                            <button
+                              onClick={() => scrollToDirection('left')}
+                              className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] transition-shadow flex items-center justify-center text-gray-700 hover:text-gray-900"
+                              aria-label="Previous photos"
                             >
-                              <div className="relative w-full aspect-[16/10]">
-                                <Image src={item.src} alt={item.title} fill sizes="(max-width: 1280px) 90vw, 720px" className="object-cover" />
-                                {item.category && (
-                                  <span className="absolute left-3 top-3 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium">
-                                    {item.category}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="px-4 pt-3 pb-4">
-                                <h4 className="text-base sm:text-lg font-medium text-gray-900">{item.title}</h4>
-                                {(item.location || item.date) && (
-                                  <div className="mt-1 text-sm text-gray-600">
-                                    {item.location && <div>{item.location}</div>}
-                                    {item.date && <div className="mt-0.5">{item.date}</div>}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                            <button
+                              onClick={() => scrollToDirection('right')}
+                              className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] transition-shadow flex items-center justify-center text-gray-700 hover:text-gray-900"
+                              aria-label="Next photos"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                         {/* Detail Modal */}
                         <AnimatePresence>
