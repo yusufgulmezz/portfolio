@@ -88,7 +88,15 @@ const PersonalCreativesSection = () => {
 
   const scrollToDirection = (direction: 'left' | 'right') => {
     if (!scrollContainerRef.current) return;
-    const scrollAmount = 300;
+    
+    // Kart genişliği + gap (24px) = tek kart için gerekli scroll miktarı
+    // Mobil: w-80 (320px) + gap-6 (24px) = 344px
+    // Desktop: w-96 (384px) + gap-6 (24px) = 408px
+    const isMobile = window.innerWidth < 640;
+    const cardWidth = isMobile ? 320 : 384; // w-80 vs w-96
+    const gap = 24; // gap-6
+    const scrollAmount = cardWidth + gap;
+    
     const currentScroll = scrollContainerRef.current.scrollLeft;
     const targetScroll = direction === 'left' 
       ? Math.max(0, currentScroll - scrollAmount)
