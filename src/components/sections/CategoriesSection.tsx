@@ -9,7 +9,7 @@ const CategoriesSection = () => {
   const categories = [
     {
       id: 'poster',
-      name: 'Poster Designs',
+      name: 'Poster',
       description: 'Creative and impressive poster designs',
       number: '01',
       color: 'from-red-500 to-pink-500',
@@ -227,7 +227,7 @@ const CategoriesSection = () => {
     },
     {
       id: 'coding',
-      name: 'Coding Projects',
+      name: 'Coding',
       description: 'Web and mobile application development projects',
       number: '05',
       color: 'from-orange-500 to-red-500',
@@ -246,7 +246,7 @@ const CategoriesSection = () => {
           id: 11,
           title: 'Portfolio Website',
           date: '15/08/2025',
-          description: 'Responsive portfolio website with smooth animations.',
+          description: 'A personal portfolio website showcasing my designs and projects, created to bring together my work in one place. The key technologies utilized in the project are the Next.js 14 React framework, TypeScript for type safety, Tailwind CSS for styling, Framer Motion for smooth animations, and Lucide React for icons, all combined to create a modern, responsive, SEO-optimized, and fast-loading site.',
           image: 'https://raw.githubusercontent.com/yusufgulmezz/yusufgulmezz/refs/heads/main/DET_Mockup-2.jpg',
           tags: ['Web', 'Portfolio'],
           link: 'https://github.com/yusufgulmezz/portfolio'
