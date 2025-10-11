@@ -20,7 +20,7 @@ const CategoriesSection = () => {
           title: 'Lewis Hamilton',
           date: '12/09/2025',
           description: 'Poster design for Formula 1 Ferrari driver Lewis Hamilton. The “Glassy Effect” was chosen for this design created for Hamilton, a seven-time world champion. The font used is “Formula1”.',
-          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/c159ee233024129.68a77e3a9374c.png',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/b282c2233024129.68ea40f709d99.png',
           tags: ['Poster', 'Design']
         },
         {
@@ -237,7 +237,7 @@ const CategoriesSection = () => {
           id: 10,
           title: 'Green World',
           date: '20/08/2025',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. Built with React Native and Firebase; includes map/reporting, ranking, notifications and profiles.',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9aa126229631387.68e57c6e5c355.jpg',
           tags: ['Mobile', 'React Native', 'Firebase'],
           link: 'https://github.com/yusufgulmezz/GreenWorld'
