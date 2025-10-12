@@ -302,6 +302,11 @@ const PersonalCreativesSection = () => {
                                     </span>
                                   )}
                                   
+                                  {/* Image counter - top right */}
+                                  <span className="absolute right-3 top-3 z-10 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium backdrop-blur-sm">
+                                    {idx + 1}/{activePhotoFilter === 'all' ? contentByTab.photos.length : filteredPhotos.length}
+                                  </span>
+                                  
                                   {/* Title - Fixed position */}
                                   <div className="absolute bottom-10 left-3 right-3 z-10">
                                     <h4 className="text-white text-base sm:text-lg font-medium leading-tight">{item.title}</h4>
