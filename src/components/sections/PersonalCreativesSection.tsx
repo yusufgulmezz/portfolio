@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
@@ -48,6 +48,8 @@ const PersonalCreativesSection = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToTab = (key: TabKey) => {
@@ -86,6 +88,13 @@ const PersonalCreativesSection = () => {
     setIsDragging(false);
   };
 
+  const updateScrollButtons = () => {
+    if (!scrollContainerRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+  };
+
   const scrollToDirection = (direction: 'left' | 'right') => {
     if (!scrollContainerRef.current) return;
     
@@ -106,6 +115,9 @@ const PersonalCreativesSection = () => {
       left: targetScroll,
       behavior: 'smooth'
     });
+    
+    // Scroll tamamlandıktan sonra buton durumunu güncelle
+    setTimeout(updateScrollButtons, 300);
   };
 
   // Yardımcı: diziyi n parçaya böl
@@ -146,6 +158,14 @@ const PersonalCreativesSection = () => {
     const want = map[activePhotoFilter];
     return contentByTab.photos.filter((p) => (p.category || '').toLowerCase() === want.toLowerCase());
   }, [activePhotoFilter, contentByTab.photos]);
+
+  // Scroll durumunu kontrol et
+  useEffect(() => {
+    updateScrollButtons();
+    const handleResize = () => updateScrollButtons();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [activePhotoFilter, filteredPhotos]);
 
   const VerticalGalleryCard = ({ data, label }: { data: Item[]; label?: string }) => {
     const current = data[0];
@@ -264,6 +284,7 @@ const PersonalCreativesSection = () => {
                             onMouseMove={handleMouseMove}
                             onMouseUp={handleMouseUp}
                             onMouseLeave={handleMouseLeave}
+                            onScroll={updateScrollButtons}
                           >
                             {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
                               <div
@@ -319,24 +340,38 @@ const PersonalCreativesSection = () => {
 
                           {/* Navigation Buttons */}
                           <div className="flex justify-center gap-4 mt-6">
-                            <button
+                            <motion.button
                               onClick={() => scrollToDirection('left')}
-                              className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] transition-shadow flex items-center justify-center text-gray-700 hover:text-gray-900"
+                              disabled={!canScrollLeft}
+                              whileHover={{ scale: canScrollLeft ? 1.02 : 1 }}
+                              whileTap={{ scale: canScrollLeft ? 0.98 : 1 }}
+                              className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${
+                                canScrollLeft 
+                                  ? 'bg-gray-900 text-white hover:bg-gray-800' 
+                                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                              }`}
                               aria-label="Previous photos"
                             >
                               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                               </svg>
-                            </button>
-                            <button
+                            </motion.button>
+                            <motion.button
                               onClick={() => scrollToDirection('right')}
-                              className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] transition-shadow flex items-center justify-center text-gray-700 hover:text-gray-900"
+                              disabled={!canScrollRight}
+                              whileHover={{ scale: canScrollRight ? 1.02 : 1 }}
+                              whileTap={{ scale: canScrollRight ? 0.98 : 1 }}
+                              className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${
+                                canScrollRight 
+                                  ? 'bg-gray-900 text-white hover:bg-gray-800' 
+                                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                              }`}
                               aria-label="Next photos"
                             >
                               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
-                            </button>
+                            </motion.button>
                           </div>
                         </div>
                         {/* Detail Modal */}
