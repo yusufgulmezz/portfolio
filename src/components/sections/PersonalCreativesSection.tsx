@@ -271,22 +271,47 @@ const PersonalCreativesSection = () => {
                                 className="group flex-shrink-0 w-80 sm:w-96 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
                                 onClick={() => setSelectedPhoto(item)}
                               >
-                                <div className="relative w-full aspect-[16/10]">
+                                <div className="relative w-full aspect-[4/5] overflow-hidden">
                                   <Image src={item.src} alt={item.title} fill sizes="320px" className="object-cover" />
+                                  
+                                  {/* Category badge - top left */}
                                   {item.category && (
-                                    <span className="absolute left-3 top-3 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium">
+                                    <span className="absolute left-3 top-3 z-10 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium backdrop-blur-sm">
                                       {item.category}
                                     </span>
                                   )}
-                                </div>
-                                <div className="px-4 pt-3 pb-4">
-                                  <h4 className="text-base sm:text-lg font-medium text-gray-900">{item.title}</h4>
-                                  {(item.location || item.date) && (
-                                    <div className="mt-1 text-sm text-gray-600">
-                                      {item.location && <div>{item.location}</div>}
-                                      {item.date && <div className="mt-0.5">{item.date}</div>}
+                                  
+                                  {/* Title - Fixed position */}
+                                  <div className="absolute bottom-12 left-3 right-3 z-10">
+                                    <h4 className="text-white text-sm sm:text-base font-medium leading-tight">{item.title}</h4>
+                                  </div>
+                                  
+                                  {/* Gradient overlay with info - bottom */}
+                                  <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/100 via-black/50 to-transparent">
+                                    {/* Date and Location */}
+                                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                                      {/* Date */}
+                                      {item.date && (
+                                        <div className="flex items-center gap-1.5 text-white text-xs">
+                                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                          </svg>
+                                          <span>{item.date}</span>
+                                        </div>
+                                      )}
+                                      
+                                      {/* Location */}
+                                      {item.location && (
+                                        <div className="flex items-center gap-1.5 text-white text-xs">
+                                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                          </svg>
+                                          <span>{item.location}</span>
+                                        </div>
+                                      )}
                                     </div>
-                                  )}
+                                  </div>
                                 </div>
                               </div>
                             ))}
