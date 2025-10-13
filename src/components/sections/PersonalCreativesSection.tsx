@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
@@ -45,12 +45,21 @@ const PersonalCreativesSection = () => {
   
   // Horizontal scroll için state'ler
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  // const [isDragging, setIsDragging] = useState(false);
+  // const [startX, setStartX] = useState(0);
+  // const [scrollLeft, setScrollLeft] = useState(0);
+  // const [canScrollLeft, setCanScrollLeft] = useState(false);
+  // const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  // Auto slide için state'ler
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isAutoSlidePaused, setIsAutoSlidePaused] = useState(false);
+  
+  // Mouse drag için state'ler
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragStartScroll, setDragStartScroll] = useState(0);
 
   const scrollToTab = (key: TabKey) => {
     const el = rowRefs.current[key];
@@ -63,62 +72,63 @@ const PersonalCreativesSection = () => {
     window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
 
-  // Horizontal scroll fonksiyonları
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-    e.preventDefault();
-  };
+  // Horizontal scroll fonksiyonları - yorum satırına alındı
+  // const handleMouseDown = (e: React.MouseEvent) => {
+  //   if (!scrollContainerRef.current) return;
+  //   setIsDragging(true);
+  //   setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+  //   setScrollLeft(scrollContainerRef.current.scrollLeft);
+  //   e.preventDefault();
+  // };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
+  // const handleMouseMove = (e: React.MouseEvent) => {
+  //   if (!isDragging || !scrollContainerRef.current) return;
+  //   e.preventDefault();
+  //   const x = e.pageX - scrollContainerRef.current.offsetLeft;
+  //   const walk = (x - startX) * 2;
+  //   scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  // };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+  // const handleMouseUp = () => {
+  //   setIsDragging(false);
+  // };
 
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-  };
+  // const handleMouseLeave = () => {
+  //   setIsDragging(false);
+  // };
 
-  const updateScrollButtons = () => {
-    if (!scrollContainerRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-    setCanScrollLeft(scrollLeft > 0);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
-  };
+  // const updateScrollButtons = () => {
+  //   if (!scrollContainerRef.current) return;
+  //   const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+  //   setCanScrollLeft(scrollLeft > 0);
+  //   setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+  // };
 
-  const scrollToDirection = (direction: 'left' | 'right') => {
-    if (!scrollContainerRef.current) return;
+  // const scrollToDirection = (direction: 'left' | 'right') => {
+  //   if (!scrollContainerRef.current) return;
     
-    // Kart genişliği + gap (24px) = tek kart için gerekli scroll miktarı
-    // Mobil: w-80 (320px) + gap-6 (24px) = 344px
-    // Desktop: w-96 (384px) + gap-6 (24px) = 408px
-    const isMobile = window.innerWidth < 640;
-    const cardWidth = isMobile ? 320 : 384; // w-80 vs w-96
-    const gap = 24; // gap-6
-    const scrollAmount = cardWidth + gap;
+  //   // Kart genişliği + gap (24px) = tek kart için gerekli scroll miktarı
+  //   // Mobil: w-80 (320px) + gap-6 (24px) = 344px
+  //   // Desktop: w-96 (384px) + gap-6 (24px) = 408px
+  //   const isMobile = window.innerWidth < 640;
+  //   const cardWidth = isMobile ? 320 : 384; // w-80 vs w-96
+  //   const gap = 24; // gap-6
+  //   const scrollAmount = cardWidth + gap;
     
-    const currentScroll = scrollContainerRef.current.scrollLeft;
-    const targetScroll = direction === 'left' 
-      ? Math.max(0, currentScroll - scrollAmount)
-      : currentScroll + scrollAmount;
+  //   const currentScroll = scrollContainerRef.current.scrollLeft;
+  //   const targetScroll = direction === 'left' 
+  //     ? Math.max(0, currentScroll - scrollAmount)
+  //     : currentScroll + scrollAmount;
     
-    scrollContainerRef.current.scrollTo({
-      left: targetScroll,
-      behavior: 'smooth'
-    });
+  //   scrollContainerRef.current.scrollTo({
+  //     left: targetScroll,
+  //     behavior: 'smooth'
+  //   });
     
-    // Scroll tamamlandıktan sonra buton durumunu güncelle
-    setTimeout(updateScrollButtons, 300);
-  };
+  //   // Scroll tamamlandıktan sonra buton durumunu güncelle
+  //   setTimeout(updateScrollButtons, 300);
+  // };
+
 
   // Yardımcı: diziyi n parçaya böl
   const chunk = <T,>(arr: T[], parts: number): T[][] => {
@@ -159,13 +169,73 @@ const PersonalCreativesSection = () => {
     return contentByTab.photos.filter((p) => (p.category || '').toLowerCase() === want.toLowerCase());
   }, [activePhotoFilter, contentByTab.photos]);
 
-  // Scroll durumunu kontrol et
+  // Mouse drag fonksiyonları
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStartX(e.pageX);
+    setDragStartScroll(scrollPosition);
+    setIsAutoSlidePaused(true);
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    
+    const deltaX = e.pageX - dragStartX;
+    const newScrollPosition = dragStartScroll + deltaX;
+    setScrollPosition(newScrollPosition);
+    e.preventDefault();
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setIsAutoSlidePaused(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setIsAutoSlidePaused(false);
+  };
+
+  // Infinite loop animasyonu
   useEffect(() => {
-    updateScrollButtons();
-    const handleResize = () => updateScrollButtons();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [activePhotoFilter, filteredPhotos]);
+    if (isAutoSlidePaused || isDragging) return;
+    
+    const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
+    if (photos.length === 0) return;
+    
+    // Her kartın genişliği + gap
+    const cardWidth = 288; // w-72 (sm:w-72 için)
+    const gap = 24; // gap-6
+    const totalWidth = (cardWidth + gap) * photos.length;
+    
+    const animate = () => {
+      setScrollPosition((prev) => {
+        const newPosition = prev - 2; // 2px sola kaydır (daha hızlı)
+        // Eğer tam bir set geçildiyse, başa dön
+        if (Math.abs(newPosition) >= totalWidth) {
+          return 0;
+        }
+        return newPosition;
+      });
+    };
+    
+    const interval = setInterval(animate, 16); // 16ms'de bir 2px kaydır (60fps, daha smooth)
+    return () => clearInterval(interval);
+  }, [activePhotoFilter, isAutoSlidePaused, isDragging, filteredPhotos, contentByTab.photos]);
+
+  // Filter değiştiğinde scroll pozisyonunu sıfırla
+  useEffect(() => {
+    setScrollPosition(0);
+  }, [activePhotoFilter]);
+
+  // Scroll durumunu kontrol et - yorum satırına alındı
+  // useEffect(() => {
+  //   updateScrollButtons();
+  //   const handleResize = () => updateScrollButtons();
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, [activePhotoFilter, filteredPhotos]);
 
   const VerticalGalleryCard = ({ data, label }: { data: Item[]; label?: string }) => {
     const current = data[0];
@@ -273,27 +343,28 @@ const PersonalCreativesSection = () => {
                           })}
                         </div>
 
-                        {/* Horizontal Scrollable Gallery */}
-                        <div className="relative">
-                          {/* Scroll Container */}
-                          <div
-                            ref={scrollContainerRef}
-                            className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
-                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        {/* Infinite Loop Gallery */}
+                        <div className="relative overflow-hidden">
+                          <motion.div
+                            className="flex gap-6"
+                            animate={{ x: scrollPosition }}
+                            transition={{ duration: 0, ease: "linear" }}
+                            onMouseEnter={() => setIsAutoSlidePaused(true)}
+                            onMouseLeave={handleMouseLeave}
                             onMouseDown={handleMouseDown}
                             onMouseMove={handleMouseMove}
                             onMouseUp={handleMouseUp}
-                            onMouseLeave={handleMouseLeave}
-                            onScroll={updateScrollButtons}
+                            style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
                           >
+                            {/* İlk set - görünür */}
                             {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
                               <div
-                                key={`photo-card-${idx}`}
-                                className="group flex-shrink-0 w-80 sm:w-96 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
+                                key={`photo-1-${idx}`}
+                                className="group flex-shrink-0 w-64 sm:w-72 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
                                 onClick={() => setSelectedPhoto(item)}
                               >
                                 <div className="relative w-full aspect-[4/5] overflow-hidden">
-                                  <Image src={item.src} alt={item.title} fill sizes="320px" className="object-cover" />
+                                  <Image src={item.src} alt={item.title} fill sizes="288px" className="object-cover" />
                                   
                                   {/* Category badge - top left */}
                                   {item.category && (
@@ -304,22 +375,22 @@ const PersonalCreativesSection = () => {
                                   
                                   {/* Image counter - top right */}
                                   <span className="absolute right-3 top-3 z-10 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium backdrop-blur-sm">
-                                    {idx + 1}/{activePhotoFilter === 'all' ? contentByTab.photos.length : filteredPhotos.length}
+                                    {idx + 1}/{(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).length}
                                   </span>
                                   
                                   {/* Title - Fixed position */}
                                   <div className="absolute bottom-10 left-3 right-3 z-10">
-                                    <h4 className="text-white text-base sm:text-lg font-medium leading-tight">{item.title}</h4>
+                                    <h4 className="text-white text-sm sm:text-base font-medium leading-tight">{item.title}</h4>
                                   </div>
                                   
                                   {/* Gradient overlay with info - bottom */}
-                                  <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-black/100 via-black/50 to-transparent">
+                                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/100 via-black/50 to-transparent">
                                     {/* Date and Location */}
                                     <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
                                       {/* Date */}
                                       {item.date && (
-                                        <div className="flex items-center gap-2 text-white text-sm">
-                                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div className="flex items-center gap-1.5 text-white text-xs">
+                                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                           </svg>
                                           <span>{item.date}</span>
@@ -328,8 +399,8 @@ const PersonalCreativesSection = () => {
                                       
                                       {/* Location */}
                                       {item.location && (
-                                        <div className="flex items-center gap-2 text-white text-sm">
-                                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div className="flex items-center gap-1.5 text-white text-xs">
+                                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                           </svg>
@@ -341,43 +412,64 @@ const PersonalCreativesSection = () => {
                                 </div>
                               </div>
                             ))}
-                          </div>
-
-                          {/* Navigation Buttons */}
-                          <div className="flex justify-center gap-4 mt-6">
-                            <motion.button
-                              onClick={() => scrollToDirection('left')}
-                              disabled={!canScrollLeft}
-                              whileHover={{ scale: canScrollLeft ? 1.02 : 1 }}
-                              whileTap={{ scale: canScrollLeft ? 0.98 : 1 }}
-                              className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${
-                                canScrollLeft 
-                                  ? 'bg-gray-900 text-white hover:bg-gray-800' 
-                                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                              }`}
-                              aria-label="Previous photos"
-                            >
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                              </svg>
-                            </motion.button>
-                            <motion.button
-                              onClick={() => scrollToDirection('right')}
-                              disabled={!canScrollRight}
-                              whileHover={{ scale: canScrollRight ? 1.02 : 1 }}
-                              whileTap={{ scale: canScrollRight ? 0.98 : 1 }}
-                              className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${
-                                canScrollRight 
-                                  ? 'bg-gray-900 text-white hover:bg-gray-800' 
-                                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                              }`}
-                              aria-label="Next photos"
-                            >
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </motion.button>
-                          </div>
+                            
+                            {/* İkinci set - loop için */}
+                            {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
+                              <div
+                                key={`photo-2-${idx}`}
+                                className="group flex-shrink-0 w-64 sm:w-72 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
+                                onClick={() => setSelectedPhoto(item)}
+                              >
+                                <div className="relative w-full aspect-[4/5] overflow-hidden">
+                                  <Image src={item.src} alt={item.title} fill sizes="288px" className="object-cover" />
+                                  
+                                  {/* Category badge - top left */}
+                                  {item.category && (
+                                    <span className="absolute left-3 top-3 z-10 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium backdrop-blur-sm">
+                                      {item.category}
+                                    </span>
+                                  )}
+                                  
+                                  {/* Image counter - top right */}
+                                  <span className="absolute right-3 top-3 z-10 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium backdrop-blur-sm">
+                                    {idx + 1}/{(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).length}
+                                  </span>
+                                  
+                                  {/* Title - Fixed position */}
+                                  <div className="absolute bottom-10 left-3 right-3 z-10">
+                                    <h4 className="text-white text-sm sm:text-base font-medium leading-tight">{item.title}</h4>
+                                  </div>
+                                  
+                                  {/* Gradient overlay with info - bottom */}
+                                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/100 via-black/50 to-transparent">
+                                    {/* Date and Location */}
+                                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                                      {/* Date */}
+                                      {item.date && (
+                                        <div className="flex items-center gap-1.5 text-white text-xs">
+                                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                          </svg>
+                                          <span>{item.date}</span>
+                                        </div>
+                                      )}
+                                      
+                                      {/* Location */}
+                                      {item.location && (
+                                        <div className="flex items-center gap-1.5 text-white text-xs">
+                                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                          </svg>
+                                          <span>{item.location}</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </motion.div>
                         </div>
                         {/* Detail Modal */}
                         <AnimatePresence>
