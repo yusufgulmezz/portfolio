@@ -109,7 +109,7 @@ const HeroSection = () => {
               >
                 <div className="flex items-baseline gap-4 mb-2 justify-start sm:justify-end">
                   <span 
-                    className="text-[16px] sm:text-[24px] md:text-[36px] lg:text-[42px] font-small text-[#4E4E4E] leading-[0.95] text-left sm:text-right"
+                    className="text-[16px] sm:text-[18px] md:text-[30px] lg:text-[36px] font-small text-[#4E4E4E] leading-[0.95] text-left sm:text-right"
                     style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
                   >
                     DIGITAL
