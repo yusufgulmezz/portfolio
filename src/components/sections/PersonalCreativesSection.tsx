@@ -274,27 +274,33 @@ const PersonalCreativesSection = () => {
                         </div>
 
                         {/* Infinite Ticker Gallery */}
-                        <div className="relative overflow-hidden">
-                          <motion.div
-                            className="flex gap-6"
-                            animate={{ 
-                              x: [0, -(288 + 24) * (activePhotoFilter === 'all' ? contentByTab.photos.length : filteredPhotos.length)]
-                            }}
-                            transition={{
-                              x: {
-                                repeat: Infinity,
-                                repeatType: "loop",
-                                duration: 30,
-                                ease: "linear",
-                              },
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.animationPlayState = 'paused';
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.animationPlayState = 'running';
-                            }}
-                          >
+                        <div className="relative overflow-hidden px-4">
+                          {(() => {
+                            const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
+                            const shouldAnimate = photos.length >= 4; // Minimum 4 fotoğraf gerekli
+                            
+                            return (
+                              <motion.div
+                                className="flex gap-6"
+                                style={{ x: 0 }}
+                                animate={shouldAnimate ? { 
+                                  x: [0, -(288 + 24) * photos.length]
+                                } : { x: 0 }}
+                                transition={shouldAnimate ? {
+                                  x: {
+                                    repeat: Infinity,
+                                    repeatType: "loop",
+                                    duration: 30,
+                                    ease: "linear",
+                                  },
+                                } : {}}
+                                onMouseEnter={shouldAnimate ? (e) => {
+                                  e.currentTarget.style.animationPlayState = 'paused';
+                                } : undefined}
+                                onMouseLeave={shouldAnimate ? (e) => {
+                                  e.currentTarget.style.animationPlayState = 'running';
+                                } : undefined}
+                              >
                             {/* İlk set */}
                             {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
                               <div
@@ -352,8 +358,8 @@ const PersonalCreativesSection = () => {
                               </div>
                             ))}
                             
-                            {/* İkinci set - loop için */}
-                            {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
+                            {/* İkinci set - sadece animasyon için gerekli */}
+                            {shouldAnimate && (activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
                               <div
                                 key={`photo-2-${idx}`}
                                 className="group flex-shrink-0 w-64 sm:w-72 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
@@ -409,6 +415,8 @@ const PersonalCreativesSection = () => {
                               </div>
                             ))}
                           </motion.div>
+                            );
+                          })()}
                         </div>
                         {/* Detail Modal */}
                         <AnimatePresence>
