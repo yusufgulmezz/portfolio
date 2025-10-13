@@ -1,7 +1,38 @@
 'use client';
 
-import { motion } from 'framer-motion';
- 
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+
+const AnimatedRoleText = () => {
+  const roles = ['DESIGNER', 'DEVELOPER'];
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentRoleIndex((prevIndex) => (prevIndex + 1) % roles.length);
+    }, 1500); // Her 1.5 saniyede bir değiş
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative h-[44px] sm:h-[56px] md:h-[72px] lg:h-[88px]">
+      <AnimatePresence mode="wait">
+        <motion.h1
+          key={currentRoleIndex}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="absolute top-0 right-0 text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#4E4E4E] leading-[0.95] text-right"
+          style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
+        >
+          {roles[currentRoleIndex]}
+        </motion.h1>
+      </AnimatePresence>
+    </div>
+  );
+};
 
 const HeroSection = () => {
   
@@ -48,19 +79,14 @@ const HeroSection = () => {
                 className="mb-6"
               >
                 <div className="flex items-baseline gap-4 mb-2 justify-end">
-                  {/* <span className="text-lg sm:text-xl lg:text-2xl font-normal text-orange-500">
-                    Yusuf Gülmez
-                  </span> */}
                   <span 
-                    className="text-[52px] sm:text-[80px] md:text-[104px] lg:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] text-right"
+                    className="text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#1A1A1A] leading-[0.95] text-right"
                     style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
                   >
                     DIGITAL
                   </span>
                 </div>
-                <h1 className="text-[24px] sm:text-[24px] md:text-[24px] lg:text-[39px] font-Regular text-[#4E4E4E] leading-[0.95] text-right">
-                DESIGNER & DEVELOPER
-                </h1>
+                <AnimatedRoleText />
               </motion.div>
               
               {/* Description */}
