@@ -30,7 +30,7 @@ const TypewriterRoleText = () => {
       if (displayedText.length > 0) {
         timeoutId = setTimeout(() => {
           setDisplayedText(displayedText.slice(0, -1));
-        }, 50); // Silme daha hızlı
+        }, 25); // Silme daha hızlı
       } else {
         // Silme tamamlandı, sonraki role geç
         setIsDeleting(false);
@@ -42,19 +42,24 @@ const TypewriterRoleText = () => {
   }, [displayedText, isDeleting, currentRoleIndex, roles]);
 
   return (
-    <div className="relative h-[44px] sm:h-[56px] md:h-[72px] lg:h-[88px]">
-      <motion.h1
-        className="absolute top-0 right-0 text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#1A1A1A] leading-[0.95] text-right"
-        style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
-      >
-        {displayedText}
+    <div className="relative h-[44px] sm:h-[56px] md:h-[72px] lg:h-[88px] flex items-center justify-end">
+      <div className="flex items-center">
+        <motion.h1
+          className="text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#1A1A1A] leading-[0.95]"
+          style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
+        >
+          {displayedText}
+        </motion.h1>
         <motion.span
           animate={{ opacity: [0, 1, 0] }}
           transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 0.2 }}
-          className="inline-block w-0.5 bg-[#4E4E4E] ml-1"
-          style={{ height: '0.9em' }}
+          className="inline-block w-1 bg-red-500 ml-2"
+          style={{ 
+            height: '6em',
+            marginLeft: '16px',
+          }}
         />
-      </motion.h1>
+      </div>
     </div>
   );
 };
