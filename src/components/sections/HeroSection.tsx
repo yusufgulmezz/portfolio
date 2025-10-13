@@ -3,33 +3,58 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
-const AnimatedRoleText = () => {
+const TypewriterRoleText = () => {
   const roles = ['DESIGNER', 'DEVELOPER'];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentRoleIndex((prevIndex) => (prevIndex + 1) % roles.length);
-    }, 1500); // Her 1.5 saniyede bir değiş
+    const currentText = roles[currentRoleIndex];
+    let timeoutId: NodeJS.Timeout;
 
-    return () => clearInterval(interval);
-  }, []);
+    if (!isDeleting) {
+      // Typing effect
+      if (displayedText.length < currentText.length) {
+        timeoutId = setTimeout(() => {
+          setDisplayedText(currentText.slice(0, displayedText.length + 1));
+        }, 75); // Her karakter için 100ms
+      } else {
+        // Yazma tamamlandı, 2 saniye bekle sonra silmeye başla
+        timeoutId = setTimeout(() => {
+          setIsDeleting(true);
+        }, 1500);
+      }
+    } else {
+      // Deleting effect
+      if (displayedText.length > 0) {
+        timeoutId = setTimeout(() => {
+          setDisplayedText(displayedText.slice(0, -1));
+        }, 50); // Silme daha hızlı
+      } else {
+        // Silme tamamlandı, sonraki role geç
+        setIsDeleting(false);
+        setCurrentRoleIndex((prevIndex) => (prevIndex + 1) % roles.length);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [displayedText, isDeleting, currentRoleIndex, roles]);
 
   return (
     <div className="relative h-[44px] sm:h-[56px] md:h-[72px] lg:h-[88px]">
-      <AnimatePresence mode="wait">
-        <motion.h1
-          key={currentRoleIndex}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="absolute top-0 right-0 text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#4E4E4E] leading-[0.95] text-right"
-          style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
-        >
-          {roles[currentRoleIndex]}
-        </motion.h1>
-      </AnimatePresence>
+      <motion.h1
+        className="absolute top-0 right-0 text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#1A1A1A] leading-[0.95] text-right"
+        style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
+      >
+        {displayedText}
+        <motion.span
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 0.2 }}
+          className="inline-block w-0.5 bg-[#4E4E4E] ml-1"
+          style={{ height: '0.9em' }}
+        />
+      </motion.h1>
     </div>
   );
 };
@@ -80,13 +105,13 @@ const HeroSection = () => {
               >
                 <div className="flex items-baseline gap-4 mb-2 justify-end">
                   <span 
-                    className="text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#1A1A1A] leading-[0.95] text-right"
+                    className="text-[4px] sm:text-[24px] md:text-[40px] lg:text-[56px] font-small text-[#4E4E4E] leading-[0.95] text-right"
                     style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
                   >
                     DIGITAL
                   </span>
                 </div>
-                <AnimatedRoleText />
+                <TypewriterRoleText />
               </motion.div>
               
               {/* Description */}
