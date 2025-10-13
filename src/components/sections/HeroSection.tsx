@@ -42,7 +42,7 @@ const TypewriterRoleText = () => {
   }, [displayedText, isDeleting, currentRoleIndex, roles]);
 
   return (
-    <div className="relative h-[44px] sm:h-[56px] md:h-[72px] lg:h-[88px] flex items-center justify-end">
+    <div className="relative h-[44px] sm:h-[56px] md:h-[72px] lg:h-[88px] flex items-center justify-start sm:justify-end">
       <div className="flex items-center">
         <motion.h1
           className="text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#1A1A1A] leading-[0.95]"
@@ -53,10 +53,9 @@ const TypewriterRoleText = () => {
         <motion.span
           animate={{ opacity: [0, 1, 0] }}
           transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 0.2 }}
-          className="inline-block w-1 bg-red-500 ml-2"
+          className="inline-block w-1 bg-red-500 ml-2 h-12 sm:h-16 md:h-20 lg:h-24"
           style={{ 
-            height: '6em',
-            marginLeft: '16px',
+            marginLeft: '8px',
           }}
         />
       </div>
@@ -98,7 +97,7 @@ const HeroSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: false, amount: 0.5 }}
-              className="relative z-10 lg:col-span-7 lg:col-start-6 text-right order-2"
+              className="relative z-10 lg:col-span-7 lg:col-start-6 text-left sm:text-right order-2"
             >
               {/* Main Heading with Name and Designer on same line */}
               <motion.div
@@ -108,9 +107,9 @@ const HeroSection = () => {
                 viewport={{ once: false, amount: 0.5 }}
                 className="mb-6"
               >
-                <div className="flex items-baseline gap-4 mb-2 justify-end">
+                <div className="flex items-baseline gap-4 mb-2 justify-start sm:justify-end">
                   <span 
-                    className="text-[4px] sm:text-[24px] md:text-[40px] lg:text-[56px] font-small text-[#4E4E4E] leading-[0.95] text-right"
+                    className="text-[16px] sm:text-[24px] md:text-[36px] lg:text-[42px] font-small text-[#4E4E4E] leading-[0.95] text-left sm:text-right"
                     style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
                   >
                     DIGITAL
@@ -128,7 +127,7 @@ const HeroSection = () => {
                 className="mb-8"
               >
                 <p 
-                  className="text-[16px] sm:text-[20px] md:text-[24px] font-normal text-[#1A1A1A] leading-relaxed max-w-2xl ml-auto text-right"
+                  className="text-[16px] sm:text-[20px] md:text-[24px] font-normal text-[#1A1A1A] leading-relaxed max-w-2xl text-left sm:text-right sm:ml-auto"
                   style={{ fontFamily: 'var(--font-roboto)' }}
                 >
                   I design and develop high-end digital experiences for design-driven companies that value attention to detail.
@@ -141,7 +140,7 @@ const HeroSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
                 viewport={{ once: false, amount: 0.5 }}
-                className="flex justify-end"
+                className="flex justify-start sm:justify-end"
               >
                 <motion.button
                   whileHover={{ scale: 1.02 }}
