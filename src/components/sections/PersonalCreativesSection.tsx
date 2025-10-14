@@ -159,6 +159,41 @@ const PersonalCreativesSection = () => {
     return contentByTab.photos.filter((p) => (p.category || '').toLowerCase() === want.toLowerCase());
   }, [activePhotoFilter, contentByTab.photos]);
 
+  // Photos ticker ölçüm ve kontrolü (mobilde az öğe varken loop kapansın, butonla gezinilsin)
+  const photosContainerRef = useRef<HTMLDivElement | null>(null);
+  const photosRowRef = useRef<HTMLDivElement | null>(null);
+  const [photoStepPx, setPhotoStepPx] = useState<number>(280);
+  const [shouldAnimatePhotos, setShouldAnimatePhotos] = useState<boolean>(false);
+  const [isMobileViewport, setIsMobileViewport] = useState<boolean>(typeof window !== 'undefined' ? window.innerWidth < 640 : false);
+  const [photosCurrentIdx, setPhotosCurrentIdx] = useState<number>(0);
+
+  useEffect(() => {
+    const measure = () => {
+      setIsMobileViewport(window.innerWidth < 640);
+      const row = photosRowRef.current;
+      const container = photosContainerRef.current;
+      if (!row || !container) return;
+      const children = Array.from(row.children) as HTMLElement[];
+      if (children.length >= 2) {
+        const dx = children[1].offsetLeft - children[0].offsetLeft;
+        if (dx > 0) setPhotoStepPx(dx);
+      } else if (children.length === 1) {
+        setPhotoStepPx(children[0].getBoundingClientRect().width);
+      }
+      const photos = filteredPhotos;
+      const totalWidth = photoStepPx * photos.length;
+      const containerWidth = container.clientWidth;
+      setShouldAnimatePhotos(totalWidth > containerWidth + 4);
+      // current index sınırla
+      setPhotosCurrentIdx((idx) => Math.min(idx, Math.max(0, photos.length - 1)));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (photosContainerRef.current) ro.observe(photosContainerRef.current);
+    window.addEventListener('resize', measure);
+    return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
+  }, [filteredPhotos, photoStepPx]);
+
   // Scroll durumunu kontrol et
   useEffect(() => {
     updateScrollButtons();
@@ -273,32 +308,34 @@ const PersonalCreativesSection = () => {
                           })}
                         </div>
 
-                        {/* Infinite Ticker Gallery */}
-                        <div className="relative overflow-hidden px-4">
+                        {/* Width-aware Photos Ticker */}
+                        <div ref={photosContainerRef} className="relative overflow-hidden px-4">
                           {(() => {
                             const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
-                            const shouldAnimate = photos.length >= 4; // Minimum 4 fotoğraf gerekli
                             
                             return (
                               <motion.div
+                                ref={photosRowRef}
                                 className="flex gap-6"
-                                style={{ x: 0 }}
-                                animate={shouldAnimate ? { 
-                                  // Responsive hesaplama: mobilde w-64 (256px), desktop'ta w-72 (288px) + gap-6 (24px)
-                                  x: [0, -(photos.length * 280)] // Ortalama değer: 256-288px arası
-                                } : { x: 0 }}
-                                transition={shouldAnimate ? {
+                                style={!shouldAnimatePhotos ? { 
+                                  transform: `translateX(-${photosCurrentIdx * photoStepPx}px)`,
+                                  transition: 'transform 400ms ease'
+                                } : undefined}
+                                animate={shouldAnimatePhotos ? { 
+                                  x: [0, -(photos.length * photoStepPx)]
+                                } : undefined}
+                                transition={shouldAnimatePhotos ? {
                                   x: {
                                     repeat: Infinity,
                                     repeatType: "loop",
-                                    duration: photos.length * 3, // Her fotoğraf için 3 saniye
+                                    duration: photos.length * 3,
                                     ease: "linear",
                                   },
-                                } : {}}
-                                onMouseEnter={shouldAnimate ? (e) => {
+                                } : undefined}
+                                onMouseEnter={shouldAnimatePhotos ? (e) => {
                                   e.currentTarget.style.animationPlayState = 'paused';
                                 } : undefined}
-                                onMouseLeave={shouldAnimate ? (e) => {
+                                onMouseLeave={shouldAnimatePhotos ? (e) => {
                                   e.currentTarget.style.animationPlayState = 'running';
                                 } : undefined}
                               >
@@ -359,8 +396,8 @@ const PersonalCreativesSection = () => {
                               </div>
                             ))}
                             
-                            {/* İkinci set - sadece animasyon için gerekli */}
-                            {shouldAnimate && (activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
+                            {/* İkinci set - sadece loop animasyonu için gerekli */}
+                            {shouldAnimatePhotos && (activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
                               <div
                                 key={`photo-2-${idx}`}
                                 className="group flex-shrink-0 w-64 sm:w-72 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
@@ -418,6 +455,28 @@ const PersonalCreativesSection = () => {
                           </motion.div>
                             );
                           })()}
+                          
+                          {/* Mobil navigasyon butonları - sadece loop yoksa ve birden fazla foto varsa */}
+                          {!shouldAnimatePhotos && filteredPhotos.length > 1 && (
+                            <div className="sm:hidden absolute inset-y-0 left-2 right-2 flex items-center justify-between pointer-events-none">
+                              <button
+                                onClick={() => setPhotosCurrentIdx(Math.max(0, photosCurrentIdx - 1))}
+                                disabled={photosCurrentIdx === 0}
+                                className="pointer-events-auto w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                                aria-label="Previous photo"
+                              >
+                                ‹
+                              </button>
+                              <button
+                                onClick={() => setPhotosCurrentIdx(Math.min(filteredPhotos.length - 1, photosCurrentIdx + 1))}
+                                disabled={photosCurrentIdx === filteredPhotos.length - 1}
+                                className="pointer-events-auto w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                                aria-label="Next photo"
+                              >
+                                ›
+                              </button>
+                            </div>
+                          )}
                         </div>
                         {/* Detail Modal */}
                         <AnimatePresence>
