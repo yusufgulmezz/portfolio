@@ -284,13 +284,14 @@ const PersonalCreativesSection = () => {
                                 className="flex gap-6"
                                 style={{ x: 0 }}
                                 animate={shouldAnimate ? { 
-                                  x: [0, -(288 + 24) * photos.length]
+                                  // Responsive hesaplama: mobilde w-64 (256px), desktop'ta w-72 (288px) + gap-6 (24px)
+                                  x: [0, -(photos.length * 280)] // Ortalama değer: 256-288px arası
                                 } : { x: 0 }}
                                 transition={shouldAnimate ? {
                                   x: {
                                     repeat: Infinity,
                                     repeatType: "loop",
-                                    duration: 30,
+                                    duration: photos.length * 3, // Her fotoğraf için 3 saniye
                                     ease: "linear",
                                   },
                                 } : {}}
