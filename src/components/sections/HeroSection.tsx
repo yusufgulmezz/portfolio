@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const TypewriterRoleText = () => {
   const roles = ['DESIGNER', 'DEVELOPER'];
@@ -64,7 +64,46 @@ const TypewriterRoleText = () => {
 };
 
 const HeroSection = () => {
-  
+  // Hero görsel slider verileri (Unsplash örnekleri)
+  const heroImages = useMemo(
+    () => [
+      {
+        src: 'https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?q=80&w=1640&auto=format&fit=crop',
+        alt: 'Stylish portrait with sunglasses',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1547106634-56dcd53ae883?q=80&w=1640&auto=format&fit=crop',
+        alt: 'Moody studio portrait',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1515468381879-40d0ded81016?q=80&w=1640&auto=format&fit=crop',
+        alt: 'Editorial fashion portrait',
+      },
+      {
+        src: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1640&auto=format&fit=crop',
+        alt: 'Modern minimal portrait',
+      },
+    ],
+    []
+  );
+
+  const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+
+  // Otomatik geçiş
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCurrentHeroIdx((idx) => (idx + 1) % heroImages.length);
+    }, 3000); // Daha hızlı geçiş
+    return () => clearInterval(id);
+  }, [heroImages.length]);
+
+  // Basit preloader
+  useEffect(() => {
+    heroImages.forEach((img) => {
+      const i = new Image();
+      i.src = img.src;
+    });
+  }, [heroImages]);
 
   return (
     <section id="hero" className="relative min-h-screen bg-[#edede9]">
@@ -73,7 +112,7 @@ const HeroSection = () => {
         <div className="min-h-screen flex items-start pt-8 sm:pt-12 lg:pt-32">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
 
-            {/* Image: Foreground column (top on mobile, left on desktop) */}
+            {/* Image Slider: Foreground column (top on mobile, left on desktop) */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -81,13 +120,112 @@ const HeroSection = () => {
               viewport={{ once: false, amount: 0.5 }}
               className="lg:col-span-5 order-1"
             >
-              <div className="relative w-full overflow-hidden rounded-2xl bg-white/40 backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.08)]">
-                <img
-                  src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ProfilePhoto.png`}
-                  alt="Profile photo"
-                  className="w-full h-[340px] sm:h-[420px] md:h-[500px] lg:h-[560px] object-cover object-center grayscale-[40%]"
-                  draggable={false}
-                />
+              <div className="relative w-full overflow-hidden rounded-2xl bg-black/50 backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
+                {/* Büyük görsel alanı */}
+                <div className="relative w-full h-[340px] sm:h-[420px] md:h-[500px] lg:h-[560px]">
+                  <AnimatePresence mode="wait">
+                    {heroImages.map((img, idx) => (
+                      idx === currentHeroIdx && (
+                        <motion.div
+                          key={img.src}
+                          className="absolute inset-0 w-full h-full"
+                          initial={{ 
+                            opacity: 0, 
+                            y: 20, 
+                            scale: 1.02
+                          }}
+                          animate={{ 
+                            opacity: 1, 
+                            y: 0, 
+                            scale: 1
+                          }}
+                          exit={{ 
+                            opacity: 0, 
+                            y: -10, 
+                            scale: 0.98
+                          }}
+                          transition={{ 
+                            duration: 0.4, 
+                            ease: [0.25, 0.46, 0.45, 0.94]
+                          }}
+                        >
+                          <motion.img
+                            src={img.src}
+                            alt={img.alt}
+                            className="absolute inset-0 w-full h-full object-cover object-center"
+                            initial={{ 
+                              filter: 'blur(8px)'
+                            }}
+                            animate={{ 
+                              filter: 'blur(0px)'
+                            }}
+                            exit={{ 
+                              filter: 'blur(4px)'
+                            }}
+                            transition={{ 
+                              filter: { duration: 0.3, delay: 0.1 }
+                            }}
+                            draggable={false}
+                          />
+                        </motion.div>
+                      )
+                    ))}
+                  </AnimatePresence>
+
+                  {/* Koyu degrade üst overlay */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
+
+                  {/* Sol üst başlık ve CTA */}
+                  <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-col gap-3">
+                    <h3 className="text-white text-xl sm:text-3xl md:text-4xl font-medium tracking-tight max-w-[18ch]">
+                      Searching for something beyond
+                    </h3>
+                    <button
+                      className="self-start px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm text-white text-sm hover:bg-white/25 transition"
+                      onClick={() => {
+                        const el = document.getElementById('tech-logos');
+                        if (!el) return;
+                        const startY = window.pageYOffset || document.documentElement.scrollTop;
+                        const rect = el.getBoundingClientRect();
+                        const offsetToCenter = (window.innerHeight - rect.height) / 2;
+                        const targetY = startY + rect.top - Math.max(0, offsetToCenter);
+                        const startTime = performance.now();
+                        const duration = 1000;
+                        const animate = (t: number) => {
+                          const p = Math.min((t - startTime) / duration, 1);
+                          const ease = 1 - Math.pow(1 - p, 3);
+                          const y = startY + (targetY - startY) * ease;
+                          window.scrollTo(0, y);
+                          if (p < 1) requestAnimationFrame(animate);
+                        };
+                        requestAnimationFrame(animate);
+                      }}
+                    >
+                      Explore
+                    </button>
+                  </div>
+
+                  {/* Alt küçük önizleme görselleri (thumbnails) */}
+                  <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-3 px-4">
+                    {heroImages.map((img, idx) => (
+                      <button
+                        key={`thumb-${idx}`}
+                        aria-label={`Go to slide ${idx + 1}`}
+                        className={`relative w-16 h-12 sm:w-20 sm:h-14 overflow-hidden rounded-md shadow-md transition ring-1 ring-white/10 ${idx === currentHeroIdx ? 'ring-2 ring-white/70 scale-[1.03]' : 'opacity-80 hover:opacity-100'}`}
+                        onClick={() => setCurrentHeroIdx(idx)}
+                      >
+                        <img
+                          src={img.src}
+                          alt="thumbnail"
+                          className="w-full h-full object-cover"
+                          draggable={false}
+                        />
+                        {/* Blur kenar efekti */}
+                        <div className="absolute inset-0 bg-black/20" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </motion.div>
 
