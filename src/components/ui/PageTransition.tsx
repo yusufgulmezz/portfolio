@@ -27,7 +27,7 @@ const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) =>
         // Yazma tamamlandı, 1 saniye bekle sonra silmeye başla
         timeoutId = setTimeout(() => {
           setIsDeleting(true);
-        }, 1000);
+        }, 750);
       }
     } else {
       // Deleting effect
@@ -45,7 +45,7 @@ const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) =>
           setIsCompleted(true);
           setTimeout(() => {
             onComplete();
-          }, 500);
+          }, 100);
         }
       }
     }
@@ -131,7 +131,7 @@ const PageTransition = () => {
           const evt = new CustomEvent('page-transition:done');
           window.dispatchEvent(evt);
         } catch {}
-      }, 3000); // DesignEveryThink yazıldıktan 3 saniye sonra
+      }, 2000); // DesignEveryThink yazıldıktan 3 saniye sonra
 
       return () => clearTimeout(hideTimer);
     }
