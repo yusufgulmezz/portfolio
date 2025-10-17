@@ -163,7 +163,7 @@ const CreativeProcessSection = () => {
           className="mt-16 text-center"
         >
           <blockquote className="text-2xl lg:text-3xl font-light text-gray-700 italic leading-relaxed max-w-4xl mx-auto">
-            "The best designs come from the intersection of professional discipline and personal passion."
+            &ldquo;The best designs come from the intersection of professional discipline and personal passion.&rdquo;
           </blockquote>
           <div className="mt-6 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full" />
         </motion.div>
