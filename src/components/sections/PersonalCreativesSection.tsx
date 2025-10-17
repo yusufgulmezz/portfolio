@@ -490,39 +490,53 @@ const PersonalCreativesSection = () => {
                               onClick={() => setSelectedPhoto(null)}
                             >
                               <motion.div
-                                className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden"
+                                className="bg-white rounded-lg overflow-hidden"
+                                style={{
+                                  maxWidth: '95vw',
+                                  maxHeight: '95vh',
+                                  width: 'auto',
+                                  height: 'auto'
+                                }}
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.95, opacity: 0 }}
                                 transition={{ duration: 0.2 }}
                                 onClick={(e) => e.stopPropagation()}
                               >
-                                <div className="relative aspect-[16/10]">
-                                  <Image src={selectedPhoto.src} alt={selectedPhoto.title} fill className="object-cover" />
+                                <div className="relative">
+                                  <Image 
+                                    src={selectedPhoto.src} 
+                                    alt={selectedPhoto.title} 
+                                    width={selectedPhoto.width}
+                                    height={selectedPhoto.height}
+                                    className="max-w-[90vw] max-h-[80vh] w-auto h-auto object-contain"
+                                  />
                                   <button
                                     onClick={() => setSelectedPhoto(null)}
-                                    className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors"
+                                    className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors text-xl font-bold"
                                     aria-label="Close"
                                   >
                                     ×
                                   </button>
-                                </div>
-                                <div className="p-6">
-                                  <div className="flex items-start justify-between mb-4">
-                                    <div>
-                                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{selectedPhoto.title}</h3>
-                                      {selectedPhoto.location && <p className="text-gray-600 mb-1">{selectedPhoto.location}</p>}
-                                      {selectedPhoto.date && <p className="text-sm text-gray-600">{selectedPhoto.date}</p>}
+                                  
+                                  {/* Image info overlay */}
+                                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
+                                    <div className="flex items-start justify-between">
+                                      <div className="text-white">
+                                        <h3 className="text-xl font-semibold mb-2">{selectedPhoto.title}</h3>
+                                        {selectedPhoto.location && <p className="text-sm opacity-90 mb-1">{selectedPhoto.location}</p>}
+                                        {selectedPhoto.date && <p className="text-xs opacity-75">{selectedPhoto.date}</p>}
+                                        {selectedPhoto.description && (
+                                          <p className="text-sm opacity-90 mt-2 leading-relaxed max-w-md">{selectedPhoto.description}</p>
+                                        )}
+                                      </div>
+                                      {selectedPhoto.category && (
+                                        <span className="px-3 py-1 text-sm bg-white/20 text-white rounded-lg backdrop-blur-sm border border-white/30">
+                                          {selectedPhoto.category}
+                                        </span>
+                                      )}
                                     </div>
-                                    {selectedPhoto.category && (
-                                      <span className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg capitalize border border-gray-200">
-                                        {selectedPhoto.category}
-                                      </span>
-                                    )}
                                   </div>
-                                  {selectedPhoto.description && (
-                                    <p className="text-gray-700 leading-relaxed">{selectedPhoto.description}</p>
-                                  )}
                                 </div>
                               </motion.div>
                             </motion.div>
