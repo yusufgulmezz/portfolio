@@ -13,6 +13,63 @@ const TABS: { key: TabKey; label: string }[] = [
 ];
 
 const PersonalCreativesSection = () => {
+  // Basit görünürlük tabanlı lazy image bileşeni (unoptimized export için ideal)
+  const LazyImg = ({
+    src,
+    alt,
+    className,
+    eager = false,
+  }: {
+    src: string;
+    alt: string;
+    className?: string;
+    eager?: boolean;
+  }) => {
+    const imgRef = useRef<HTMLImageElement | null>(null);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+    useEffect(() => {
+      if (eager) {
+        if (imgRef.current && imgRef.current.dataset.src) {
+          imgRef.current.src = imgRef.current.dataset.src;
+        }
+        return;
+      }
+      const el = imgRef.current;
+      if (!el) return;
+      const onIntersect: IntersectionObserverCallback = (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const target = entry.target as HTMLImageElement;
+            if (target.dataset.src) {
+              target.src = target.dataset.src;
+              observer.unobserve(target);
+            }
+          }
+        });
+      };
+      const io = new IntersectionObserver(onIntersect, { rootMargin: '200px' });
+      io.observe(el);
+      return () => io.disconnect();
+    }, [eager]);
+
+    return (
+      <img
+        ref={imgRef}
+        src={eager ? src : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='}
+        data-src={eager ? undefined : src}
+        alt={alt}
+        className={className}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        onLoad={() => setIsLoaded(true)}
+        style={{
+          transition: 'opacity 200ms ease',
+          opacity: isLoaded ? 1 : 0.6,
+        }}
+      />
+    );
+  };
   const [activeTab, setActiveTab] = useState<TabKey>('photos');
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
@@ -352,7 +409,12 @@ const PersonalCreativesSection = () => {
                                 onClick={() => setSelectedPhoto(item)}
                               >
                                 <div className="relative w-full aspect-[4/5] overflow-hidden">
-                                  <Image src={item.src} alt={item.title} fill sizes="288px" className="object-cover" />
+                                  <LazyImg
+                                    src={item.src}
+                                    alt={item.title}
+                                    eager={idx === 0}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                  />
                                   
                                   {/* Category badge - top left */}
                                   {item.category && (
@@ -409,7 +471,12 @@ const PersonalCreativesSection = () => {
                                 onClick={() => setSelectedPhoto(item)}
                               >
                                 <div className="relative w-full aspect-[4/5] overflow-hidden">
-                                  <Image src={item.src} alt={item.title} fill sizes="288px" className="object-cover" />
+                                  <LazyImg
+                                    src={item.src}
+                                    alt={item.title}
+                                    eager={false}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                  />
                                   
                                   {/* Category badge - top left */}
                                   {item.category && (
