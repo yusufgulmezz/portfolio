@@ -19,12 +19,17 @@ const PersonalCreativesSection = () => {
   type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string };
   const contentByTab: Record<TabKey, Item[]> = {
     photos: [
-      { title: 'Swiss Alpine Lake', description: '', src: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Montenegro', location: 'Interlaken, Switzerland', date: '15/08/2025' },
+      { title: 'Sveti Stefan Island View', description: 'View of Sveti Stefan Island from the St. Sava Church', src: '/images/Montenegro/MNE_image_1.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Đenaši, Montenegro', date: '16/07/2025' },
+      { title: 'Slansko Lake', description: 'Beautiful view of Slansko Lake', src: '/images/Montenegro/MNE_image_2.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Slansko Lake, Montenegro', date: '18/07/2025' },
+      { title: 'Viewpoint of Kotor', description: 'Viewpoint of Kotor from the top of the mountain', src: '/images/Montenegro/MNE_image_3.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '17/07/2025' },
+      { title: 'Sunset in Kotor', description: 'Sunset in Dobrota, Kotor', src: '/images/Montenegro/MNE_image_4.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '15/07/2025' },
+      { title: 'Horizont Bar', description: 'Sunset in Horizont Bar, Kotor', src: '/images/Montenegro/MNE_image_5.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '17/07/2025' },
+      { title: 'View of Kotor Bay', description: 'View of Kotor Bay from the Serpentine Road', src: '/images/Montenegro/MNE_image_6.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '17/07/2025' },
+      { title: 'Turkey to Montenegro', description: 'Flying over the clouds from Turkey to Montenegro', src: '/images/Montenegro/MNE_image_7.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Montenegro', date: '15/07/2025' },
       { title: 'Street Life in Prague', description: '', src: 'https://images.unsplash.com/photo-1556196148-1fb724238998?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Street', location: 'Prague, Czech Republic', date: '22/07/2025' },
       { title: 'Mystical Forest Path', description: '', src: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Nature', location: 'Black Forest, Germany', date: '05/09/2025' },
       { title: 'Modern Barcelona', description: '', src: 'https://images.unsplash.com/photo-1486324466559-0226613b4a43?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Architecture', location: 'Barcelona, Spain', date: '12/06/2025' },
       { title: 'Aegean Sunset', description: '', src: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Landscape', location: 'Aegean Sea, Türkiye', date: '28/06/2025' },
-      { title: 'Venice Canals', description: '', src: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Montenegro', location: 'Venice, Italy', date: '03/05/2025' }
     ],
     drawings: [
       { title: 'Portrait Study', description: 'Quick sketch with pencil.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
