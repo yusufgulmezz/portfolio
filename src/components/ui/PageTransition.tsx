@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) => {
   const roles = ['UI/UX', 'Poster', 'Pixel Art', '3D', 'Coding'];

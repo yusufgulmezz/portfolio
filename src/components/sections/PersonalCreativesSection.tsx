@@ -14,22 +14,22 @@ const TABS: { key: TabKey; label: string }[] = [
 
 const PersonalCreativesSection = () => {
   const [activeTab, setActiveTab] = useState<TabKey>('photos');
-  const [activeIndex] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string };
   const contentByTab: Record<TabKey, Item[]> = {
     photos: [
-      { title: 'Sveti Stefan Island View', description: 'View of Sveti Stefan Island from the St. Sava Church', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_1.jpg`, width: 1740, height: 1160, category: 'Montenegro', location: 'Đenaši, Montenegro', date: '16/07/2025' },
-      { title: 'Slansko Lake', description: 'Beautiful view of Slansko Lake', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_2.jpg`, width: 1740, height: 1160, category: 'Montenegro', location: 'Slansko Lake, Montenegro', date: '18/07/2025' },
-      { title: 'Viewpoint of Kotor', description: 'Viewpoint of Kotor from the top of the mountain', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_3.jpg`, width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '17/07/2025' },
-      { title: 'Sunset in Kotor', description: 'Sunset in Dobrota, Kotor', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_4.jpg`, width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '15/07/2025' },
-      { title: 'Horizont Bar', description: 'Sunset in Horizont Bar, Kotor', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_5.jpg`, width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '17/07/2025' },
-      { title: 'View of Kotor Bay', description: 'View of Kotor Bay from the Serpentine Road', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_6.jpg`, width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '17/07/2025' },
-      { title: 'Turkey to Montenegro', description: 'Flying over the clouds from Turkey to Montenegro', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_7.jpg`, width: 1740, height: 1160, category: 'Montenegro', location: 'Montenegro', date: '15/07/2025' },
+      { title: 'Kotor Bay', description: 'Historic bay with medieval architecture', src: '/images/Montenegro/MNE_image_1.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Kotor, Montenegro', date: '15/08/2025' },
       { title: 'Street Life in Prague', description: '', src: 'https://images.unsplash.com/photo-1556196148-1fb724238998?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Street', location: 'Prague, Czech Republic', date: '22/07/2025' },
       { title: 'Mystical Forest Path', description: '', src: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Nature', location: 'Black Forest, Germany', date: '05/09/2025' },
       { title: 'Modern Barcelona', description: '', src: 'https://images.unsplash.com/photo-1486324466559-0226613b4a43?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Architecture', location: 'Barcelona, Spain', date: '12/06/2025' },
       { title: 'Aegean Sunset', description: '', src: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?q=80&w=1740&auto=format&fit=crop', width: 1740, height: 1160, category: 'Landscape', location: 'Aegean Sea, Türkiye', date: '28/06/2025' },
+      { title: 'Perast Old Town', description: 'Charming coastal town with baroque architecture', src: '/images/Montenegro/MNE_image_2.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Perast, Montenegro', date: '03/05/2025' },
+      { title: 'Durmitor National Park', description: 'Mountain landscapes and pristine nature', src: '/images/Montenegro/MNE_image_3.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Durmitor, Montenegro', date: '10/05/2025' },
+      { title: 'Sveti Stefan Island', description: 'Famous island resort with stunning views', src: '/images/Montenegro/MNE_image_4.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Sveti Stefan, Montenegro', date: '18/05/2025' },
+      { title: 'Budva Old Town', description: 'Medieval walled city by the Adriatic', src: '/images/Montenegro/MNE_image_5.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Budva, Montenegro', date: '25/05/2025' },
+      { title: 'Lovćen National Park', description: 'Mountain peak with panoramic views', src: '/images/Montenegro/MNE_image_6.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Lovćen, Montenegro', date: '02/06/2025' },
+      { title: 'Lake Skadar', description: 'Largest lake in the Balkans with rich wildlife', src: '/images/Montenegro/MNE_image_7.jpg', width: 1740, height: 1160, category: 'Montenegro', location: 'Lake Skadar, Montenegro', date: '09/06/2025' },
     ],
     drawings: [
       { title: 'Portrait Study', description: 'Quick sketch with pencil.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
@@ -44,13 +44,17 @@ const PersonalCreativesSection = () => {
   };
 
   const items = contentByTab[activeTab];
+  const activeItem = useMemo(() => items[Math.min(activeIndex, items.length - 1)] ?? items[0], [items, activeIndex]);
   const [selectedPhoto, setSelectedPhoto] = useState<Item | null>(null);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
   
   // Horizontal scroll için state'ler
+  const [scrollPosition, setScrollPosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToTab = (key: TabKey) => {
@@ -91,7 +95,42 @@ const PersonalCreativesSection = () => {
 
   const updateScrollButtons = () => {
     if (!scrollContainerRef.current) return;
-    // Scroll button logic can be added here if needed
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+  };
+
+  const scrollToDirection = (direction: 'left' | 'right') => {
+    if (!scrollContainerRef.current) return;
+    
+    // Kart genişliği + gap (24px) = tek kart için gerekli scroll miktarı
+    // Mobil: w-80 (320px) + gap-6 (24px) = 344px
+    // Desktop: w-96 (384px) + gap-6 (24px) = 408px
+    const isMobile = window.innerWidth < 640;
+    const cardWidth = isMobile ? 320 : 384; // w-80 vs w-96
+    const gap = 24; // gap-6
+    const scrollAmount = cardWidth + gap;
+    
+    const currentScroll = scrollContainerRef.current.scrollLeft;
+    const targetScroll = direction === 'left' 
+      ? Math.max(0, currentScroll - scrollAmount)
+      : currentScroll + scrollAmount;
+    
+    scrollContainerRef.current.scrollTo({
+      left: targetScroll,
+      behavior: 'smooth'
+    });
+    
+    // Scroll tamamlandıktan sonra buton durumunu güncelle
+    setTimeout(updateScrollButtons, 300);
+  };
+
+  // Yardımcı: diziyi n parçaya böl
+  const chunk = <T,>(arr: T[], parts: number): T[][] => {
+    if (arr.length === 0) return Array.from({ length: parts }, () => []);
+    const out: T[][] = Array.from({ length: parts }, () => []);
+    arr.forEach((it, idx) => out[idx % parts].push(it));
+    return out;
   };
 
   // Photos filtre chip'leri (Figma'daki gibi)
@@ -168,6 +207,43 @@ const PersonalCreativesSection = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [activePhotoFilter, filteredPhotos]);
 
+  const VerticalGalleryCard = ({ data, label }: { data: Item[]; label?: string }) => {
+    const current = data[0];
+    return (
+      <div className="relative mx-auto w-full max-w-[220px] sm:max-w-[240px] md:max-w-[220px] lg:max-w-[240px] xl:max-w-[260px] rounded-2xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
+        <div className="relative w-full aspect-[3/5] bg-gray-100">
+          {label && (
+            <div className="absolute left-2 top-2 z-[1]">
+              <span className="inline-block rounded-md bg-black/35 text-white px-2 py-1 text-xs sm:text-sm font-medium backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.18)]">
+                {label}
+              </span>
+            </div>
+          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current?.src}
+              initial={{ opacity: 0, y: 12, scale: 0.995 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.995 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0"
+            >
+              {current && (
+                <Image
+                  src={current.src}
+                  alt={current.title}
+                  fill
+                  sizes="(max-width: 1024px) 92vw, 360px"
+                  className="object-cover"
+                  priority
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section id="personal-creatives" className="pt-4 pb-20 bg-[#edede9]">

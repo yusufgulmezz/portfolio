@@ -306,7 +306,7 @@ const CategoriesSection = () => {
         setOpenUiuxId(designs[0].id);
       }
     }, [isUIUX, collapsed, designs, openUiuxId]);
-    const [galleryImageByDesignId] = useState<Record<number, string>>({});
+    const [galleryImageByDesignId, setGalleryImageByDesignId] = useState<Record<number, string>>({});
     const [expandedDesign, setExpandedDesign] = useState<null | { 
       image: string; 
       title: string; 
