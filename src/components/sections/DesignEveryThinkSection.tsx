@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
+import MetaBalls from '../ui/MetaBalls';
 
 const DesignEveryThinkSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -89,11 +90,30 @@ const DesignEveryThinkSection = () => {
   return (
     <section
       id="design-every-think"
-      className="relative bg-[#edede9] flex flex-col justify-center items-center"
+      className="relative bg-[#edede9] flex flex-col justify-center items-center overflow-hidden"
       style={{ minHeight: sectionMinHeight ? `${sectionMinHeight}px` : '100vh' }}
     >
+      {/* MetaBalls Background - Only behind title area */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center">
+        <div className="w-full max-w-4xl h-56 sm:h-68 md:h-80 lg:h-88">
+          <MetaBalls
+            color="#1A1A1A"
+            cursorBallColor="#4E4E4E"
+            cursorBallSize={3}
+            ballCount={20}
+            animationSize={35}
+            enableMouseInteraction={false}
+            enableTransparency={true}
+            hoverSmoothness={0.08}
+            clumpFactor={1}
+            speed={0.7}
+            className="opacity"
+          />
+        </div>
+      </div>
+
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Main Title */}
         <motion.h1 
           className="text-[52px] sm:text-[80px] md:text-[104px] lg:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] mb-12 text-center"
@@ -131,7 +151,7 @@ const DesignEveryThinkSection = () => {
 
       {/* Animated Scroll Down Button with Text */}
       <motion.div 
-        className="absolute left-1/2 transform -translate-x-1/2 bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-6"
+        className="absolute left-1/2 transform -translate-x-1/2 bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-6 z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 1, delay: 2 }}
