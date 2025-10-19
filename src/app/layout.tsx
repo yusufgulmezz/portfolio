@@ -8,7 +8,7 @@ import BlobCursor from "@/components/ui/BlobCursor";
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700", "900"],
+  weight: ["300", "400", "500", "700"],
 });
 
 const geistMono = Geist_Mono({
