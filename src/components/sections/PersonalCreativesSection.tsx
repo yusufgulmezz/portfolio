@@ -280,7 +280,16 @@ const PersonalCreativesSection = () => {
                   className="w-full text-left group"
                 >
                   <div className="flex items-end justify-between">
-                    <h3 className={`font-bold transition-colors ${isActive ? 'text-4xl sm:text-5xl lg:text-6xl text-[#4E4E4E]' : 'text-3xl sm:text-4xl lg:text-5xl text-[#4E4E4E] group-hover:text-gray-900'}`}>{tab.label}</h3>
+                    <div className="relative group">
+                      <h3 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#4E4E4E] group-hover:text-gray-900 transition-colors relative z-10">
+                        {tab.label}
+                      </h3>
+                      {/* Corner brackets */}
+                      <div className="absolute -top-2 -left-2 w-4 h-4 border-l-2 border-t-2 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute -top-2 -right-2 w-4 h-4 border-r-2 border-t-2 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute -bottom-2 -left-2 w-4 h-4 border-l-2 border-b-2 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute -bottom-2 -right-2 w-4 h-4 border-r-2 border-b-2 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
                     <span className="text-sm sm:text-base text-gray-500">{itemsOfTab.length}</span>
                   </div>
                   <div className="w-full h-px bg-gray-300 mt-4" />
