@@ -44,14 +44,7 @@ const PersonalCreativesSection = () => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
   
-  // Horizontal scroll için state'ler
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
 
   const scrollToTab = (key: TabKey) => {
     const el = rowRefs.current[key];
@@ -64,62 +57,6 @@ const PersonalCreativesSection = () => {
     window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
 
-  // Horizontal scroll fonksiyonları
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-    e.preventDefault();
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-  };
-
-  const updateScrollButtons = () => {
-    if (!scrollContainerRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-    setCanScrollLeft(scrollLeft > 0);
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
-  };
-
-  const scrollToDirection = (direction: 'left' | 'right') => {
-    if (!scrollContainerRef.current) return;
-    
-    // Kart genişliği + gap (24px) = tek kart için gerekli scroll miktarı
-    // Mobil: w-80 (320px) + gap-6 (24px) = 344px
-    // Desktop: w-96 (384px) + gap-6 (24px) = 408px
-    const isMobile = window.innerWidth < 640;
-    const cardWidth = isMobile ? 320 : 384; // w-80 vs w-96
-    const gap = 24; // gap-6
-    const scrollAmount = cardWidth + gap;
-    
-    const currentScroll = scrollContainerRef.current.scrollLeft;
-    const targetScroll = direction === 'left' 
-      ? Math.max(0, currentScroll - scrollAmount)
-      : currentScroll + scrollAmount;
-    
-    scrollContainerRef.current.scrollTo({
-      left: targetScroll,
-      behavior: 'smooth'
-    });
-    
-    // Scroll tamamlandıktan sonra buton durumunu güncelle
-    setTimeout(updateScrollButtons, 300);
-  };
 
   // Yardımcı: diziyi n parçaya böl
   const chunk = <T,>(arr: T[], parts: number): T[][] => {
@@ -195,13 +132,6 @@ const PersonalCreativesSection = () => {
     return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
   }, [filteredPhotos, photoStepPx]);
 
-  // Scroll durumunu kontrol et
-  useEffect(() => {
-    updateScrollButtons();
-    const handleResize = () => updateScrollButtons();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [activePhotoFilter, filteredPhotos]);
 
   const VerticalGalleryCard = ({ data, label }: { data: Item[]; label?: string }) => {
     const current = data[0];
