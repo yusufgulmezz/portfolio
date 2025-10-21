@@ -406,27 +406,6 @@ const PersonalCreativesSection = () => {
                             );
                           })()}
                           
-                          {/* Mobil navigasyon butonları */}
-                          {filteredPhotos.length > 1 && (
-                            <div className="sm:hidden absolute inset-y-0 left-2 right-2 flex items-center justify-between pointer-events-none">
-                              <button
-                                onClick={() => setPhotosCurrentIdx(Math.max(0, photosCurrentIdx - 1))}
-                                disabled={photosCurrentIdx === 0}
-                                className="pointer-events-auto w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-                                aria-label="Previous photo"
-                              >
-                                ‹
-                              </button>
-                              <button
-                                onClick={() => setPhotosCurrentIdx(Math.min(filteredPhotos.length - 1, photosCurrentIdx + 1))}
-                                disabled={photosCurrentIdx === filteredPhotos.length - 1}
-                                className="pointer-events-auto w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-                                aria-label="Next photo"
-                              >
-                                ›
-                              </button>
-                            </div>
-                          )}
                         </div>
                         {/* Detail Modal */}
                         <AnimatePresence>
