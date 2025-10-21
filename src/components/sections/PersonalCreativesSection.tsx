@@ -44,6 +44,11 @@ const PersonalCreativesSection = () => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
   
+  // Horizontal scroll için state'ler
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  
   
 
   const scrollToTab = (key: TabKey) => {
@@ -57,6 +62,64 @@ const PersonalCreativesSection = () => {
     window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
 
+  // Horizontal scroll handlers (mouse ve touch)
+  const handleScrollStart = (clientX: number) => {
+    if (!photosContainerRef.current) return;
+    setIsScrolling(true);
+    setStartX(clientX);
+    setScrollLeft(photosContainerRef.current.scrollLeft);
+    photosContainerRef.current.style.cursor = 'grabbing';
+    photosContainerRef.current.style.userSelect = 'none';
+  };
+
+  const handleScrollMove = (clientX: number) => {
+    if (!isScrolling || !photosContainerRef.current) return;
+    const x = clientX;
+    const walk = (x - startX) * 2; // Scroll hızı
+    photosContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleScrollEnd = () => {
+    setIsScrolling(false);
+    if (photosContainerRef.current) {
+      photosContainerRef.current.style.cursor = 'grab';
+      photosContainerRef.current.style.userSelect = 'auto';
+    }
+  };
+
+  // Mouse events
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleScrollStart(e.clientX);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleScrollMove(e.clientX);
+  };
+
+  const handleMouseUp = () => {
+    handleScrollEnd();
+  };
+
+  const handleMouseLeave = () => {
+    handleScrollEnd();
+  };
+
+  // Touch events
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    handleScrollStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
+    handleScrollMove(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    handleScrollEnd();
+  };
 
   // Yardımcı: diziyi n parçaya böl
   const chunk = <T,>(arr: T[], parts: number): T[][] => {
@@ -249,7 +312,21 @@ const PersonalCreativesSection = () => {
                         </div>
 
                         {/* Width-aware Photos Ticker */}
-                        <div ref={photosContainerRef} className="relative overflow-hidden px-4">
+                        <div 
+                          ref={photosContainerRef} 
+                          className="relative overflow-x-auto overflow-y-hidden px-4 cursor-grab select-none scrollbar-hide"
+                          style={{
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none'
+                          }}
+                          onMouseDown={handleMouseDown}
+                          onMouseMove={handleMouseMove}
+                          onMouseUp={handleMouseUp}
+                          onMouseLeave={handleMouseLeave}
+                          onTouchStart={handleTouchStart}
+                          onTouchMove={handleTouchMove}
+                          onTouchEnd={handleTouchEnd}
+                        >
                           {(() => {
                             const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
                             
@@ -258,8 +335,8 @@ const PersonalCreativesSection = () => {
                                 ref={photosRowRef}
                                 className="flex gap-6"
                                 style={{ 
-                                  transform: `translateX(-${photosCurrentIdx * photoStepPx}px)`,
-                                  transition: 'transform 400ms ease'
+                                  width: 'max-content',
+                                  minWidth: '100%'
                                 }}
                               >
                             {/* İlk set */}
@@ -268,10 +345,12 @@ const PersonalCreativesSection = () => {
                                 key={`photo-1-${idx}`}
                                 className="group flex-shrink-0 w-64 sm:w-72 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
                                 onClick={() => {
-                                  const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
-                                  const index = photos.findIndex(p => p.src === item.src);
-                                  setSelectedPhoto(item);
-                                  setSelectedPhotoIndex(index);
+                                  if (!isScrolling) {
+                                    const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
+                                    const index = photos.findIndex(p => p.src === item.src);
+                                    setSelectedPhoto(item);
+                                    setSelectedPhotoIndex(index);
+                                  }
                                 }}
                               >
                                 <div className="relative w-full aspect-[4/5] overflow-hidden">
