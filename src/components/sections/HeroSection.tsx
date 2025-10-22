@@ -68,7 +68,7 @@ const HeroSection = () => {
   const heroImages = useMemo(
     () => [
       {
-        src: 'https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?q=80&w=1640&auto=format&fit=crop',
+        src: '/images/Profile-1.jpg',
         alt: 'Stylish portrait with sunglasses',
       },
       {
@@ -88,14 +88,6 @@ const HeroSection = () => {
   );
 
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
-
-  // Otomatik geçiş
-  useEffect(() => {
-    const id = setInterval(() => {
-      setCurrentHeroIdx((idx) => (idx + 1) % heroImages.length);
-    }, 3000); // Daha hızlı geçiş
-    return () => clearInterval(id);
-  }, [heroImages.length]);
 
   // Basit preloader
   useEffect(() => {
@@ -211,7 +203,8 @@ const HeroSection = () => {
                       <button
                         key={`thumb-${idx}`}
                         aria-label={`Go to slide ${idx + 1}`}
-                        className={`relative w-16 h-12 sm:w-20 sm:h-14 overflow-hidden rounded-md shadow-md transition ring-1 ring-white/10 ${idx === currentHeroIdx ? 'ring-2 ring-white/70 scale-[1.03]' : 'opacity-80 hover:opacity-100'}`}
+                        className={`relative w-16 h-12 sm:w-20 sm:h-14 overflow-hidden rounded-md shadow-md transition-all duration-300 ring-1 ring-white/10 ${idx === currentHeroIdx ? 'ring-2 ring-white/70 scale-[1.03]' : 'opacity-80 hover:opacity-100 hover:scale-[1.02]'}`}
+                        onMouseEnter={() => setCurrentHeroIdx(idx)}
                         onClick={() => setCurrentHeroIdx(idx)}
                       >
                         <img
