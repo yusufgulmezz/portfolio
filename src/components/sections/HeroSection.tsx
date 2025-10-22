@@ -165,10 +165,10 @@ const HeroSection = () => {
                   </AnimatePresence>
 
                   {/* Koyu degrade üst overlay */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
+                  {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" /> */}
 
                   {/* Sol üst başlık ve CTA */}
-                  <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-col gap-3">
+                  {/* <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-col gap-3">
                     <h3 className="text-white text-xl sm:text-3xl md:text-4xl font-medium tracking-tight max-w-[18ch]">
                       Searching for something beyond
                     </h3>
@@ -195,7 +195,7 @@ const HeroSection = () => {
                     >
                       Explore
                     </button>
-                  </div>
+                  </div> */}
 
                   {/* Alt küçük önizleme görselleri (thumbnails) */}
                   <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-3 px-4">
