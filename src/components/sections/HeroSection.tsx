@@ -68,19 +68,19 @@ const HeroSection = () => {
   const heroImages = useMemo(
     () => [
       {
-        src: '/images/Profile-1.jpg',
+        src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Profile-1.jpg`,
         alt: 'Stylish portrait with sunglasses',
       },
       {
-        src: '/images/Profile-1.jpg',
+        src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Profile-1.jpg`,
         alt: 'Moody studio portrait',
       },
       {
-        src: '/images/Profile-1.jpg',
+        src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Profile-1.jpg`,
         alt: 'Editorial fashion portrait',
       },
       {
-        src: '/images/Profile-1.jpg',
+        src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Profile-1.jpg`,
         alt: 'Modern minimal portrait',
       },
     ],
