@@ -72,15 +72,15 @@ const HeroSection = () => {
         alt: 'Stylish portrait with sunglasses',
       },
       {
-        src: 'https://images.unsplash.com/photo-1547106634-56dcd53ae883?q=80&w=1640&auto=format&fit=crop',
+        src: '/images/Profile-1.jpg',
         alt: 'Moody studio portrait',
       },
       {
-        src: 'https://images.unsplash.com/photo-1515468381879-40d0ded81016?q=80&w=1640&auto=format&fit=crop',
+        src: '/images/Profile-1.jpg',
         alt: 'Editorial fashion portrait',
       },
       {
-        src: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1640&auto=format&fit=crop',
+        src: '/images/Profile-1.jpg',
         alt: 'Modern minimal portrait',
       },
     ],
@@ -112,7 +112,7 @@ const HeroSection = () => {
               viewport={{ once: false, amount: 0.5 }}
               className="lg:col-span-5 order-1"
             >
-              <div className="relative w-full overflow-hidden rounded-2xl bg-black/50 backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
+              <div className="relative w-full overflow-hidden rounded-2xl backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
                 {/* Büyük görsel alanı */}
                 <div className="relative w-full h-[340px] sm:h-[420px] md:h-[500px] lg:h-[560px]">
                   <AnimatePresence mode="wait">
