@@ -15,7 +15,8 @@ import {
   SiAdobephotoshop,
   SiBlender,
   SiAseprite,
-  SiNotion
+  SiNotion,
+  SiFramer
 } from 'react-icons/si';
 
 const TechLogosSection = () => {
@@ -24,6 +25,7 @@ const TechLogosSection = () => {
     { node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
     { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org" },
     { node: <SiTailwindcss />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+    { node: <SiFramer />, title: "Framer Motion", href: "https://framer.com/motion" },
     { node: <SiFigma />, title: "Figma", href: "https://figma.com" },
     { node: <SiGit />, title: "Git", href: "https://git-scm.com" },
     { node: <SiGithub />, title: "GitHub", href: "https://github.com" },
