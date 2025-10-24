@@ -858,7 +858,7 @@ const CategoriesSection = () => {
             MY WORKS
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl">
-            Pixel Art, Poster Designs, UI/UX, 3D, Coding,.. and more
+            Pixel Art, Poster Designs, UI/UX, 3D, Coding
           </p>
         </motion.div>
 
