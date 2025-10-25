@@ -130,18 +130,15 @@ const PersonalCreativesSection = () => {
   };
 
   // Photos filtre chip'leri (Figma'daki gibi)
-  type PhotoFilterKey = 'all' | 'montenegro' | 'street' | 'nature' | 'architecture' | 'landscape' | 'portrait' | 'night';
+  type PhotoFilterKey = 'all' | 'montenegro' | 'sakarya' | 'istanbul' | 'bolu';
   const [activePhotoFilter, setActivePhotoFilter] = useState<PhotoFilterKey>('all');
 
   const photoFilters: { key: PhotoFilterKey; label: string }[] = [
-    { key: 'all', label: 'All Photos' },
+    { key: 'all', label: 'All' },
     { key: 'montenegro', label: 'Montenegro' },
-    { key: 'street', label: 'Street' },
-    { key: 'nature', label: 'Nature' },
-    { key: 'architecture', label: 'Architecture' },
-    { key: 'landscape', label: 'Landscape' },
-    { key: 'portrait', label: 'Portrait' },
-    { key: 'night', label: 'Night' }
+    { key: 'sakarya', label: 'Sakarya' },
+    { key: 'istanbul', label: 'Istanbul' },
+    { key: 'bolu', label: 'Bolu' }
   ];
 
   const filteredPhotos = useMemo(() => {
@@ -149,12 +146,9 @@ const PersonalCreativesSection = () => {
     const map: Record<PhotoFilterKey, string> = {
       all: '',
       montenegro: 'Montenegro',
-      street: 'Street',
-      nature: 'Nature',
-      architecture: 'Architecture',
-      landscape: 'Landscape',
-      portrait: 'Portrait',
-      night: 'Night'
+      sakarya: 'Sakarya',
+      istanbul: 'Istanbul',
+      bolu: 'Bolu'
     };
     const want = map[activePhotoFilter];
     return contentByTab.photos.filter((p) => (p.category || '').toLowerCase() === want.toLowerCase());
