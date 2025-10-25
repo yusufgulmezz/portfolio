@@ -27,7 +27,7 @@ const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) =>
         // Yazma tamamlandı, 1 saniye bekle sonra silmeye başla
         timeoutId = setTimeout(() => {
           setIsDeleting(true);
-        }, 750);
+        }, 500);
       }
     } else {
       // Deleting effect
@@ -45,7 +45,7 @@ const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) =>
           setIsCompleted(true);
           setTimeout(() => {
             onComplete();
-          }, 100);
+          }, 50);
         }
       }
     }
