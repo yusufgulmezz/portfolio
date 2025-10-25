@@ -215,14 +215,14 @@ const CategoriesSection = () => {
           ],
           tags: ['UI/UX', 'Mobile']
         },
-        {
-          id: 9,
-          title: 'Dashboard Design',
-          date: '25/08/2025',
-          description: 'Modern dashboard interface with clean data visualization and intuitive user experience.',
-          image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&crop=center',
-          tags: ['UI/UX', 'Dashboard']
-        }
+        // {
+        //   id: 9,
+        //   title: 'Dashboard Design',
+        //   date: '25/08/2025',
+        //   description: 'Modern dashboard interface with clean data visualization and intuitive user experience.',
+        //   image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&crop=center',
+        //   tags: ['UI/UX', 'Dashboard']
+        // }
       ]
     },
     {
