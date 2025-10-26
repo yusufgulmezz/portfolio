@@ -69,65 +69,65 @@ const CategoriesSection = () => {
           id: 4,
           title: 'Camp Fire Gif',
           date: '10/09/2025',
-          description: 'Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.',
+          description: 'Pixel art animation of a camp fire with a flickering effect.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/source/4c5350173548789.649217fa63368.gif',
-          tags: ['Pixel Art', 'Character']
+          tags: ['Animation', 'Camp Fire']
         },
         {
           id: 5,
           title: 'Lethal Company',
           date: '08/09/2025',
-          description: 'Maecenas eget condimentum velit, sit amet feugiat lectus.',
+          description: 'Pixel art game scene of Lethal Company.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/6c0699191220265.65c7a14f5ad97.png',
-          tags: ['Pixel Art', 'Landscape']
+          tags: ['Game', 'Lethal Company']
         },
         {
           id: 16,
           title: 'Demon Slayer Zenitsu',
           date: '05/09/2025',
-          description: 'Nostalgic pixel art city with neon lights and retro atmosphere.',
+          description: 'Pixel art character design of Demon Slayer Zenitsu.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/bfb9f8153649027.633386fc1b0a6.png',
-          tags: ['Pixel Art', 'Cityscape']
+          tags: ['Anime', 'Demon Slayer']
         },
         {
           id: 17,
           title: 'Banana For Every Taste',
           date: '03/09/2025',
-          description: 'Detailed pixel art character with medieval fantasy theme.',
+          description: 'Nine detailed pixel art bananas with different colors and textures.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/e6e3c0201088071.666d9d6546b2e.png',
-          tags: ['Pixel Art', 'Fantasy']
+          tags: ['Banana', 'Food']
         },
         {
           id: 18,
           title: 'Star Wars: Jedi Fallen Order',
           date: '01/09/2025',
-          description: 'Sci-fi pixel art scene with spaceships and alien planets.',
+          description: 'Pixel art scene of Star Wars: Jedi Fallen Order game.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/10393c158503857.638d2b93e0ed1.png',
-          tags: ['Pixel Art', 'Sci-Fi']
+          tags: ['Game', 'Star Wars']
         },
         {
           id: 19,
           title: 'Cat Punch',
           date: '29/08/2025',
-          description: 'Smooth pixel art animation with fluid character movement.',
+          description: 'Cat punch meme with pixel art style.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e0dee5181781743.6521cca9d06d7.png',
-          tags: ['Pixel Art', 'Animation']
+          tags: ['Meme', 'Cat']
         },
         {
           id: 20,
           title: 'Jon Snow',
           date: '27/08/2025',
-          description: 'Classic game interface design with pixel art elements.',
+          description: 'Pixel art character design of Game of Thrones Jon Snow and Ghost.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/3e4d56201862729.667c0a739ea40.jpg',
-          tags: ['Pixel Art', 'UI']
+          tags: ['Series', 'Game of Thrones']
         },
         {
           id: 21,
           title: 'Xbox Controller',
           date: '25/08/2025',
-          description: 'Peaceful pixel art nature landscape with trees and mountains.',
+          description: 'Pixel art design of Xbox Controller.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/68a907191056269.65c4c74d29a2c.png',
-          tags: ['Pixel Art', 'Nature']
+          tags: ['Game', 'Xbox']
         }
       ]
     },
