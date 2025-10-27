@@ -33,22 +33,22 @@ export default function RootLayout({
       >
         <BlobCursor
           blobType="circle"
-          fillColor="#4E4E4E"
+          fillColor="#1A1A1A"
           trailCount={3}
-          sizes={[50, 24, 32  ]}
+          sizes={[42, 12, 24  ]}
           innerSizes={[10, 18]}
           innerColor="rgba(255,255,255,0.8)"
           opacities={[0.25, 0.25]}
-          shadowColor="rgba(0,0,0,0.25)"
-          shadowBlur={2}
-          shadowOffsetX={8}
-          shadowOffsetY={8}
-          filterStdDeviation={18}
-          useFilter={true}
+          shadowColor="rgba(0, 0, 0, 0.25)"
+          shadowBlur={5}
+          shadowOffsetX={0}
+          shadowOffsetY={0}
+          filterStdDeviation={1}
+          useFilter={false}
           fastDuration={0.03}
           slowDuration={0.08}
-          borderColor="#5227FF"
-          borderWidth={2}
+          borderColor="#edede9"
+          borderWidth={1}
           zIndex={100}
         />
         <Header />
