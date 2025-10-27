@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import gsap from 'gsap';
 import './BlobCursor.css';
 
@@ -55,6 +55,7 @@ export default function BlobCursor({
 }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const blobsRef = useRef<Array<HTMLDivElement | null>>([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   const updateOffset = useCallback(() => {
     if (!containerRef.current) return { left: 0, top: 0 };
@@ -83,7 +84,22 @@ export default function BlobCursor({
     [updateOffset, fastDuration, slowDuration, fastEase, slowEase]
   );
 
+  // Detect if user is on mobile/touch device
   useEffect(() => {
+    const checkMobile = () => {
+      const isMobileDevice = window.innerWidth < 1024 || ('ontouchstart' in window);
+      setIsMobile(isMobileDevice);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    // Don't attach cursor events on mobile
+    if (isMobile) return;
+
     const onResize = () => updateOffset();
     const onMouseMove = (e: MouseEvent) => handleMove(e);
     const onTouchMove = (e: TouchEvent) => handleMove(e);
@@ -95,7 +111,10 @@ export default function BlobCursor({
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('touchmove', onTouchMove);
     };
-  }, [updateOffset, handleMove]);
+  }, [updateOffset, handleMove, isMobile]);
+
+  // Don't render cursor on mobile
+  if (isMobile) return null;
 
   return (
     <div
