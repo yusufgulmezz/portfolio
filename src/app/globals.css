@@ -21,6 +21,13 @@ body {
   cursor: none !important;
 }
 
+/* Hide cursor for all clickable elements and inputs */
+button, a, [role="button"], .cursor-pointer, 
+input, textarea, select, [onclick], 
+.cursor-grab, .cursor-not-allowed {
+  cursor: none !important;
+}
+
 /* Lightbox açıkken sayfa kaydırmasını kapat */
 .no-scroll {
   overflow: hidden !important;
