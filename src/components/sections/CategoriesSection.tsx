@@ -590,7 +590,7 @@ const CategoriesSection = () => {
                         
                         {/* Click to Expand Message - Inside design, at bottom */}
                         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                          <div className="bg-white/60 backdrop-blur-sm rounded-lg px-2.5 sm:px-3 py-2 shadow-lg border border-white/30">
+                          <div className="bg-[#edede9]/80 backdrop-blur-sm rounded-lg px-2.5 sm:px-3 py-2 shadow-lg border border-white/30">
                             <div className="flex items-center gap-1.5 sm:gap-2 text-[#4E4E4E] font-medium text-xs sm:text-sm whitespace-nowrap">
                               {design.link ? (
                                 // Coding Projects için external link icon
@@ -709,7 +709,7 @@ const CategoriesSection = () => {
                 disabled={currentIndex === 0}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 bg-white/90 backdrop-blur-sm text-gray-900 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 aria-label="Previous project"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -721,7 +721,7 @@ const CategoriesSection = () => {
                 disabled={currentIndex === designs.length - 1}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-12 h-12 bg-white/90 backdrop-blur-sm text-gray-900 rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 aria-label="Next project"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
