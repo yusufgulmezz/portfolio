@@ -130,11 +130,10 @@ const PersonalCreativesSection = () => {
   };
 
   // Photos filtre chip'leri (Figma'daki gibi)
-  type PhotoFilterKey = 'all' | 'montenegro' | 'sakarya' | 'istanbul' | 'bolu';
-  const [activePhotoFilter, setActivePhotoFilter] = useState<PhotoFilterKey>('all');
+  type PhotoFilterKey = 'montenegro' | 'sakarya' | 'istanbul' | 'bolu';
+  const [activePhotoFilter, setActivePhotoFilter] = useState<PhotoFilterKey>('montenegro');
 
   const photoFilters: { key: PhotoFilterKey; label: string }[] = [
-    { key: 'all', label: 'All' },
     { key: 'montenegro', label: 'Montenegro' },
     { key: 'sakarya', label: 'Sakarya' },
     { key: 'istanbul', label: 'Istanbul' },
@@ -142,9 +141,7 @@ const PersonalCreativesSection = () => {
   ];
 
   const filteredPhotos = useMemo(() => {
-    if (activePhotoFilter === 'all') return contentByTab.photos;
     const map: Record<PhotoFilterKey, string> = {
-      all: '',
       montenegro: 'Montenegro',
       sakarya: 'Sakarya',
       istanbul: 'Istanbul',
@@ -322,7 +319,7 @@ const PersonalCreativesSection = () => {
                           onTouchEnd={handleTouchEnd}
                         >
                           {(() => {
-                            const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
+                            const photos = filteredPhotos;
                             
                             return (
                               <div
@@ -334,13 +331,13 @@ const PersonalCreativesSection = () => {
                                 }}
                               >
                             {/* İlk set */}
-                            {(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).map((item, idx) => (
+                            {filteredPhotos.map((item, idx) => (
                               <div
                                 key={`photo-1-${idx}`}
                                 className="group flex-shrink-0 w-64 sm:w-72 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
                                 onClick={() => {
                                   if (!isScrolling) {
-                                    const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
+                                    const photos = filteredPhotos;
                                     const index = photos.findIndex(p => p.src === item.src);
                                     setSelectedPhoto(item);
                                     setSelectedPhotoIndex(index);
@@ -359,7 +356,7 @@ const PersonalCreativesSection = () => {
                                   
                                   {/* Image counter - top right */}
                                   <span className="absolute right-3 top-3 z-10 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium backdrop-blur-sm">
-                                    {idx + 1}/{(activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos).length}
+                                    {idx + 1}/{filteredPhotos.length}
                                   </span>
                                   
                                   {/* Title - Fixed position */}
@@ -446,7 +443,7 @@ const PersonalCreativesSection = () => {
                                   
                                   {/* Navigation buttons */}
                                   {(() => {
-                                    const photos = activePhotoFilter === 'all' ? contentByTab.photos : filteredPhotos;
+                                    const photos = filteredPhotos;
                                     const hasPrevious = selectedPhotoIndex > 0;
                                     const hasNext = selectedPhotoIndex < photos.length - 1;
                                     
