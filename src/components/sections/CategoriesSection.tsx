@@ -27,7 +27,7 @@ const CategoriesSection = () => {
           id: 2,
           title: 'Max Verstappen',
           date: '12/09/2025',
-          description: 'The poster design for Red Bull Racing driver Verstappen, a key F1 figure, uses three driver images against a white background enhanced with textures for greater impact. The dominant colors are the red and orange tones characteristic of the Red Bull Racing brand, making the poster exceptionally noticeable.',
+          description: 'The poster for F1 figure Verstappen of Red Bull Racing is highly noticeable. It features three driver images on a textured white background, utilizing the brands dominant red and orange tones for maximum impact.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/b816cb235880157.68e1995cd1b62.jpg',
           tags: ['Poster', 'Design']
         },
@@ -143,7 +143,7 @@ const CategoriesSection = () => {
           id: 6,
           title: 'Lamb',
           date: '03/09/2025',
-          description: 'Modern building design with realistic lighting and materials.',
+          description: '3D lamb model with realistic textures and materials.',
           image: 'https://mir-cdn.behance.net/v1/rendition/project_modules/hd_webp/3378c9195317861.68cc44e3d42fe.png',
           tags: ['3D', 'Architecture']
         },
@@ -151,41 +151,41 @@ const CategoriesSection = () => {
           id: 7,
           title: 'Mini TV',
           date: '01/09/2025',
-          description: 'High-quality product visualization for e-commerce.',
+          description: 'Mini TV model with nice lighting and materials.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/93eed3192858185.68cc45e2f0d38.png',
-          tags: ['3D', 'Product']
+          tags: ['3D', 'TV']
         },
         {
           id: 12,
           title: 'Shotgun',
           date: '30/08/2025',
-          description: 'Detailed character modeling with realistic textures and animations.',
+          description: 'Realistic 3D shotgun model.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/bae6aa187036695.68cc43844c8e1.jpg',
-          tags: ['3D', 'Character']
+          tags: ['3D', 'Gun']
         },
         {
           id: 13,
           title: 'Guitar',
           date: '28/08/2025',
-          description: 'Modern interior space with photorealistic lighting and materials.',
+          description: 'Guitar model with Blender.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/37d30f234905769.68cc3e70f0c0c.jpg',
-          tags: ['3D', 'Interior']
+          tags: ['3D', 'Guitar']
         },
         {
           id: 14,
           title: 'Paperclips',
           date: '25/08/2025',
-          description: 'High-poly vehicle model with detailed textures and realistic materials.',
+          description: 'Interlocking paperclips modeling with Blender.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/66b26f207669509.68cc45a6dea73.jpg',
-          tags: ['3D', 'Vehicle']
+          tags: ['3D', 'Paperclip']
         },
         {
           id: 15,
           title: 'Vase Plate Cup',
           date: '22/08/2025',
-          description: 'Creative abstract 3D composition with experimental lighting.',
+          description: '3D vase, plate and cup model with Blender.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/e75e98207675585.68cc412ba6a1c.png',
-          tags: ['3D', 'Abstract']
+          tags: ['3D', 'Cups']
         }
       ]
     },
