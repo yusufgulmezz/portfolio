@@ -231,25 +231,23 @@ const CategoriesSection = () => {
       description: 'Web and mobile application development projects',
       number: '05',
       color: 'from-orange-500 to-red-500',
-      count: 25,
+      count: 11,
       projects: [
-        {
-          id: 10,
-          title: 'Green World',
-          date: '20/08/2025',
+        ...Array.from({ length: 10 }).map((_, idx) => ({
+          id: 100 + idx,
+          title: `Green World - ${idx + 1}`,
+          date: `2025-08-${(20-idx).toString().padStart(2,'0')}`,
           description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
-          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9aa126229631387.68e57c6e5c355.jpg',
-          tags: ['Mobile', 'React Native', 'Firebase'],
-          link: 'https://github.com/yusufgulmezz/GreenWorld'
-        },
+          image: '/images/GreenWorld/IPhoneMainPage.png',
+          tags: ['Mobile', 'React Native', 'Firebase']
+        })),
         {
-          id: 11,
+          id: 999,
           title: 'Portfolio Website',
-          date: '15/08/2025',
-          description: 'A personal portfolio website showcasing my designs and projects, created to bring together my work in one place. The key technologies utilized in the project are the Next.js 14 React framework, TypeScript for type safety, Tailwind CSS for styling, Framer Motion for smooth animations, and Lucide React for icons, all combined to create a modern, responsive, SEO-optimized, and fast-loading site.',
+          date: '2025-08-15',
+          description: '',
           image: 'https://raw.githubusercontent.com/yusufgulmezz/yusufgulmezz/refs/heads/main/DET_Mockup-2.jpg',
-          tags: ['Web', 'Portfolio'],
-          link: 'https://github.com/yusufgulmezz/portfolio'
+          tags: ['Web', 'Portfolio']
         }
       ]
     }
@@ -297,6 +295,7 @@ const CategoriesSection = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const isPixelArt = title.toLowerCase().includes('pixel');
     const is3D = title.toLowerCase().includes('3d');
+    const isCoding = title.toLowerCase().includes('coding');
     const isUIUX = title.toLowerCase().includes('ui/ux');
     const [openUiuxId, setOpenUiuxId] = useState<number | null>(null);
 
@@ -563,10 +562,12 @@ const CategoriesSection = () => {
                             }
                           }
                         }}
-                        className={`${isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app'))
-                          ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]'
-                          : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'
-                        } bg-gray-200 rounded-lg border border-gray-300 shadow-lg overflow-hidden cursor-zoom-in relative group`}
+                        className={`${isCoding
+                          ? 'w-[220px] sm:w-[240px] md:w-[260px] lg:w-[300px] xl:w-[320px] h-[460px] sm:h-[500px] lg:h-[540px] aspect-[9/19]'
+                          : (isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app')))
+                            ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]'
+                            : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'
+                        } bg-transparent rounded-lg overflow-hidden cursor-zoom-in relative group`}
                       >
                         {design.image ? (
                           <Image
@@ -575,9 +576,11 @@ const CategoriesSection = () => {
                             width={400}
                             height={300}
                             className={`w-full h-full ${
-                              (isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app')))
-                                ? 'object-contain bg-black'
-                                : 'object-cover'
+                              isCoding
+                                ? 'object-contain'
+                                : (isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app')))
+                                  ? 'object-contain bg-black'
+                                  : 'object-cover'
                             } transition-transform duration-300 group-hover:scale-105`}
                           />
                         ) : (
@@ -686,7 +689,7 @@ const CategoriesSection = () => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
                     goToProject(currentIndex + 1);
                   }}
-                  className={`${isPixelArt || is3D ? 'w-44 h-44' : 'w-44 h-60'} bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
+                  className={`${isPixelArt || is3D ? 'w-44 h-44' : 'w-[120px] h-[240px]'} bg-transparent rounded-lg shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -695,7 +698,7 @@ const CategoriesSection = () => {
                     alt={designs[currentIndex + 1]?.title || ''}
                     width={400}
                     height={300}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </motion.button>
               </div>
