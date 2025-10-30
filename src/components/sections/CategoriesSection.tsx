@@ -298,6 +298,10 @@ const CategoriesSection = () => {
     const isCoding = title.toLowerCase().includes('coding');
     const isUIUX = title.toLowerCase().includes('ui/ux');
     const [openUiuxId, setOpenUiuxId] = useState<number | null>(null);
+    // Coding alt başlıkları ve aktif sekme
+    const codingGreen = isCoding ? designs.filter(d => d.title.toLowerCase().includes('green world')) : designs;
+    const codingPortfolio = isCoding ? designs.filter(d => d.title.toLowerCase().includes('portfolio')) : [];
+    const [activeCodingTab, setActiveCodingTab] = useState<'green' | 'portfolio'>('green');
 
     // UI/UX açıldığında üstteki proje (Green World App) varsayılan açık gelsin
     useEffect(() => {
@@ -427,14 +431,33 @@ const CategoriesSection = () => {
                 <div className="absolute -bottom-2 -left-2 w-4 h-4 border-l-2 border-b-2 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute -bottom-2 -right-2 w-4 h-4 border-r-2 border-b-2 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <span className="text-sm text-gray-500 mb-2">{designs.length}</span>
+              <span className="text-sm text-gray-500 mb-2">{isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length}</span>
             </div>
             <div className="w-full h-px bg-gray-300 mt-6"></div>
             {/* Design counter */}
             <div className="text-sm text-gray-500 mt-2">
-              {currentIndex + 1} / {designs.length}
+              {currentIndex + 1} / {isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length}
             </div>
           </motion.div>
+
+          {isCoding && (
+            <div className="mt-2 mb-2 flex gap-3">
+              <button
+                onClick={() => { setActiveCodingTab('green'); setCurrentIndex(0); }}
+                className={`px-4 py-2 rounded-lg transition-colors border cursor-pointer ${activeCodingTab === 'green' ? 'bg-gray-900 text-white border-gray-900' : 'bg-transparent text-gray-800 border-gray-300 hover:bg-gray-100'}`}
+                aria-pressed={activeCodingTab === 'green'}
+              >
+                Green World
+              </button>
+              <button
+                onClick={() => { setActiveCodingTab('portfolio'); setCurrentIndex(0); }}
+                className={`px-4 py-2 rounded-lg transition-colors border cursor-pointer ${activeCodingTab === 'portfolio' ? 'bg-gray-900 text-white border-gray-900' : 'bg-transparent text-gray-800 border-gray-300 hover:bg-gray-100'}`}
+                aria-pressed={activeCodingTab === 'portfolio'}
+              >
+                Portfolio Website
+              </button>
+            </div>
+          )}
 
           <motion.div
             className={`relative ${isUIUX ? 'h-auto' : 'h-[700px] sm:h-[600px]'} overflow-hidden`}
@@ -491,7 +514,7 @@ const CategoriesSection = () => {
                 ))}
               </div>
             ) : (
-            designs.map((design, index) => {
+            (isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs).map((design, index) => {
               // Ana tasarım için animasyon değerleri
               const isActive = index === currentIndex;
               const isNext = index === currentIndex + 1;
@@ -548,7 +571,8 @@ const CategoriesSection = () => {
                         whileTap={{ scale: 0.99 }}
                         onClick={() => {
                           if (isActive) {
-                            const d = designs[currentIndex];
+                            const base = isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs;
+                            const d = base[currentIndex];
                             if (d.link) {
                               window.open(d.link, '_blank', 'noopener,noreferrer');
                             } else {
@@ -557,7 +581,7 @@ const CategoriesSection = () => {
                                 title: d.title, 
                                 pixel: isPixelArt || is3D,
                                 currentIndex: currentIndex,
-                                designs: designs
+                                designs: base
                               });
                             }
                           }
@@ -682,7 +706,7 @@ const CategoriesSection = () => {
             {!isUIUX && (
             <>
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
-            {currentIndex < designs.length - 1 && (
+            {currentIndex < ((isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length) - 1) && (
               <div className="hidden lg:block absolute top-32 right-4 z-10">
                 <motion.button
                   onClick={() => {
@@ -694,8 +718,8 @@ const CategoriesSection = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Image
-                    src={designs[currentIndex + 1]?.image || ''}
-                    alt={designs[currentIndex + 1]?.title || ''}
+                    src={(isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs)[currentIndex + 1]?.image || ''}
+                    alt={(isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs)[currentIndex + 1]?.title || ''}
                     width={400}
                     height={300}
                     className="w-full h-full object-contain"
@@ -721,7 +745,7 @@ const CategoriesSection = () => {
               </motion.button>
               <motion.button
                 onClick={() => goToProject(currentIndex + 1)}
-                disabled={currentIndex === designs.length - 1}
+                disabled={currentIndex === ((isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length) - 1)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
