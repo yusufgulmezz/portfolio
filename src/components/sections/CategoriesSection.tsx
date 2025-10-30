@@ -238,7 +238,7 @@ const CategoriesSection = () => {
           title: `Green World - ${idx + 1}`,
           date: `2025-08-${(20-idx).toString().padStart(2,'0')}`,
           description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
-          image: '/images/GreenWorld/IPhoneMainPage.png',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/IPhoneMainPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         })),
         {
@@ -246,7 +246,7 @@ const CategoriesSection = () => {
           title: 'Portfolio Website',
           date: '2025-08-15',
           description: '',
-          image: 'https://raw.githubusercontent.com/yusufgulmezz/yusufgulmezz/refs/heads/main/DET_Mockup-2.jpg',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/DET_Mockup-2.jpg`,
           tags: ['Web', 'Portfolio']
         }
       ]
