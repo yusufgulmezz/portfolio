@@ -460,7 +460,7 @@ const CategoriesSection = () => {
           )}
 
           <motion.div
-            className={`relative ${isUIUX ? 'h-auto' : 'h-[700px] sm:h-[600px]'} overflow-hidden`}
+            className={`relative ${isUIUX ? 'h-auto' : 'h-[800px] sm:h-[750px]'} overflow-hidden`}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
@@ -553,7 +553,7 @@ const CategoriesSection = () => {
                     zIndex: zIndex
                   }}
                 >
-                  <div className="flex flex-col lg:flex-row items-start gap-6 w-full min-h-[500px] lg:min-h-auto">
+                  <div className="flex flex-col lg:flex-row items-start gap-6 w-full min-h-[700px] lg:min-h-[720px]">
                     {/* Sol taraf - Tasarım görüntüsü */}
                     <motion.div 
                       className="flex-shrink-0 mx-auto lg:mx-0"
@@ -587,10 +587,10 @@ const CategoriesSection = () => {
                           }
                         }}
                         className={`${isCoding
-                          ? 'w-[220px] sm:w-[240px] md:w-[260px] lg:w-[300px] xl:w-[320px] h-[460px] sm:h-[500px] lg:h-[540px] aspect-[9/19]'
+                          ? 'w-[240px] sm:w-[260px] md:w-[280px] lg:w-[320px] xl:w-[340px] h-[480px] sm:h-[520px] lg:h-[560px] aspect-[9/19]'
                           : (isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app')))
-                            ? 'w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]'
-                            : 'w-56 h-72 sm:w-64 sm:h-80 md:w-80 md:h-[420px] lg:w-[420px] lg:h-[520px]'
+                            ? 'w-80 h-80 sm:w-96 sm:h-96 md:w-[440px] md:h-[440px] lg:w-[520px] lg:h-[520px]'
+                            : 'w-64 h-80 sm:w-72 sm:h-96 md:w-96 md:h-[480px] lg:w-[480px] lg:h-[580px]'
                         } bg-transparent rounded-lg overflow-hidden cursor-zoom-in relative group`}
                       >
                         {design.image ? (
@@ -713,7 +713,7 @@ const CategoriesSection = () => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
                     goToProject(currentIndex + 1);
                   }}
-                  className={`${isPixelArt || is3D ? 'w-44 h-44' : 'w-[120px] h-[240px]'} bg-transparent rounded-lg shadow-md overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
+                  className={`${isPixelArt || is3D ? 'w-44 h-44' : 'w-[120px] h-[240px]'} bg-transparent rounded-lg overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
