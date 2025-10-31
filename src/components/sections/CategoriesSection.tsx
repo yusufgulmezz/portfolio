@@ -246,7 +246,7 @@ const CategoriesSection = () => {
           title: 'Portfolio Website',
           date: '2025-08-15',
           description: '',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/DET_Mockup-2.jpg`,
+          image: 'https://raw.githubusercontent.com/yusufgulmezz/yusufgulmezz/refs/heads/main/DET_Mockup-2.jpg',
           tags: ['Web', 'Portfolio']
         }
       ]
@@ -302,6 +302,8 @@ const CategoriesSection = () => {
     const codingGreen = isCoding ? designs.filter(d => d.title.toLowerCase().includes('green world')) : designs;
     const codingPortfolio = isCoding ? designs.filter(d => d.title.toLowerCase().includes('portfolio')) : [];
     const [activeCodingTab, setActiveCodingTab] = useState<'green' | 'portfolio'>('green');
+    const baseDesigns = (isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs);
+    const baseDesignsLength = baseDesigns.length;
 
     // UI/UX açıldığında üstteki proje (Green World App) varsayılan açık gelsin
     useEffect(() => {
@@ -372,8 +374,8 @@ const CategoriesSection = () => {
 
     // Tasarım değiştirme fonksiyonu
     const goToProject = (index: number) => {
-      console.log('Tıklanan tasarım index:', index, 'Toplam tasarım sayısı:', designs.length);
-      if (index >= 0 && index < designs.length) {
+      console.log('Tıklanan tasarım index:', index, 'Toplam tasarım sayısı:', baseDesignsLength);
+      if (index >= 0 && index < baseDesignsLength) {
         setCurrentIndex(index);
       }
     };
@@ -653,7 +655,7 @@ const CategoriesSection = () => {
                       </motion.button>
                       <motion.button
                         onClick={() => goToProject(currentIndex + 1)}
-                        disabled={currentIndex === designs.length - 1}
+                        disabled={currentIndex === baseDesignsLength - 1}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
@@ -678,9 +680,9 @@ const CategoriesSection = () => {
                         damping: 30
                       }}
                     >
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{design.title}</h3>
-                      <p className="text-gray-500 text-sm mb-4 lg:mb-6">{design.date}</p>
-                      <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">{design.description}</p>
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1A1A] mb-3">{design.title}</h3>
+                      <p className="text-[#4E4E4E] text-sm mb-4 lg:mb-6">{design.date}</p>
+                      <p className="text-[#1A1A1A] text-sm sm:text-base leading-relaxed mb-4">{design.description}</p>
                       {/* <p className="text-gray-700 text-base leading-relaxed mb-6">
                         Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus.
                       </p> */}
@@ -690,7 +692,7 @@ const CategoriesSection = () => {
                         {design.tags.map((tag: string, tagIndex: number) => (
                           <span
                             key={tagIndex}
-                            className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs sm:text-sm rounded-full border border-gray-200"
+                            className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs sm:text-sm rounded-xl border border-gray-200"
                           >
                             {tag}
                           </span>
@@ -745,7 +747,7 @@ const CategoriesSection = () => {
               </motion.button>
               <motion.button
                 onClick={() => goToProject(currentIndex + 1)}
-                disabled={currentIndex === ((isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length) - 1)}
+                disabled={currentIndex === (baseDesignsLength - 1)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
