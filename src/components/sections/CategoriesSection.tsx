@@ -342,7 +342,7 @@ const CategoriesSection = () => {
           title: 'Portfolio Website',
           date: '2025-08-15',
           description: '',
-          image: '',
+          image: 'https://raw.githubusercontent.com/yusufgulmezz/yusufgulmezz/refs/heads/main/DET_Portfolio.jpg',
           tags: ['Web', 'Portfolio']
         }
       ]
@@ -391,6 +391,7 @@ const CategoriesSection = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const isPixelArt = title.toLowerCase().includes('pixel');
     const is3D = title.toLowerCase().includes('3d');
+    const isPoster = title.toLowerCase().includes('poster');
     const isCoding = title.toLowerCase().includes('coding');
     const isUIUX = title.toLowerCase().includes('ui/ux');
     const [openUiuxId, setOpenUiuxId] = useState<number | null>(null);
@@ -811,7 +812,13 @@ const CategoriesSection = () => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
                     goToProject(currentIndex + 1);
                   }}
-                  className={`${isPixelArt || is3D ? 'w-44 h-44' : 'w-[120px] h-[240px]'} bg-transparent rounded-lg overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
+                  className={`${
+                    isPixelArt || is3D
+                      ? 'w-44 h-44'
+                      : isPoster
+                        ? 'w-auto h-56'
+                        : 'w-[180px] h-[360px]'
+                  } bg-transparent rounded-lg overflow-hidden flex items-center justify-center hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 relative z-30`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
