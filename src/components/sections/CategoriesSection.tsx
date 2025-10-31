@@ -714,25 +714,76 @@ const CategoriesSection = () => {
 
                         {/* Thumbnail bar moved to Lightbox */}
                         
-                        {/* Click to Expand Message - Inside design, at bottom */}
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                          <div className="bg-[#edede9]/80 backdrop-blur-sm rounded-lg px-2.5 sm:px-3 py-2 shadow-lg border border-white/30">
-                            <div className="flex items-center gap-1.5 sm:gap-2 text-[#4E4E4E] font-medium text-xs sm:text-sm whitespace-nowrap">
-                              {design.link ? (
-                                // Coding Projects için external link icon
-                                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg>
-                              ) : (
-                                // Diğer projeler için zoom icon
-                                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                                </svg>
-                              )}
-                              {design.link ? 'Click For Detail' : 'Click For Fullsize'}
-                            </div>
-                          </div>
-                        </div>
+                        {/* Click control: Coding'de ikon butonu sağ üstte, diğerlerinde altta etiket */}
+                        {isCoding ? (
+                          <button
+                            type="button"
+                            aria-label={design.link ? 'Open detail' : 'Open fullsize'}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (isActive) {
+                                const base = isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs;
+                                const d = base[currentIndex];
+                                if (d.link) {
+                                  window.open(d.link, '_blank', 'noopener,noreferrer');
+                                } else {
+                                  setExpandedDesign({ 
+                                    image: d.image, 
+                                    title: d.title, 
+                                    pixel: isPixelArt || is3D,
+                                    currentIndex: currentIndex,
+                                    designs: base
+                                  });
+                                }
+                              }
+                            }}
+                            className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 bg-[#1A1A1A]/60 text-[#edede9] backdrop-blur-sm rounded-full p-2 shadow-lg border border-white/30 hover:bg-[#edede9] lg:hidden"
+                          >
+                            {design.link ? (
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                            ) : (
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                              </svg>
+                            )}
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            aria-label={design.link ? 'Open detail' : 'Open fullsize'}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (isActive) {
+                                const base = isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs;
+                                const d = base[currentIndex];
+                                if (d.link) {
+                                  window.open(d.link, '_blank', 'noopener,noreferrer');
+                                } else {
+                                  setExpandedDesign({ 
+                                    image: d.image, 
+                                    title: d.title, 
+                                    pixel: isPixelArt || is3D,
+                                    currentIndex: currentIndex,
+                                    designs: base
+                                  });
+                                }
+                              }
+                            }}
+                            className="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-[#edede9]/80 text-[#4E4E4E] backdrop-blur-sm rounded-full p-2 shadow-lg border border-white/30 hover:bg-[#edede9] lg:hidden"
+                          >
+                            {design.link ? (
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                            ) : (
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                              </svg>
+                            )}
+                          </button>
+                        )}
                       </motion.div>
                     </motion.div>
 
