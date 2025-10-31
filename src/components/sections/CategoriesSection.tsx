@@ -231,22 +231,118 @@ const CategoriesSection = () => {
       description: 'Web and mobile application development projects',
       number: '05',
       color: 'from-orange-500 to-red-500',
-      count: 11,
+      count: 14,
       projects: [
-        ...Array.from({ length: 10 }).map((_, idx) => ({
-          id: 100 + idx,
-          title: `Green World - ${idx + 1}`,
-          date: `2025-08-${(20-idx).toString().padStart(2,'0')}`,
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/IPhoneMainPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        })),
         {
-          id: 999,
+          id: 16,
+          title: 'Green World - 01',
+          date: '2025-08-20',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/01-IPhoneLoginPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 17,
+          title: 'Green World - 02',
+          date: '2025-08-19',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/02-IPhoneMainPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 18,
+          title: 'Green World - 03',
+          date: '2025-08-18',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/03-IPhoneUserPostPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 19,
+          title: 'Green World - 04',
+          date: '2025-08-17',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/04-IPhoneRankingPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 20,
+          title: 'Green World - 05',
+          date: '2025-08-16',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/05-IPhoneMapPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 21,
+          title: 'Green World - 06',
+          date: '2025-08-15',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/06-IPhoneReportButtonPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 22,
+          title: 'Green World - 07',
+          date: '2025-08-14',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/07-IPhoneTrashMapPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 23,
+          title: 'Green World - 08',
+          date: '2025-08-13',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/08-IPhoneTrashReportPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 24,
+          title: 'Green World - 09',
+          date: '2025-08-12',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/09-IPhoneWasteGuidePage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 25,
+          title: 'Green World - 10',
+          date: '2025-08-11',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/10-IPhoneTrashInfoPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 26,
+          title: 'Green World - 11',
+          date: '2025-08-10',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/11-IPhoneTrashCleaningPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 27,
+          title: 'Green World - 12',
+          date: '2025-08-09',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/12-IPhoneNotificationPage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 28,
+          title: 'Green World - 13',
+          date: '2025-08-08',
+          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/13-IPhoneProfilePage.png`,
+          tags: ['Mobile', 'React Native', 'Firebase']
+        },
+        {
+          id: 29,
           title: 'Portfolio Website',
           date: '2025-08-15',
           description: '',
-          image: 'https://raw.githubusercontent.com/yusufgulmezz/yusufgulmezz/refs/heads/main/DET_Mockup-2.jpg',
+          image: '',
           tags: ['Web', 'Portfolio']
         }
       ]
