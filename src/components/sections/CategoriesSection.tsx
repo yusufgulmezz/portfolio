@@ -238,7 +238,7 @@ const CategoriesSection = () => {
           title: 'Green World - 01',
           date: '2025-08-20',
           description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/01-IPhoneLoginPage.png`,
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/01-IPhoneLogInPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
