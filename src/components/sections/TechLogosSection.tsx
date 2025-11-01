@@ -68,7 +68,7 @@ const TechLogosSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-gray-600 max-w-2xl mx-auto"
           >
-            Modern tools and technologies I use to create exceptional digital experiences
+            Modern tools and technologies I use to create exceptional digital experiences.
           </motion.p>
         </motion.div>
         
