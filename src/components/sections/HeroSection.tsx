@@ -69,19 +69,19 @@ const HeroSection = () => {
     () => [
       {
         src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Profile-1.jpg`,
-        alt: 'Stylish portrait with sunglasses',
+        alt: 'ProfileImage_1',
       },
       {
         src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Profile-1.jpg`,
-        alt: 'Moody studio portrait',
+        alt: 'ProfileImage_2',
       },
       {
         src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Profile-1.jpg`,
-        alt: 'Editorial fashion portrait',
+        alt: 'ProfileImage_3',
       },
       {
         src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Profile-1.jpg`,
-        alt: 'Modern minimal portrait',
+        alt: 'ProfileImage_4',
       },
     ],
     []
