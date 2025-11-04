@@ -630,7 +630,7 @@ const CategoriesSection = () => {
                             </div>
                           </div>
                           <div className="w-full lg:max-w-xl text-left">
-                            <p className="text-gray-500 text-sm mb-3">{design.date}</p>
+                            {/* <p className="text-gray-500 text-sm mb-3">{design.date}</p> */}
                             <p className="text-gray-700 leading-relaxed mb-4">{design.description}</p>
                             <div className="flex gap-2 flex-wrap items-start">
                               {design.tags.map((tag, tagIndex) => (
@@ -879,7 +879,7 @@ const CategoriesSection = () => {
 
                     {/* Sağ taraf - İçerik */}
                     <motion.div 
-                      className="flex-1 w-full lg:max-w-md mt-6 lg:mt-0 px-4 lg:px-0"
+                      className="flex-1 w-full lg:max-w-md lg:mt-0 px-4 lg:px-0"
                       animate={{
                         opacity: isActive ? 1 : 0.6,
                         x: isActive ? 0 : 50
@@ -890,9 +890,9 @@ const CategoriesSection = () => {
                         damping: 30
                       }}
                     >
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1A1A] mb-3">{design.title}</h3>
-                      <p className="text-[#4E4E4E] text-sm mb-4 lg:mb-6">{design.date}</p>
-                      <p className="text-[#1A1A1A] text-sm sm:text-base leading-relaxed mb-4">{design.description}</p>
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1A1A] mb-4">{design.title}</h3>
+                      {/* <p className="text-[#4E4E4E] text-sm mb-4 lg:mb-6">{design.date}</p> */}
+                      <p className="text-[#4E4E4E] text-sm sm:text-base leading-relaxed mb-4">{design.description}</p>
                       {/* <p className="text-gray-700 text-base leading-relaxed mb-6">
                         Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus.
                       </p> */}
