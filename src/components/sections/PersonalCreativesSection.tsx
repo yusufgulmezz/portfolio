@@ -235,15 +235,13 @@ const PersonalCreativesSection = () => {
           className="text-left mb-8"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
-            PERSONAL WORKS
+            PERSONAL
           </h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl"
           >
-            Beyond professional projects, I share photos, drawings, and short notes.
           </motion.p>
         </motion.div>
 
