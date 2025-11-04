@@ -435,6 +435,41 @@ const CategoriesSection = () => {
     const [activeCodingTab, setActiveCodingTab] = useState<'green' | 'portfolio'>('green');
     const baseDesigns = (isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs);
     const baseDesignsLength = baseDesigns.length;
+    // Mobilde içerik yüksekliğine göre parent container'ı ayarlamak için
+    const activeContentRef = useRef<HTMLDivElement | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const [containerHeight, setContainerHeight] = useState<number>(600);
+
+    // Aktif içeriğin yüksekliğine göre container yüksekliğini ayarla (mobilde boşluk sorununu çözmek için)
+    useEffect(() => {
+      if (isUIUX) return;
+      const updateHeight = () => {
+        if (activeContentRef.current) {
+          // Tag'ler dahil tüm içeriğin yüksekliğini ölç
+          const height = activeContentRef.current.offsetHeight;
+          // Mobilde tag'ler için ekstra padding ekle, desktop'ta normal
+          const isMobile = window.innerWidth < 1024;
+          const extraPadding = isMobile ? 40 : 0;
+          setContainerHeight(Math.max(height + extraPadding + 24, isMobile ? 500 : 600)); // Minimum yükseklik
+        }
+      };
+      updateHeight();
+      const resizeObserver = activeContentRef.current 
+        ? new ResizeObserver(updateHeight) 
+        : null;
+      if (activeContentRef.current && resizeObserver) {
+        resizeObserver.observe(activeContentRef.current);
+      }
+      window.addEventListener('resize', updateHeight);
+      const timer = setTimeout(updateHeight, 150);
+      return () => {
+        if (resizeObserver && activeContentRef.current) {
+          resizeObserver.unobserve(activeContentRef.current);
+        }
+        window.removeEventListener('resize', updateHeight);
+        clearTimeout(timer);
+      };
+    }, [currentIndex, isUIUX, activeCodingTab, baseDesignsLength]);
 
     // UI/UX açıldığında üstteki proje (Green World App) varsayılan açık gelsin
     useEffect(() => {
@@ -593,7 +628,9 @@ const CategoriesSection = () => {
           )}
 
           <motion.div
-            className={`relative ${isUIUX ? 'h-auto' : 'h-[800px] sm:h-[750px]'} overflow-hidden`}
+            ref={containerRef}
+            className={`relative ${isUIUX ? 'h-auto' : ''} overflow-hidden`}
+            style={!isUIUX ? { minHeight: containerHeight } : undefined}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
@@ -686,7 +723,10 @@ const CategoriesSection = () => {
                     zIndex: zIndex
                   }}
                 >
-                  <div className="flex flex-col lg:flex-row items-start gap-6 w-full min-h-[700px] lg:min-h-[720px]">
+                  <div
+                    ref={isActive ? activeContentRef : undefined}
+                    className="flex flex-col lg:flex-row items-start gap-6 w-full"
+                  >
                     {/* Sol taraf - Tasarım görüntüsü */}
                     <motion.div 
                       className="flex-shrink-0 mx-auto lg:mx-0"
