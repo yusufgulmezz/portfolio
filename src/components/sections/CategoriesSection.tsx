@@ -11,7 +11,15 @@ const CategoriesSection = () => {
     target: workStickyRef,
     offset: ["start start", "end start"],
   });
-  const workScale = useTransform(workProgress, [0, 0.8], [1, 0.4]);
+  // Mobilde daha az küçülme: min scale 0.7
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 1024);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  const workScale = useTransform(workProgress, [0, 0.8], isMobile ? [1, 0.7] : [1, 0.4]);
   const workHeadingRef = useRef<HTMLSpanElement | null>(null);
   const [workTopOffset, setWorkTopOffset] = useState<number>(0);
   const [workStartY, setWorkStartY] = useState<number>(0);
