@@ -815,15 +815,42 @@ const CategoriesSection = () => {
                             )}
                           </button>
                         )}
-                        {/* Desktop (lg+) Previous/Next controls on image sides */}
+                        {/* Previous/Next controls on image sides (mobile + desktop) */}
                         {!isUIUX && (
                           <>
+                            {/* Mobile (sm-md) */}
                             <motion.button
                               onClick={(e) => { e.stopPropagation(); goToProject(currentIndex - 1); }}
                               disabled={currentIndex === 0}
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
-                              className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full items-center justify-center transition-all duration-200 border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="flex lg:hidden absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#edede9]/80 text-[#4E4E4E] backdrop-blur-sm rounded-full items-center justify-center transition-all duration-200 border border-white/20 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                              aria-label="Previous project"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </motion.button>
+                            <motion.button
+                              onClick={(e) => { e.stopPropagation(); goToProject(currentIndex + 1); }}
+                              disabled={currentIndex === baseDesignsLength - 1}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="flex lg:hidden absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#edede9]/80 text-[#4E4E4E] backdrop-blur-sm rounded-full items-center justify-center transition-all duration-200 border border-white/20 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                              aria-label="Next project"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </motion.button>
+
+                            {/* Desktop (lg+) */}
+                            <motion.button
+                              onClick={(e) => { e.stopPropagation(); goToProject(currentIndex - 1); }}
+                              disabled={currentIndex === 0}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-[#edede9]/80 text-[#4E4E4E] backdrop-blur-sm rounded-full items-center justify-center transition-all duration-200 border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                               aria-label="Previous project"
                             >
                               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -835,7 +862,7 @@ const CategoriesSection = () => {
                               disabled={currentIndex === baseDesignsLength - 1}
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
-                              className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full items-center justify-center transition-all duration-200 border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 bg-[#edede9]/80 text-[#4E4E4E] backdrop-blur-sm rounded-full items-center justify-center transition-all duration-200 border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                               aria-label="Next project"
                             >
                               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -847,33 +874,7 @@ const CategoriesSection = () => {
                       </motion.div>
                     </motion.div>
 
-                    {/* Mobile/Tablet buttons - under image */}
-                    <div className="lg:hidden mt-4 flex justify-center gap-4 w-full">
-                      <motion.button
-                        onClick={() => goToProject(currentIndex - 1)}
-                        disabled={currentIndex === 0}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                        aria-label="Previous project"
-                      >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
-                      </motion.button>
-                      <motion.button
-                        onClick={() => goToProject(currentIndex + 1)}
-                        disabled={currentIndex === baseDesignsLength - 1}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="w-12 h-12 bg-[#1A1A1A]/90 backdrop-blur-sm text-[#edede9] rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                        aria-label="Next project"
-                      >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </motion.button>
-                    </div>
+                    {/* Mobile/Tablet buttons moved to image sides */}
 
                     {/* Sağ taraf - İçerik */}
                     <motion.div 
