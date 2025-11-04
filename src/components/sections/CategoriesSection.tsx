@@ -268,105 +268,105 @@ const CategoriesSection = () => {
       projects: [
         {
           id: 16,
-          title: 'Green World - 01',
+          title: 'Log In & Sign Up Pages',
           date: '2025-08-20',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The relevant screens where you can log in and sign up for the application.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/01-IPhoneLogInPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 17,
-          title: 'Green World - 02',
+          title: 'Main Page',
           date: '2025-08-19',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The app is homepage where users share informative contents.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/02-IPhoneMainPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 18,
-          title: 'Green World - 03',
+          title: 'User Post Page',
           date: '2025-08-18',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The details page for this content shared by the user is included.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/03-IPhoneUserPostPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 19,
-          title: 'Green World - 04',
+          title: 'Ranking Page',
           date: '2025-08-17',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'A ranking list page created based on users activity in the application.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/04-IPhoneRankingPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 20,
-          title: 'Green World - 05',
+          title: 'Map Page',
           date: '2025-08-16',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The map page contains buttons that users can interact with. At the top are filter and navigation buttons, while zoom in and zoom out buttons are located at the bottom right. At the very bottom are buttons for reporting waste and displaying waste.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/05-IPhoneMapPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 21,
-          title: 'Green World - 06',
+          title: 'Report Trash',
           date: '2025-08-15',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The location of the waste is marked within this area, and the waste report is initiated by clicking the "Confirm" button below. If the wrong location has been selected or you wist to cancel, click the "Cancel" button.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/06-IPhoneReportButtonPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 22,
-          title: 'Green World - 07',
+          title: 'Trash Points',
           date: '2025-08-14',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The cleaned and uncleaned waste reporting points are shown above. Users can access the relevant waste information by clicking on these points.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/07-IPhoneTrashMapPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 23,
-          title: 'Green World - 08',
+          title: 'Trash Report Page',
           date: '2025-08-13',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'Once the waste reporting point has been determined, it is time to enter the relevant information about the waste. This section includes images of the waste, its category, quantity, and related information such as the necessary tools.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/08-IPhoneTrashReportPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 24,
-          title: 'Green World - 09',
+          title: 'Waste Guide',
           date: '2025-08-12',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'As seen here, there is an information guide on what category the waste should fall under. Users can refer to this section when determining the type of waste.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/09-IPhoneWasteGuidePage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 25,
-          title: 'Green World - 10',
+          title: 'Trash Info Page',
           date: '2025-08-11',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'On the Trash Info page, you can see a reported waste item with the necessary information entered. The page includes when, where, and by whom the waste was reported, other information, and the necessary buttons for cleaning up the waste.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/10-IPhoneTrashInfoPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 26,
-          title: 'Green World - 11',
+          title: 'Trash Cleaning Page',
           date: '2025-08-10',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The cleaning process takes place after the images of the waste during and after cleaning are uploaded to the relevant sections on this page.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/11-IPhoneTrashCleaningPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 27,
-          title: 'Green World - 12',
+          title: 'Notification Page',
           date: '2025-08-09',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The Notifications page is where you can see new waste reports in your area, likes on shared posts, new updates about the app, and more.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/12-IPhoneNotificationPage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
           id: 28,
-          title: 'Green World - 13',
+          title: 'Profile Page',
           date: '2025-08-08',
-          description: 'Location-based mobile app to report, track and clean waste with community-driven actions. The mobile application was fundamentally built using React Native and Expo Go, supported by Firebase Authentication, Firestore, and Cloud Messaging for user services and notifications, and the Google Maps API for location-based features.',
+          description: 'The profile page is a page belonging to the user, where the waste they have reported and cleaned up, as well as the posts they have shared, are displayed. From here, they can also edit their personal information.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/13-IPhoneProfilePage.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
@@ -429,8 +429,9 @@ const CategoriesSection = () => {
     const isUIUX = title.toLowerCase().includes('ui/ux');
     const [openUiuxId, setOpenUiuxId] = useState<number | null>(null);
     // Coding alt başlıkları ve aktif sekme
-    const codingGreen = isCoding ? designs.filter(d => d.title.toLowerCase().includes('green world')) : designs;
-    const codingPortfolio = isCoding ? designs.filter(d => d.title.toLowerCase().includes('portfolio')) : [];
+    // Başlık değişse bile bozulmaması için GreenWorld klasör yoluna göre ayırıyoruz
+    const codingGreen = isCoding ? designs.filter(d => (d.image || '').toLowerCase().includes('/greenworld/')) : designs;
+    const codingPortfolio = isCoding ? designs.filter(d => !(d.image || '').toLowerCase().includes('/greenworld/')) : [];
     const [activeCodingTab, setActiveCodingTab] = useState<'green' | 'portfolio'>('green');
     const baseDesigns = (isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs);
     const baseDesignsLength = baseDesigns.length;
