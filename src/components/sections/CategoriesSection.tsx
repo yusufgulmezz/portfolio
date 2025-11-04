@@ -1,10 +1,35 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const CategoriesSection = () => {
+  // WORK sticky header scroll control
+  const workStickyRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress: workProgress } = useScroll({
+    target: workStickyRef,
+    offset: ["start start", "end start"],
+  });
+  const workScale = useTransform(workProgress, [0, 0.8], [1, 0.4]);
+  const workHeadingRef = useRef<HTMLSpanElement | null>(null);
+  const [workTopOffset, setWorkTopOffset] = useState<number>(0);
+  const [workStartY, setWorkStartY] = useState<number>(0);
+  useEffect(() => {
+    const update = () => {
+      const headerEl = document.querySelector('header') as HTMLElement | null;
+      const headerH = headerEl?.offsetHeight ?? 0;
+      setWorkTopOffset(headerH + 8);
+      const viewportH = window.innerHeight;
+      const headingH = workHeadingRef.current?.offsetHeight ?? 0;
+      const startY = Math.max(0, (viewportH - headerH - headingH) / 2);
+      setWorkStartY(startY);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+  const workY = useTransform(workProgress, [0, 1], [workStartY, 0]);
 
   const categories = [
     {
@@ -1029,21 +1054,17 @@ const CategoriesSection = () => {
   return (
     <section id="categories" className="py-20 bg-[#edede9]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-left mb-8"
-        >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            MY WORKS
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl">
-            Pixel Art, Poster Designs, UI/UX, 3D, Coding
-          </p>
-        </motion.div>
+        {/* Sticky WORK header with scroll-scale effect */}
+        <div ref={workStickyRef} className="relative h-[160vh] mb-6">
+          <motion.h2
+            style={{ scale: workScale, y: workY, top: workTopOffset as unknown as string }}
+            className="sticky text-center font-bold text-[#1A1A1A]"
+          >
+            <span ref={workHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: 'clamp(72px, 24vw, 420px)' }}>
+              WORK
+            </span>
+          </motion.h2>
+        </div>
 
 
         {/* Animated Categories Sections */}
