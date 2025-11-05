@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 
 type TabKey = 'photos' | 'drawings' | 'blog';
@@ -13,6 +13,40 @@ const TABS: { key: TabKey; label: string }[] = [
 ];
 
 const PersonalCreativesSection = () => {
+  // PERSONAL sticky header scroll control
+  const personalStickyRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress: personalProgress } = useScroll({
+    target: personalStickyRef,
+    offset: ["start start", "end start"],
+  });
+  // Mobilde daha az küçülme: min scale 0.7
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 1024);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  const personalScale = useTransform(personalProgress, [0, 0.8], isMobile ? [1, 0.7] : [1, 0.4]);
+  const personalHeadingRef = useRef<HTMLSpanElement | null>(null);
+  const [personalTopOffset, setPersonalTopOffset] = useState<number>(0);
+  const [personalStartY, setPersonalStartY] = useState<number>(0);
+  useEffect(() => {
+    const update = () => {
+      const headerEl = document.querySelector('header') as HTMLElement | null;
+      const headerH = headerEl?.offsetHeight ?? 0;
+      setPersonalTopOffset(headerH + 8);
+      const viewportH = window.innerHeight;
+      const headingH = personalHeadingRef.current?.offsetHeight ?? 0;
+      const startY = Math.max(0, (viewportH - headerH - headingH) / 2);
+      setPersonalStartY(startY);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+  const personalY = useTransform(personalProgress, [0, 1], [personalStartY, 0]);
+
   const [activeTab, setActiveTab] = useState<TabKey>('photos');
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
@@ -227,23 +261,18 @@ const PersonalCreativesSection = () => {
 
   return (
     <section id="personal-creatives" className="pt-4 pb-20 bg-[#edede9]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-left mb-8"
-        >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
-            PERSONAL
-          </h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Sticky PERSONAL header with scroll-scale effect */}
+        <div ref={personalStickyRef} className="relative h-[160vh] mb-6">
+          <motion.h2
+            style={{ scale: personalScale, y: personalY, top: personalTopOffset as unknown as string }}
+            className="sticky text-center font-bold text-[#1A1A1A]"
           >
-          </motion.p>
-        </motion.div>
+            <span ref={personalHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: 'clamp(72px, 24vw, 248px)' }}>
+              PERSONAL
+            </span>
+          </motion.h2>
+        </div>
 
         {/* CategoriesSection başlık stili ile akordeon */}
         <div className="mb-6">
