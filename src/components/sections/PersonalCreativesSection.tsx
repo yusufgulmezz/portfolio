@@ -260,8 +260,8 @@ const PersonalCreativesSection = () => {
   };
 
   return (
-    <section id="personal-creatives" className="pt-4 pb-20 bg-[#edede9]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section id="personal-creatives" className="py-20 bg-[#edede9]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Sticky PERSONAL header with scroll-scale effect */}
         <div ref={personalStickyRef} className="relative h-[160vh] mb-6">
           <motion.h2
