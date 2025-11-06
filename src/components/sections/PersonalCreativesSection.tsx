@@ -260,15 +260,15 @@ const PersonalCreativesSection = () => {
   };
 
   return (
-    <section id="personal-creatives" className="py-20 bg-[#edede9]">
+    <section id="personal-creatives" className="bg-[#edede9]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Sticky PERSONAL header with scroll-scale effect */}
-        <div ref={personalStickyRef} className="relative h-[160vh] mb-6">
+        <div ref={personalStickyRef} className="relative h-[160vh] mb-12">
           <motion.h2
             style={{ scale: personalScale, y: personalY, top: personalTopOffset as unknown as string }}
             className="sticky text-center font-bold text-[#1A1A1A]"
           >
-            <span ref={personalHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: 'clamp(72px, 24vw, 248px)' }}>
+            <span ref={personalHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: 'clamp(36px, 18vw, 248px)' }}>
               PERSONAL
             </span>
           </motion.h2>
