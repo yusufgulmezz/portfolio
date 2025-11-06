@@ -19,7 +19,7 @@ const CategoriesSection = () => {
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
-  const workScale = useTransform(workProgress, [0, 0.8], isMobile ? [1, 0.7] : [1, 0.4]);
+  const workScale = useTransform(workProgress, [0, 0.8], isMobile ? [1, 0.5] : [1, 0.4]);
   const workHeadingRef = useRef<HTMLSpanElement | null>(null);
   const [workTopOffset, setWorkTopOffset] = useState<number>(0);
   const [workStartY, setWorkStartY] = useState<number>(0);
@@ -1110,7 +1110,7 @@ const CategoriesSection = () => {
             style={{ scale: workScale, y: workY, top: workTopOffset as unknown as string }}
             className="sticky text-center font-bold text-[#1A1A1A]"
           >
-            <span ref={workHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: 'clamp(72px, 24vw, 420px)' }}>
+            <span ref={workHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: 'clamp(96px, 32vw, 420px)' }}>
               WORK
             </span>
           </motion.h2>
