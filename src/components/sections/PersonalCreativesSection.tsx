@@ -218,7 +218,7 @@ const PersonalCreativesSection = () => {
                                 style={{
                                   width: 'max-content',
                                   gap: '36px',
-                                  animation: `scroll-left ${photos.length * 4}s linear infinite`
+                                  animation: `scroll-left ${photos.length * 8}s linear infinite`
                                 }}
                               >
                                 {/* İki set görsel (loop için) */}
@@ -247,15 +247,30 @@ const PersonalCreativesSection = () => {
                                         className="object-cover" 
                                       />
                                       
+                                      {/* Gradient overlay - ana görsele uygulanıyor */}
+                                      <div 
+                                        className="absolute inset-0 z-[5]"
+                                        style={{
+                                          background: 'linear-gradient(to bottom, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)'
+                                        }}
+                                      />
+                                      
                                       {/* Sağ üstte görsel numarası */}
-                                      <div className="absolute right-3 top-3 z-10">
-                                        <span className="inline-block rounded-md bg-[#edede9]/80 text-[#1A1A1A] px-2.5 py-1 text-sm font-medium backdrop-blur-sm">
+                                      <div className="absolute z-10" style={{ right: '18px', top: '18px' }}>
+                                        <span 
+                                          className="inline-flex items-center justify-center bg-[#edede9]/80 text-[#1A1A1A] text-sm font-medium backdrop-blur-sm"
+                                          style={{
+                                            width: '42px',
+                                            height: '24px',
+                                            borderRadius: '6px'
+                                          }}
+                                        >
                                           {actualIndex + 1}/{photos.length}
                                         </span>
                                       </div>
                                       
                                       {/* Sol altta başlık ve tarih */}
-                                      <div className="absolute bottom-0 left-0 right-0 z-10 p-4 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                                      <div className="absolute z-10" style={{ left: '36px', bottom: '36px' }}>
                                         <h5 className="text-[#edede9] text-lg font-medium mb-1">{item.title}</h5>
                                         {item.date && (
                                           <p className="text-[#edede9] text-sm">{item.date}</p>
