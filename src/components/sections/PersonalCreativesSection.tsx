@@ -271,9 +271,9 @@ const PersonalCreativesSection = () => {
                                       
                                       {/* Sol altta başlık ve tarih */}
                                       <div className="absolute z-10" style={{ left: '36px', bottom: '36px' }}>
-                                        <h5 className="text-[#edede9] text-lg font-medium mb-1">{item.title}</h5>
+                                        <h5 className="text-[#edede9] text-[20px] font-bold mb-[8px]">{item.title}</h5>
                                         {item.date && (
-                                          <p className="text-[#edede9] text-sm">{item.date}</p>
+                                          <p className="text-[#edede9] text-[14px] font-normal">{item.date}</p>
                                         )}
                                       </div>
                                     </div>
