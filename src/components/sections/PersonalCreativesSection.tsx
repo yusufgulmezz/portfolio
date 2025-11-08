@@ -218,7 +218,7 @@ const PersonalCreativesSection = () => {
                                 style={{
                                   width: 'max-content',
                                   gap: '36px',
-                                  animation: `scroll-left ${photos.length * 8}s linear infinite`
+                                  animation: `scroll-left ${photos.length * 6}s linear infinite`
                                 }}
                               >
                                 {/* İki set görsel (loop için) */}
@@ -244,14 +244,14 @@ const PersonalCreativesSection = () => {
                                         alt={item.title} 
                                         fill 
                                         sizes="412px"
-                                        className="object-cover" 
+                                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
                                       />
                                       
                                       {/* Gradient overlay - ana görsele uygulanıyor */}
                                       <div 
                                         className="absolute inset-0 z-[5]"
                                         style={{
-                                          background: 'linear-gradient(to bottom, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%)'
+                                          background: 'linear-gradient(to bottom, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%)'
                                         }}
                                       />
                                       
