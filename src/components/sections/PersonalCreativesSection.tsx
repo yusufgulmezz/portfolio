@@ -78,10 +78,6 @@ const PersonalCreativesSection = () => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
   
-  // Horizontal scroll için state'ler
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   
   
 
@@ -96,64 +92,6 @@ const PersonalCreativesSection = () => {
     window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
 
-  // Horizontal scroll handlers (mouse ve touch)
-  const handleScrollStart = (clientX: number) => {
-    if (!photosContainerRef.current) return;
-    setIsScrolling(true);
-    setStartX(clientX);
-    setScrollLeft(photosContainerRef.current.scrollLeft);
-    photosContainerRef.current.style.cursor = 'grabbing';
-    photosContainerRef.current.style.userSelect = 'none';
-  };
-
-  const handleScrollMove = (clientX: number) => {
-    if (!isScrolling || !photosContainerRef.current) return;
-    const x = clientX;
-    const walk = (x - startX) * 2; // Scroll hızı
-    photosContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleScrollEnd = () => {
-    setIsScrolling(false);
-    if (photosContainerRef.current) {
-      photosContainerRef.current.style.cursor = 'grab';
-      photosContainerRef.current.style.userSelect = 'auto';
-    }
-  };
-
-  // Mouse events
-  const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
-    handleScrollStart(e.clientX);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    e.preventDefault();
-    handleScrollMove(e.clientX);
-  };
-
-  const handleMouseUp = () => {
-    handleScrollEnd();
-  };
-
-  const handleMouseLeave = () => {
-    handleScrollEnd();
-  };
-
-  // Touch events
-  const handleTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault();
-    handleScrollStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault();
-    handleScrollMove(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    handleScrollEnd();
-  };
 
   // Yardımcı: diziyi n parçaya böl
   const chunk = <T,>(arr: T[], parts: number): T[][] => {
@@ -163,62 +101,19 @@ const PersonalCreativesSection = () => {
     return out;
   };
 
-  // Photos filtre chip'leri (Figma'daki gibi)
-  type PhotoFilterKey = 'montenegro' | 'sakarya' | 'istanbul' | 'bolu';
-  const [activePhotoFilter, setActivePhotoFilter] = useState<PhotoFilterKey>('montenegro');
-
-  const photoFilters: { key: PhotoFilterKey; label: string }[] = [
-    { key: 'montenegro', label: 'Montenegro' },
-    { key: 'sakarya', label: 'Sakarya' },
-    { key: 'istanbul', label: 'Istanbul' },
-    { key: 'bolu', label: 'Bolu' }
-  ];
-
-  const filteredPhotos = useMemo(() => {
-    const map: Record<PhotoFilterKey, string> = {
-      montenegro: 'Montenegro',
-      sakarya: 'Sakarya',
-      istanbul: 'Istanbul',
-      bolu: 'Bolu'
-    };
-    const want = map[activePhotoFilter];
-    return contentByTab.photos.filter((p) => (p.category || '').toLowerCase() === want.toLowerCase());
-  }, [activePhotoFilter, contentByTab.photos]);
-
-  // Photos ticker ölçüm ve kontrolü (mobilde az öğe varken loop kapansın, butonla gezinilsin)
-  const photosContainerRef = useRef<HTMLDivElement | null>(null);
-  const photosRowRef = useRef<HTMLDivElement | null>(null);
-  const [photoStepPx, setPhotoStepPx] = useState<number>(280);
-  const [shouldAnimatePhotos, setShouldAnimatePhotos] = useState<boolean>(false);
-  const [isMobileViewport, setIsMobileViewport] = useState<boolean>(typeof window !== 'undefined' ? window.innerWidth < 640 : false);
-  const [photosCurrentIdx, setPhotosCurrentIdx] = useState<number>(0);
-
-  useEffect(() => {
-    const measure = () => {
-      setIsMobileViewport(window.innerWidth < 640);
-      const row = photosRowRef.current;
-      const container = photosContainerRef.current;
-      if (!row || !container) return;
-      const children = Array.from(row.children) as HTMLElement[];
-      if (children.length >= 2) {
-        const dx = children[1].offsetLeft - children[0].offsetLeft;
-        if (dx > 0) setPhotoStepPx(dx);
-      } else if (children.length === 1) {
-        setPhotoStepPx(children[0].getBoundingClientRect().width);
+  // Photos kategorilere göre grupla
+  const photosByCategory = useMemo(() => {
+    const grouped: Record<string, Item[]> = {};
+    contentByTab.photos.forEach((photo) => {
+      const category = photo.category || 'Other';
+      if (!grouped[category]) {
+        grouped[category] = [];
       }
-      const photos = filteredPhotos;
-      const totalWidth = photoStepPx * photos.length;
-      const containerWidth = container.clientWidth;
-      setShouldAnimatePhotos(totalWidth > containerWidth + 4);
-      // current index sınırla
-      setPhotosCurrentIdx((idx) => Math.min(idx, Math.max(0, photos.length - 1)));
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (photosContainerRef.current) ro.observe(photosContainerRef.current);
-    window.addEventListener('resize', measure);
-    return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
-  }, [filteredPhotos, photoStepPx]);
+      grouped[category].push(photo);
+    });
+    return grouped;
+  }, [contentByTab.photos]);
+
 
 
   const VerticalGalleryCard = ({ data, label }: { data: Item[]; label?: string }) => {
@@ -309,233 +204,70 @@ const PersonalCreativesSection = () => {
                 {isActive && (
                   <div className="mt-6">
                     {tab.key === 'photos' ? (
-                      <div>
-                        {/* Filter chips */}
-                        <div className="mb-6 flex flex-wrap items-center gap-2">
-                          {photoFilters.map((f) => {
-                            const active = f.key === activePhotoFilter;
-                            return (
-                              <button
-                                key={f.key}
-                                type="button"
-                                onClick={() => setActivePhotoFilter(f.key)}
-                                className={`px-4 py-2 rounded-md border text-sm capitalize transition-colors ${
-                                  active ? 'bg-gray-900 text-white border-gray-900' : 'bg-white/70 text-gray-700 border-gray-300 hover:bg-white'
-                                }`}
-                              >
-                                {f.label}
-                              </button>
-                            );
-                          })}
-                        </div>
-
-                        {/* Width-aware Photos Ticker */}
-                        <div 
-                          ref={photosContainerRef} 
-                          className="relative overflow-x-auto overflow-y-hidden px-4 cursor-grab select-none scrollbar-hide"
-                          style={{
-                            scrollbarWidth: 'none',
-                            msOverflowStyle: 'none'
-                          }}
-                          onMouseDown={handleMouseDown}
-                          onMouseMove={handleMouseMove}
-                          onMouseUp={handleMouseUp}
-                          onMouseLeave={handleMouseLeave}
-                          onTouchStart={handleTouchStart}
-                          onTouchMove={handleTouchMove}
-                          onTouchEnd={handleTouchEnd}
-                        >
-                          {(() => {
-                            const photos = filteredPhotos;
+                      <div className="space-y-12">
+                        {/* Her kategori için ayrı scroll container */}
+                        {Object.entries(photosByCategory).map(([categoryName, photos]) => (
+                          <div key={categoryName} className="space-y-4">
+                            {/* Kategori başlığı */}
+                            <h4 className="text-2xl font-bold text-[#1A1A1A]">{categoryName}</h4>
                             
-                            return (
-                              <div
-                                ref={photosRowRef}
-                                className="flex gap-6"
-                                style={{ 
-                                  width: 'max-content',
-                                  minWidth: '100%'
-                                }}
-                              >
-                            {/* İlk set */}
-                            {filteredPhotos.map((item, idx) => (
-                              <div
-                                key={`photo-1-${idx}`}
-                                className="group flex-shrink-0 w-64 sm:w-72 rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-0 overflow-hidden cursor-pointer hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
-                                onClick={() => {
-                                  if (!isScrolling) {
-                                    const photos = filteredPhotos;
-                                    const index = photos.findIndex(p => p.src === item.src);
-                                    setSelectedPhoto(item);
-                                    setSelectedPhotoIndex(index);
-                                  }
-                                }}
-                              >
-                                <div className="relative w-full aspect-[4/5] overflow-hidden">
-                                  <Image src={item.src} alt={item.title} fill sizes="288px" className="object-cover" />
-                                  
-                                  {/* Category badge - top left */}
-                                  {item.category && (
-                                    <span className="absolute left-3 top-3 z-10 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium backdrop-blur-sm">
-                                      {item.category}
-                                    </span>
-                                  )}
-                                  
-                                  {/* Image counter - top right */}
-                                  <span className="absolute right-3 top-3 z-10 inline-block rounded-md bg-black/60 text-white px-2 py-1 text-xs font-medium backdrop-blur-sm">
-                                    {idx + 1}/{filteredPhotos.length}
-                                  </span>
-                                  
-                                  {/* Title - Fixed position */}
-                                  <div className="absolute bottom-10 left-3 right-3 z-10">
-                                    <h4 className="text-white text-sm sm:text-base font-medium leading-tight">{item.title}</h4>
-                                  </div>
-                                  
-                                  {/* Gradient overlay with info - bottom */}
-                                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/100 via-black/50 to-transparent">
-                                    {/* Date and Location */}
-                                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                                      {/* Date */}
-                                      {item.date && (
-                                        <div className="flex items-center gap-1.5 text-white text-xs">
-                                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                          </svg>
-                                          <span>{item.date}</span>
-                                        </div>
-                                      )}
-                                      
-                                      {/* Location */}
-                                      {item.location && (
-                                        <div className="flex items-center gap-1.5 text-white text-xs">
-                                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                          </svg>
-                                          <span>{item.location}</span>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                              </div>
-                            );
-                          })()}
-                          
-                        </div>
-                        {/* Detail Modal */}
-                        <AnimatePresence>
-                          {selectedPhoto && (
-                            <motion.div
-                              key="photo-modal"
-                              className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              onClick={() => setSelectedPhoto(null)}
-                            >
-                              <motion.div
-                                className="bg-white rounded-lg overflow-hidden"
+                            {/* Yatay scroll container - sonsuz loop */}
+                            <div className="relative overflow-hidden" style={{ width: '100%' }}>
+                              <div 
+                                className="flex"
                                 style={{
-                                  maxWidth: '95vw',
-                                  maxHeight: '95vh',
-                                  width: 'auto',
-                                  height: 'auto'
+                                  width: 'max-content',
+                                  gap: '36px',
+                                  animation: `scroll-left ${photos.length * 4}s linear infinite`
                                 }}
-                                initial={{ scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.95, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
-                                onClick={(e) => e.stopPropagation()}
                               >
-                                <div className="relative">
-                                  <Image 
-                                    src={selectedPhoto.src} 
-                                    alt={selectedPhoto.title} 
-                                    width={selectedPhoto.width}
-                                    height={selectedPhoto.height}
-                                    className="max-w-[90vw] max-h-[80vh] w-auto h-auto object-contain"
-                                  />
-                                  
-                                  {/* Close button */}
-                                  <button
-                                    onClick={() => setSelectedPhoto(null)}
-                                    className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors text-xl font-bold"
-                                    aria-label="Close"
-                                  >
-                                    ×
-                                  </button>
-                                  
-                                  {/* Navigation buttons */}
-                                  {(() => {
-                                    const photos = filteredPhotos;
-                                    const hasPrevious = selectedPhotoIndex > 0;
-                                    const hasNext = selectedPhotoIndex < photos.length - 1;
-                                    
-                                    return (
-                                      <>
-                                        {/* Previous button */}
-                                        {hasPrevious && (
-                                          <button
-                                            onClick={() => {
-                                              const prevPhoto = photos[selectedPhotoIndex - 1];
-                                              setSelectedPhoto(prevPhoto);
-                                              setSelectedPhotoIndex(selectedPhotoIndex - 1);
-                                            }}
-                                            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 text-white rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg"
-                                            aria-label="Previous photo"
-                                          >
-                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                            </svg>
-                                          </button>
-                                        )}
-                                        
-                                        {/* Next button */}
-                                        {hasNext && (
-                                          <button
-                                            onClick={() => {
-                                              const nextPhoto = photos[selectedPhotoIndex + 1];
-                                              setSelectedPhoto(nextPhoto);
-                                              setSelectedPhotoIndex(selectedPhotoIndex + 1);
-                                            }}
-                                            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 text-white rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg"
-                                            aria-label="Next photo"
-                                          >
-                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                            </svg>
-                                          </button>
-                                        )}
-                                      </>
-                                    );
-                                  })()}
-                                  
-                                  {/* Image info overlay */}
-                                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
-                                    <div className="flex items-start justify-between">
-                                      <div className="text-white">
-                                        <h3 className="text-xl font-semibold mb-2">{selectedPhoto.title}</h3>
-                                        {selectedPhoto.location && <p className="text-sm opacity-90 mb-1">{selectedPhoto.location}</p>}
-                                        {selectedPhoto.date && <p className="text-xs opacity-75">{selectedPhoto.date}</p>}
-                                        {selectedPhoto.description && (
-                                          <p className="text-sm opacity-90 mt-2 leading-relaxed max-w-md">{selectedPhoto.description}</p>
+                                {/* İki set görsel (loop için) */}
+                                {[...photos, ...photos].map((item, idx) => {
+                                  const actualIndex = idx % photos.length;
+                                  return (
+                                    <div
+                                      key={`${categoryName}-${idx}`}
+                                      className="group flex-shrink-0 relative overflow-hidden cursor-pointer"
+                                      style={{
+                                        width: '412px',
+                                        height: '548px'
+                                      }}
+                                      onClick={() => {
+                                        const photosList = photosByCategory[categoryName] || [];
+                                        const index = photosList.findIndex(p => p.src === item.src);
+                                        setSelectedPhoto(item);
+                                        setSelectedPhotoIndex(index);
+                                      }}
+                                    >
+                                      <Image 
+                                        src={item.src} 
+                                        alt={item.title} 
+                                        fill 
+                                        sizes="412px"
+                                        className="object-cover" 
+                                      />
+                                      
+                                      {/* Sağ üstte görsel numarası */}
+                                      <div className="absolute right-3 top-3 z-10">
+                                        <span className="inline-block rounded-md bg-[#edede9]/80 text-[#1A1A1A] px-2.5 py-1 text-sm font-medium backdrop-blur-sm">
+                                          {actualIndex + 1}/{photos.length}
+                                        </span>
+                                      </div>
+                                      
+                                      {/* Sol altta başlık ve tarih */}
+                                      <div className="absolute bottom-0 left-0 right-0 z-10 p-4 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                                        <h5 className="text-[#edede9] text-lg font-medium mb-1">{item.title}</h5>
+                                        {item.date && (
+                                          <p className="text-[#edede9] text-sm">{item.date}</p>
                                         )}
                                       </div>
-                                      {selectedPhoto.category && (
-                                        <span className="px-3 py-1 text-sm bg-white/20 text-white rounded-lg backdrop-blur-sm border border-white/30">
-                                          {selectedPhoto.category}
-                                        </span>
-                                      )}
                                     </div>
-                                  </div>
-                                </div>
-                              </motion.div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     ) : (
                       <motion.div
@@ -565,6 +297,119 @@ const PersonalCreativesSection = () => {
         </div>
         {/* İçerikler başlık altında render edildiği için ayrıca genel grid yok */}
       </div>
+      
+      {/* Detail Modal */}
+      <AnimatePresence>
+        {selectedPhoto && (
+          <motion.div
+            key="photo-modal"
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedPhoto(null)}
+          >
+            <motion.div
+              className="bg-white rounded-lg overflow-hidden"
+              style={{
+                maxWidth: '95vw',
+                maxHeight: '95vh',
+                width: 'auto',
+                height: 'auto'
+              }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative">
+                <Image 
+                  src={selectedPhoto.src} 
+                  alt={selectedPhoto.title} 
+                  width={selectedPhoto.width}
+                  height={selectedPhoto.height}
+                  className="max-w-[90vw] max-h-[80vh] w-auto h-auto object-contain"
+                />
+                
+                {/* Close button */}
+                <button
+                  onClick={() => setSelectedPhoto(null)}
+                  className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-colors text-xl font-bold"
+                  aria-label="Close"
+                >
+                  ×
+                </button>
+                
+                {/* Navigation buttons */}
+                {(() => {
+                  const category = selectedPhoto.category || 'Other';
+                  const photos = photosByCategory[category] || [];
+                  const hasPrevious = selectedPhotoIndex > 0;
+                  const hasNext = selectedPhotoIndex < photos.length - 1;
+                  
+                  return (
+                    <>
+                      {/* Previous button */}
+                      {hasPrevious && (
+                        <button
+                          onClick={() => {
+                            const prevPhoto = photos[selectedPhotoIndex - 1];
+                            setSelectedPhoto(prevPhoto);
+                            setSelectedPhotoIndex(selectedPhotoIndex - 1);
+                          }}
+                          className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 text-white rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg"
+                          aria-label="Previous photo"
+                        >
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                        </button>
+                      )}
+                      
+                      {/* Next button */}
+                      {hasNext && (
+                        <button
+                          onClick={() => {
+                            const nextPhoto = photos[selectedPhotoIndex + 1];
+                            setSelectedPhoto(nextPhoto);
+                            setSelectedPhotoIndex(selectedPhotoIndex + 1);
+                          }}
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 text-white rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg"
+                          aria-label="Next photo"
+                        >
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      )}
+                    </>
+                  );
+                })()}
+                
+                {/* Image info overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="text-white">
+                      <h3 className="text-xl font-semibold mb-2">{selectedPhoto.title}</h3>
+                      {selectedPhoto.location && <p className="text-sm opacity-90 mb-1">{selectedPhoto.location}</p>}
+                      {selectedPhoto.date && <p className="text-xs opacity-75">{selectedPhoto.date}</p>}
+                      {selectedPhoto.description && (
+                        <p className="text-sm opacity-90 mt-2 leading-relaxed max-w-md">{selectedPhoto.description}</p>
+                      )}
+                    </div>
+                    {selectedPhoto.category && (
+                      <span className="px-3 py-1 text-sm bg-white/20 text-white rounded-lg backdrop-blur-sm border border-white/30">
+                        {selectedPhoto.category}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
