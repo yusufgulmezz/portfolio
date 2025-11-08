@@ -204,20 +204,19 @@ const PersonalCreativesSection = () => {
                 {isActive && (
                   <div className="mt-6">
                     {tab.key === 'photos' ? (
-                      <div className="space-y-12">
+                      <div className="space-y-8 md:space-y-12">
                         {/* Her kategori için ayrı scroll container */}
                         {Object.entries(photosByCategory).map(([categoryName, photos]) => (
-                          <div key={categoryName} className="space-y-4">
+                          <div key={categoryName} className="space-y-3 md:space-y-4">
                             {/* Kategori başlığı */}
-                            <h4 className="text-2xl font-bold text-[#1A1A1A]">{categoryName}</h4>
+                            <h4 className="text-xl md:text-2xl font-bold text-[#1A1A1A]">{categoryName}</h4>
                             
                             {/* Yatay scroll container - sonsuz loop */}
                             <div className="relative overflow-hidden" style={{ width: '100%' }}>
                               <div 
-                                className="flex"
+                                className="flex gap-6 md:gap-9"
                                 style={{
                                   width: 'max-content',
-                                  gap: '36px',
                                   animation: `scroll-left ${photos.length * 6}s linear infinite`
                                 }}
                               >
@@ -227,11 +226,7 @@ const PersonalCreativesSection = () => {
                                   return (
                                     <div
                                       key={`${categoryName}-${idx}`}
-                                      className="group flex-shrink-0 relative overflow-hidden cursor-pointer"
-                                      style={{
-                                        width: '412px',
-                                        height: '548px'
-                                      }}
+                                      className="group flex-shrink-0 relative overflow-hidden cursor-pointer w-[280px] h-[372px] sm:w-[320px] sm:h-[425px] md:w-[412px] md:h-[548px]"
                                       onClick={() => {
                                         const photosList = photosByCategory[categoryName] || [];
                                         const index = photosList.findIndex(p => p.src === item.src);
@@ -243,7 +238,7 @@ const PersonalCreativesSection = () => {
                                         src={item.src} 
                                         alt={item.title} 
                                         fill 
-                                        sizes="412px"
+                                        sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 412px"
                                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
                                       />
                                       
@@ -256,9 +251,9 @@ const PersonalCreativesSection = () => {
                                       />
                                       
                                       {/* Sağ üstte görsel numarası */}
-                                      <div className="absolute z-10" style={{ right: '18px', top: '18px' }}>
+                                      <div className="absolute z-10 right-[12px] top-[12px] md:right-[18px] md:top-[18px]">
                                         <span 
-                                          className="inline-flex items-center justify-center bg-[#edede9]/80 text-[#1A1A1A] text-sm font-medium backdrop-blur-sm"
+                                          className="inline-flex items-center justify-center bg-[#edede9]/80 text-[#1A1A1A] text-xs md:text-sm font-medium backdrop-blur-sm"
                                           style={{
                                             width: '42px',
                                             height: '24px',
@@ -270,10 +265,10 @@ const PersonalCreativesSection = () => {
                                       </div>
                                       
                                       {/* Sol altta başlık ve tarih */}
-                                      <div className="absolute z-10" style={{ left: '36px', bottom: '36px' }}>
-                                        <h5 className="text-[#edede9] text-[20px] font-bold mb-[8px]">{item.title}</h5>
+                                      <div className="absolute z-10 left-[24px] bottom-[24px] md:left-[36px] md:bottom-[36px]">
+                                        <h5 className="text-[#edede9] text-[16px] md:text-[20px] font-bold mb-[6px] md:mb-[8px]">{item.title}</h5>
                                         {item.date && (
-                                          <p className="text-[#edede9] text-[14px] font-normal">{item.date}</p>
+                                          <p className="text-[#edede9] text-[12px] md:text-[14px] font-normal">{item.date}</p>
                                         )}
                                       </div>
                                     </div>
