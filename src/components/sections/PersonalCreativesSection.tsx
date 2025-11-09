@@ -206,78 +206,206 @@ const PersonalCreativesSection = () => {
                     {tab.key === 'photos' ? (
                       <div className="space-y-8 md:space-y-12">
                         {/* Her kategori için ayrı scroll container */}
-                        {Object.entries(photosByCategory).map(([categoryName, photos]) => (
-                          <div key={categoryName} className="space-y-3 md:space-y-4">
-                            {/* Kategori başlığı */}
-                            <h4 className="text-xl md:text-2xl font-bold text-[#1A1A1A]">{categoryName}</h4>
+                        {Object.entries(photosByCategory).map(([categoryName, photos]) => {
+                          // Montenegro için özel layout
+                          if (categoryName === 'Montenegro' && photos.length > 0) {
+                            const featuredPhoto = photos[0];
+                            const galleryPhotos = photos.slice(1); // İlk görsel hariç
                             
-                            {/* Yatay scroll container - sonsuz loop */}
-                            <div className="relative overflow-hidden" style={{ width: '100%' }}>
-                              <div 
-                                className="flex gap-6 md:gap-9"
-                                style={{
-                                  width: 'max-content',
-                                  animation: `scroll-left ${photos.length * 6}s linear infinite`
-                                }}
-                              >
-                                {/* İki set görsel (loop için) */}
-                                {[...photos, ...photos].map((item, idx) => {
-                                  const actualIndex = idx % photos.length;
-                                  return (
-                                    <div
-                                      key={`${categoryName}-${idx}`}
-                                      className="group flex-shrink-0 relative overflow-hidden cursor-pointer w-[280px] h-[372px] sm:w-[320px] sm:h-[425px] md:w-[412px] md:h-[548px]"
+                            return (
+                              <div key={categoryName} className="space-y-6 md:space-y-8">
+                                {/* Featured görsel ve açıklama bölümü */}
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start">
+                                  {/* Sol taraf: Metin içeriği */}
+                                  <div className="space-y-4">
+                                    <div>
+                                      <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1A1A1A] mb-2">
+                                        {categoryName}
+                                      </h4>
+                                      {featuredPhoto.date && (
+                                        <p className="text-[#4E4E4E] text-base md:text-lg font-normal">
+                                          {featuredPhoto.date}
+                                        </p>
+                                      )}
+                                    </div>
+                                    <div className="space-y-3 text-[#1A1A1A]">
+                                      <p className="text-sm md:text-base leading-relaxed">
+                                        {featuredPhoto.description || 'A beautiful collection of photographs capturing the essence of this stunning destination.'}
+                                      </p>
+                                      {photos.length > 1 && (
+                                        <p className="text-sm md:text-base leading-relaxed">
+                                          Explore more images from this collection in the gallery below, each telling a unique story of the journey.
+                                        </p>
+                                      )}
+                                    </div>
+                                  </div>
+                                  
+                                  {/* Sağ taraf: Featured görsel - Dikey format, küçük */}
+                                  <div className="flex justify-center lg:justify-end">
+                                    <div 
+                                      className="relative flex-shrink-0 w-[180px] h-[240px] sm:w-[220px] sm:h-[293px] md:w-[280px] md:h-[373px] overflow-hidden cursor-pointer group"
                                       onClick={() => {
-                                        const photosList = photosByCategory[categoryName] || [];
-                                        const index = photosList.findIndex(p => p.src === item.src);
-                                        setSelectedPhoto(item);
+                                        const index = photos.findIndex(p => p.src === featuredPhoto.src);
+                                        setSelectedPhoto(featuredPhoto);
                                         setSelectedPhotoIndex(index);
                                       }}
                                     >
                                       <Image 
-                                        src={item.src} 
-                                        alt={item.title} 
+                                        src={featuredPhoto.src} 
+                                        alt={featuredPhoto.title} 
                                         fill 
-                                        sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 412px"
+                                        sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, 280px"
                                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
                                       />
-                                      
-                                      {/* Gradient overlay - ana görsele uygulanıyor */}
-                                      <div 
-                                        className="absolute inset-0 z-[5]"
-                                        style={{
-                                          background: 'linear-gradient(to bottom, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%)'
-                                        }}
-                                      />
-                                      
-                                      {/* Sağ üstte görsel numarası */}
-                                      <div className="absolute z-10 right-[12px] top-[12px] md:right-[18px] md:top-[18px]">
-                                        <span 
-                                          className="inline-flex items-center justify-center bg-[#edede9]/80 text-[#1A1A1A] text-xs md:text-sm font-medium backdrop-blur-sm"
-                                          style={{
-                                            width: '42px',
-                                            height: '24px',
-                                            borderRadius: '6px'
-                                          }}
-                                        >
-                                          {actualIndex + 1}/{photos.length}
-                                        </span>
-                                      </div>
-                                      
-                                      {/* Sol altta başlık ve tarih */}
-                                      <div className="absolute z-10 left-[24px] bottom-[24px] md:left-[36px] md:bottom-[36px]">
-                                        <h5 className="text-[#edede9] text-[16px] md:text-[20px] font-bold mb-[6px] md:mb-[8px]">{item.title}</h5>
-                                        {item.date && (
-                                          <p className="text-[#edede9] text-[12px] md:text-[14px] font-normal">{item.date}</p>
-                                        )}
-                                      </div>
                                     </div>
-                                  );
-                                })}
+                                  </div>
+                                </div>
+                                
+                                {/* Yatay scroll galeri - İlk görsel hariç */}
+                                {galleryPhotos.length > 0 && (
+                                  <div className="relative overflow-hidden" style={{ width: '100%' }}>
+                                    <div 
+                                      className="flex gap-6 md:gap-9"
+                                      style={{
+                                        width: 'max-content',
+                                        animation: `scroll-left ${galleryPhotos.length * 6}s linear infinite`
+                                      }}
+                                    >
+                                      {/* İki set görsel (loop için) */}
+                                      {[...galleryPhotos, ...galleryPhotos].map((item, idx) => {
+                                        const actualIndex = (idx % galleryPhotos.length) + 1; // +1 çünkü ilk görsel featured
+                                        return (
+                                          <div
+                                            key={`${categoryName}-gallery-${idx}`}
+                                            className="group flex-shrink-0 relative overflow-hidden cursor-pointer w-[280px] h-[372px] sm:w-[320px] sm:h-[425px] md:w-[412px] md:h-[548px]"
+                                            onClick={() => {
+                                              const photosList = photosByCategory[categoryName] || [];
+                                              const index = photosList.findIndex(p => p.src === item.src);
+                                              setSelectedPhoto(item);
+                                              setSelectedPhotoIndex(index);
+                                            }}
+                                          >
+                                            <Image 
+                                              src={item.src} 
+                                              alt={item.title} 
+                                              fill 
+                                              sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 412px"
+                                              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                                            />
+                                            
+                                            {/* Gradient overlay - ana görsele uygulanıyor */}
+                                            <div 
+                                              className="absolute inset-0 z-[5]"
+                                              style={{
+                                                background: 'linear-gradient(to bottom, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%)'
+                                              }}
+                                            />
+                                            
+                                            {/* Sağ üstte görsel numarası */}
+                                            <div className="absolute z-10 right-[12px] top-[12px] md:right-[18px] md:top-[18px]">
+                                              <span 
+                                                className="inline-flex items-center justify-center bg-[#edede9]/80 text-[#1A1A1A] text-xs md:text-sm font-medium backdrop-blur-sm"
+                                                style={{
+                                                  width: '42px',
+                                                  height: '24px',
+                                                  borderRadius: '6px'
+                                                }}
+                                              >
+                                                {actualIndex + 1}/{photos.length}
+                                              </span>
+                                            </div>
+                                            
+                                            {/* Sol altta başlık ve tarih */}
+                                            <div className="absolute z-10 left-[24px] bottom-[24px] md:left-[36px] md:bottom-[36px]">
+                                              <h5 className="text-[#edede9] text-[16px] md:text-[20px] font-bold mb-[6px] md:mb-[8px]">{item.title}</h5>
+                                              {item.date && (
+                                                <p className="text-[#edede9] text-[12px] md:text-[14px] font-normal">{item.date}</p>
+                                              )}
+                                            </div>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          }
+                          
+                          // Diğer kategoriler için mevcut tasarım
+                          return (
+                            <div key={categoryName} className="space-y-3 md:space-y-4">
+                              {/* Kategori başlığı */}
+                              <h4 className="text-xl md:text-2xl font-bold text-[#1A1A1A]">{categoryName}</h4>
+                              
+                              {/* Yatay scroll container - sonsuz loop */}
+                              <div className="relative overflow-hidden" style={{ width: '100%' }}>
+                                <div 
+                                  className="flex gap-6 md:gap-9"
+                                  style={{
+                                    width: 'max-content',
+                                    animation: `scroll-left ${photos.length * 6}s linear infinite`
+                                  }}
+                                >
+                                  {/* İki set görsel (loop için) */}
+                                  {[...photos, ...photos].map((item, idx) => {
+                                    const actualIndex = idx % photos.length;
+                                    return (
+                                      <div
+                                        key={`${categoryName}-${idx}`}
+                                        className="group flex-shrink-0 relative overflow-hidden cursor-pointer w-[280px] h-[372px] sm:w-[320px] sm:h-[425px] md:w-[412px] md:h-[548px]"
+                                        onClick={() => {
+                                          const photosList = photosByCategory[categoryName] || [];
+                                          const index = photosList.findIndex(p => p.src === item.src);
+                                          setSelectedPhoto(item);
+                                          setSelectedPhotoIndex(index);
+                                        }}
+                                      >
+                                        <Image 
+                                          src={item.src} 
+                                          alt={item.title} 
+                                          fill 
+                                          sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 412px"
+                                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                                        />
+                                        
+                                        {/* Gradient overlay - ana görsele uygulanıyor */}
+                                        <div 
+                                          className="absolute inset-0 z-[5]"
+                                          style={{
+                                            background: 'linear-gradient(to bottom, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%)'
+                                          }}
+                                        />
+                                        
+                                        {/* Sağ üstte görsel numarası */}
+                                        <div className="absolute z-10 right-[12px] top-[12px] md:right-[18px] md:top-[18px]">
+                                          <span 
+                                            className="inline-flex items-center justify-center bg-[#edede9]/80 text-[#1A1A1A] text-xs md:text-sm font-medium backdrop-blur-sm"
+                                            style={{
+                                              width: '42px',
+                                              height: '24px',
+                                              borderRadius: '6px'
+                                            }}
+                                          >
+                                            {actualIndex + 1}/{photos.length}
+                                          </span>
+                                        </div>
+                                        
+                                        {/* Sol altta başlık ve tarih */}
+                                        <div className="absolute z-10 left-[24px] bottom-[24px] md:left-[36px] md:bottom-[36px]">
+                                          <h5 className="text-[#edede9] text-[16px] md:text-[20px] font-bold mb-[6px] md:mb-[8px]">{item.title}</h5>
+                                          {item.date && (
+                                            <p className="text-[#edede9] text-[12px] md:text-[14px] font-normal">{item.date}</p>
+                                          )}
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     ) : (
                       <motion.div
