@@ -197,8 +197,8 @@ const HeroSection = () => {
                     </button>
                   </div> */}
 
-                  {/* Alt küçük önizleme görselleri (thumbnails) */}
-                  <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-3 px-4">
+                  {/* Alt küçük önizleme görselleri (thumbnails) - İleride kullanılmak üzere yorum satırına alındı */}
+                  {/* <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-3 px-4">
                     {heroImages.map((img, idx) => (
                       <button
                         key={`thumb-${idx}`}
@@ -213,11 +213,10 @@ const HeroSection = () => {
                           className="w-full h-full object-cover"
                           draggable={false}
                         />
-                        {/* Blur kenar efekti */}
                         <div className="absolute inset-0 bg-black/20" />
                       </button>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </motion.div>
