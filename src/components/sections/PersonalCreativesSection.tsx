@@ -209,8 +209,17 @@ const PersonalCreativesSection = () => {
                         {Object.entries(photosByCategory).map(([categoryName, photos]) => {
                           // Montenegro için özel layout
                           if (categoryName === 'Montenegro' && photos.length > 0) {
-                            const featuredPhoto = photos[0];
-                            const galleryPhotos = photos.slice(1); // İlk görsel hariç
+                            const featuredPhoto = {
+                              title: 'Adriatic Sunrise',
+                              description: 'Golden hour over the Adriatic, captured above the coastal cliffs of Montenegro.',
+                              src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
+                              width: 1200,
+                              height: 1800,
+                              category: 'Montenegro',
+                              location: 'Budva, Montenegro',
+                              date: '04/08/2025'
+                            };
+                            const galleryPhotos = photos;
                             
                             return (
                               <div key={categoryName} className="space-y-6 md:space-y-8">
@@ -245,9 +254,8 @@ const PersonalCreativesSection = () => {
                                     <div 
                                       className="relative flex-shrink-0 w-[180px] h-[240px] sm:w-[220px] sm:h-[293px] md:w-[280px] md:h-[373px] overflow-hidden cursor-pointer group"
                                       onClick={() => {
-                                        const index = photos.findIndex(p => p.src === featuredPhoto.src);
                                         setSelectedPhoto(featuredPhoto);
-                                        setSelectedPhotoIndex(index);
+                                        setSelectedPhotoIndex(-1);
                                       }}
                                     >
                                       <Image 
@@ -261,7 +269,7 @@ const PersonalCreativesSection = () => {
                                   </div>
                                 </div>
                                 
-                                {/* Yatay scroll galeri - İlk görsel hariç */}
+                                {/* Yatay scroll galeri */}
                                 {galleryPhotos.length > 0 && (
                                   <div className="relative overflow-hidden" style={{ width: '100%' }}>
                                     <div 
@@ -273,7 +281,7 @@ const PersonalCreativesSection = () => {
                                     >
                                       {/* İki set görsel (loop için) */}
                                       {[...galleryPhotos, ...galleryPhotos].map((item, idx) => {
-                                        const actualIndex = (idx % galleryPhotos.length) + 1; // +1 çünkü ilk görsel featured
+                                        const actualIndex = idx % galleryPhotos.length;
                                         return (
                                           <div
                                             key={`${categoryName}-gallery-${idx}`}
@@ -311,7 +319,7 @@ const PersonalCreativesSection = () => {
                                                   borderRadius: '6px'
                                                 }}
                                               >
-                                                {actualIndex + 1}/{photos.length}
+                                                {actualIndex + 1}/{galleryPhotos.length}
                                               </span>
                                             </div>
                                             
@@ -483,8 +491,9 @@ const PersonalCreativesSection = () => {
                 {(() => {
                   const category = selectedPhoto.category || 'Other';
                   const photos = photosByCategory[category] || [];
-                  const hasPrevious = selectedPhotoIndex > 0;
-                  const hasNext = selectedPhotoIndex < photos.length - 1;
+                  const hasValidIndex = selectedPhotoIndex >= 0 && selectedPhotoIndex < photos.length;
+                  const hasPrevious = hasValidIndex && selectedPhotoIndex > 0;
+                  const hasNext = hasValidIndex && selectedPhotoIndex < photos.length - 1;
                   
                   return (
                     <>
