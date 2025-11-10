@@ -255,11 +255,7 @@ const PersonalCreativesSection = () => {
                                   {/* Sağ taraf: Featured görsel - Yatay format */}
                                   <div className="flex justify-center lg:justify-end lg:col-span-6">
                                     <div
-                                      className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[360px] xl:h-[400px] cursor-pointer group"
-                                      onClick={() => {
-                                        setSelectedPhoto(featuredPhoto);
-                                        setSelectedPhotoIndex(-1);
-                                      }}
+                                      className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[360px] xl:h-[400px] group"
                                     >
                                       <div className="bg-[#F8F4ED] h-full w-full p-2 sm:p-3 lg:p-4 flex items-center justify-center">
                                         <div className="relative h-full w-full overflow-hidden bg-[#E6E0D4]">
@@ -268,7 +264,7 @@ const PersonalCreativesSection = () => {
                                             alt={featuredPhoto.title} 
                                             fill 
                                             sizes="(max-width: 1024px) 100vw, 50vw"
-                                            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                                            className="object-cover transition-transform duration-500 ease-out" 
                                           />
                                           <div className="absolute inset-0 pointer-events-none border border-white/35" />
                                         </div>
@@ -284,7 +280,7 @@ const PersonalCreativesSection = () => {
                                       className="flex gap-6 md:gap-9"
                                       style={{
                                         width: 'max-content',
-                                        animation: `scroll-left ${galleryPhotos.length * 6}s linear infinite`
+                                        animation: `scroll-left ${galleryPhotos.length * 5}s linear infinite`
                                       }}
                                     >
                                       {/* İki set görsel (loop için) */}
