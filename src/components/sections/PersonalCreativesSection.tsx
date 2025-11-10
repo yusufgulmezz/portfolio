@@ -211,10 +211,10 @@ const PersonalCreativesSection = () => {
                           if (categoryName === 'Montenegro' && photos.length > 0) {
                             const featuredPhoto = {
                               title: 'Adriatic Sunrise',
-                              description: 'Golden hour over the Adriatic, captured above the coastal cliffs of Montenegro.',
-                              src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80',
-                              width: 1200,
-                              height: 1800,
+                              description: 'One evening, while sitting at Arada Coffee, a sudden idea sparked a series of events and plans that resulted in my first trip abroad, to Montenegro.',
+                              src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_main.jpg`,
+                              width: 1740,
+                              height: 1160,
                               category: 'Montenegro',
                               location: 'Budva, Montenegro',
                               date: '04/08/2025'
@@ -224,9 +224,9 @@ const PersonalCreativesSection = () => {
                             return (
                               <div key={categoryName} className="space-y-6 md:space-y-8">
                                 {/* Featured görsel ve açıklama bölümü */}
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-start">
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-start">
                                   {/* Sol taraf: Metin içeriği */}
-                                  <div className="space-y-4">
+                                  <div className="space-y-4 lg:col-span-6">
                                     <div>
                                       <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1A1A1A] mb-2">
                                         {categoryName}
@@ -249,22 +249,27 @@ const PersonalCreativesSection = () => {
                                     </div>
                                   </div>
                                   
-                                  {/* Sağ taraf: Featured görsel - Dikey format, küçük */}
-                                  <div className="flex justify-center lg:justify-end">
-                                    <div 
-                                      className="relative flex-shrink-0 w-[180px] h-[240px] sm:w-[220px] sm:h-[293px] md:w-[280px] md:h-[373px] overflow-hidden cursor-pointer group"
+                                  {/* Sağ taraf: Featured görsel - Yatay format */}
+                                  <div className="flex justify-center lg:justify-end lg:col-span-6">
+                                    <div
+                                      className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[360px] xl:h-[400px] cursor-pointer group"
                                       onClick={() => {
                                         setSelectedPhoto(featuredPhoto);
                                         setSelectedPhotoIndex(-1);
                                       }}
                                     >
-                                      <Image 
-                                        src={featuredPhoto.src} 
-                                        alt={featuredPhoto.title} 
-                                        fill 
-                                        sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, 280px"
-                                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
-                                      />
+                                      <div className="bg-[#F8F4ED] h-full w-full p-2 sm:p-3 lg:p-4 flex items-center justify-center">
+                                        <div className="relative h-full w-full overflow-hidden bg-[#E6E0D4]">
+                                          <Image 
+                                            src={featuredPhoto.src} 
+                                            alt={featuredPhoto.title} 
+                                            fill 
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
+                                            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                                          />
+                                          <div className="absolute inset-0 pointer-events-none border border-white/35" />
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -285,7 +290,7 @@ const PersonalCreativesSection = () => {
                                         return (
                                           <div
                                             key={`${categoryName}-gallery-${idx}`}
-                                            className="group flex-shrink-0 relative overflow-hidden cursor-pointer w-[280px] h-[372px] sm:w-[320px] sm:h-[425px] md:w-[412px] md:h-[548px]"
+                                            className="group flex-shrink-0 w-[280px] sm:w-[320px] md:w-[372px] lg:w-[400px] cursor-pointer"
                                             onClick={() => {
                                               const photosList = photosByCategory[categoryName] || [];
                                               const index = photosList.findIndex(p => p.src === item.src);
@@ -293,42 +298,34 @@ const PersonalCreativesSection = () => {
                                               setSelectedPhotoIndex(index);
                                             }}
                                           >
-                                            <Image 
-                                              src={item.src} 
-                                              alt={item.title} 
-                                              fill 
-                                              sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 412px"
-                                              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
-                                            />
-                                            
-                                            {/* Gradient overlay - ana görsele uygulanıyor */}
-                                            <div 
-                                              className="absolute inset-0 z-[5]"
-                                              style={{
-                                                background: 'linear-gradient(to bottom, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%)'
-                                              }}
-                                            />
-                                            
-                                            {/* Sağ üstte görsel numarası */}
-                                            <div className="absolute z-10 right-[12px] top-[12px] md:right-[18px] md:top-[18px]">
-                                              <span 
-                                                className="inline-flex items-center justify-center bg-[#edede9]/80 text-[#1A1A1A] text-xs md:text-sm font-medium backdrop-blur-sm"
-                                                style={{
-                                                  width: '42px',
-                                                  height: '24px',
-                                                  borderRadius: '6px'
-                                                }}
-                                              >
-                                                {actualIndex + 1}/{galleryPhotos.length}
-                                              </span>
-                                            </div>
-                                            
-                                            {/* Sol altta başlık ve tarih */}
-                                            <div className="absolute z-10 left-[24px] bottom-[24px] md:left-[36px] md:bottom-[36px]">
-                                              <h5 className="text-[#edede9] text-[16px] md:text-[20px] font-bold mb-[6px] md:mb-[8px]">{item.title}</h5>
-                                              {item.date && (
-                                                <p className="text-[#edede9] text-[12px] md:text-[14px] font-normal">{item.date}</p>
-                                              )}
+                                            <div className="h-full bg-[#F8F4ED] px-4 pt-4 pb-6 flex flex-col gap-4">
+                                              <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#E6E0D4]">
+                                                <Image 
+                                                  src={item.src} 
+                                                  alt={item.title} 
+                                                  fill 
+                                                  sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 372px"
+                                                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                                                />
+                                                <div className="absolute right-3 top-3 md:right-4 md:top-4">
+                                                  <span 
+                                                    className="inline-flex items-center justify-center bg-white/85 text-[#1A1A1A] text-xs md:text-sm font-medium border border-[#D6CCBD] shadow-[0_4px_8px_rgba(0,0,0,0.06)]"
+                                                    style={{
+                                                      width: '42px',
+                                                      height: '24px',
+                                                      borderRadius: '6px'
+                                                    }}
+                                                  >
+                                                    {actualIndex + 1}/{galleryPhotos.length}
+                                                  </span>
+                                                </div>
+                                              </div>
+                                              <div className="px-1">
+                                                <h5 className="text-[#2E2A24] text-[18px] md:text-[20px] font-bold mb-2">{item.title}</h5>
+                                                {item.date && (
+                                                  <p className="text-[#6B6255] text-sm md:text-base font-normal">{item.date}</p>
+                                                )}
+                                              </div>
                                             </div>
                                           </div>
                                         );
@@ -361,7 +358,7 @@ const PersonalCreativesSection = () => {
                                     return (
                                       <div
                                         key={`${categoryName}-${idx}`}
-                                        className="group flex-shrink-0 relative overflow-hidden cursor-pointer w-[280px] h-[372px] sm:w-[320px] sm:h-[425px] md:w-[412px] md:h-[548px]"
+                                        className="group flex-shrink-0 w-[280px] sm:w-[320px] md:w-[372px] lg:w-[400px] cursor-pointer"
                                         onClick={() => {
                                           const photosList = photosByCategory[categoryName] || [];
                                           const index = photosList.findIndex(p => p.src === item.src);
@@ -369,42 +366,34 @@ const PersonalCreativesSection = () => {
                                           setSelectedPhotoIndex(index);
                                         }}
                                       >
-                                        <Image 
-                                          src={item.src} 
-                                          alt={item.title} 
-                                          fill 
-                                          sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 412px"
-                                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
-                                        />
-                                        
-                                        {/* Gradient overlay - ana görsele uygulanıyor */}
-                                        <div 
-                                          className="absolute inset-0 z-[5]"
-                                          style={{
-                                            background: 'linear-gradient(to bottom, rgba(0,0,0,0) 75%, rgba(0,0,0,1) 100%)'
-                                          }}
-                                        />
-                                        
-                                        {/* Sağ üstte görsel numarası */}
-                                        <div className="absolute z-10 right-[12px] top-[12px] md:right-[18px] md:top-[18px]">
-                                          <span 
-                                            className="inline-flex items-center justify-center bg-[#edede9]/80 text-[#1A1A1A] text-xs md:text-sm font-medium backdrop-blur-sm"
-                                            style={{
-                                              width: '42px',
-                                              height: '24px',
-                                              borderRadius: '6px'
-                                            }}
-                                          >
-                                            {actualIndex + 1}/{photos.length}
-                                          </span>
-                                        </div>
-                                        
-                                        {/* Sol altta başlık ve tarih */}
-                                        <div className="absolute z-10 left-[24px] bottom-[24px] md:left-[36px] md:bottom-[36px]">
-                                          <h5 className="text-[#edede9] text-[16px] md:text-[20px] font-bold mb-[6px] md:mb-[8px]">{item.title}</h5>
-                                          {item.date && (
-                                            <p className="text-[#edede9] text-[12px] md:text-[14px] font-normal">{item.date}</p>
-                                          )}
+                                        <div className="h-full bg-[#F8F4ED] border border-[#E5DDD0] rounded-[24px] shadow-[0_10px_30px_rgba(31,41,55,0.12)] px-4 pt-4 pb-6 flex flex-col gap-4">
+                                          <div className="relative w-full aspect-[3/4] rounded-[18px] overflow-hidden bg-[#E6E0D4]">
+                                            <Image 
+                                              src={item.src} 
+                                              alt={item.title} 
+                                              fill 
+                                              sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 372px"
+                                              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                                            />
+                                            <div className="absolute right-3 top-3 md:right-4 md:top-4">
+                                              <span 
+                                                className="inline-flex items-center justify-center bg-white/85 text-[#1A1A1A] text-xs md:text-sm font-medium border border-[#D6CCBD] shadow-[0_4px_8px_rgba(0,0,0,0.06)]"
+                                                style={{
+                                                  width: '42px',
+                                                  height: '24px',
+                                                  borderRadius: '6px'
+                                                }}
+                                              >
+                                                {actualIndex + 1}/{photos.length}
+                                              </span>
+                                            </div>
+                                          </div>
+                                          <div className="px-1">
+                                            <h5 className="text-[#2E2A24] text-[18px] md:text-[20px] font-bold mb-2">{item.title}</h5>
+                                            {item.date && (
+                                              <p className="text-[#6B6255] text-sm md:text-base font-normal">{item.date}</p>
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
                                     );
