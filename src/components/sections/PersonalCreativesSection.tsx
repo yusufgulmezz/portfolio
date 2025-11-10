@@ -219,8 +219,8 @@ const PersonalCreativesSection = () => {
                               width: 1740,
                               height: 1160,
                               category: 'Montenegro',
-                              location: 'Budva, Montenegro',
-                              date: '04/08/2025'
+                              location: 'Montenegro',
+                              date: '15/07/2025'
                             };
                             const galleryPhotos = photos;
                             
