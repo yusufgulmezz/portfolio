@@ -219,6 +219,7 @@ const PersonalCreativesSection = () => {
                           // Montenegro ve Camp için özel layout
                           if ((categoryName === 'Montenegro' || categoryName === 'Camp') && photos.length > 0) {
                             const isMontenegro = categoryName === 'Montenegro';
+                            const isCamp = categoryName === 'Camp';
                             const featuredPhoto = isMontenegro
                               ? {
                                   title: 'Adriatic Sunrise',
@@ -246,8 +247,8 @@ const PersonalCreativesSection = () => {
                               <div key={categoryName} className="space-y-6 md:space-y-8">
                                 {/* Featured görsel ve açıklama bölümü */}
                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-start">
-                                  {/* Sol taraf: Metin içeriği */}
-                                  <div className="space-y-4 lg:col-span-6">
+                                  {/* Metin içeriği */}
+                                  <div className={`space-y-4 lg:col-span-6 ${isCamp ? 'lg:order-2' : 'lg:order-1'}`}>
                                     <div>
                                       <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1A1A1A] mb-2">
                                         {categoryName}
@@ -270,8 +271,8 @@ const PersonalCreativesSection = () => {
                                     </div>
                                   </div>
                                   
-                                  {/* Sağ taraf: Featured görsel - Yatay format */}
-                                  <div className="flex justify-center lg:justify-end lg:col-span-6">
+                                  {/* Featured görsel - Yatay format */}
+                                  <div className={`flex justify-center ${isCamp ? 'lg:justify-start lg:order-1' : 'lg:justify-end lg:order-2'} lg:col-span-6`}>
                                     <div
                                       className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[360px] xl:h-[400px] group"
                                     >
