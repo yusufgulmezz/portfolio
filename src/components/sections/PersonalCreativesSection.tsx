@@ -245,6 +245,18 @@ const PersonalCreativesSection = () => {
                             
                             return (
                               <div key={categoryName} className="space-y-6 md:space-y-8">
+                                {isCamp && (
+                                  <div className="flex justify-center py-16 md:py-20 lg:py-24">
+                                    <Image
+                                      src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/Fire_Anim.gif`}
+                                      alt="Campfire animation"
+                                      width={480}
+                                      height={240}
+                                      unoptimized
+                                      className="w-full max-w-[240px] md:max-w-[260px] lg:max-w-[300px] mx-auto"
+                                    />
+                                  </div>
+                                )}
                                 {/* Featured görsel ve açıklama bölümü */}
                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-start">
                                   {/* Metin içeriği */}
