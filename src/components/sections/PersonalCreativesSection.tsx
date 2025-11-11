@@ -62,6 +62,12 @@ const PersonalCreativesSection = () => {
       { title: 'Turkey to Montenegro', description: 'Flying over the clouds from Turkey to Montenegro', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_7.webp`, width: 1740, height: 1160, category: 'Montenegro', location: 'Montenegro', date: '15/07/2025' },
       { title: 'Budva Oldtown', description: 'Budva Oldtown streets.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_8.webp`, width: 1740, height: 1160, category: 'Montenegro', location: 'Budva, Montenegro', date: '16/07/2025' },
       { title: 'Passports', description: 'Passports.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_9.webp`, width: 1740, height: 1160, category: 'Montenegro', location: 'Budva, Montenegro', date: '16/07/2025' },
+      // Camp kategorisi
+      { title: 'Camp 01', description: 'Camping moments 01', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_1.webp`, width: 1740, height: 1160, category: 'Camp', location: 'Aslanlar Göleti', date: '—' },
+      { title: 'Camp 02', description: 'Camping moments 02', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_2.webp`, width: 1740, height: 1160, category: 'Camp', location: 'Aslanlar Göleti', date: '—' },
+      { title: 'Camp 03', description: 'Camping moments 03', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_3.webp`, width: 1740, height: 1160, category: 'Camp', location: 'Aslanlar Göleti', date: '—' },
+      { title: 'Camp 04', description: 'Camping moments 04', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_4.webp`, width: 1740, height: 1160, category: 'Camp', location: 'Aslanlar Göleti', date: '—' },
+      { title: 'Camp 05', description: 'Camping moments 05', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_5.webp`, width: 1740, height: 1160, category: 'Camp', location: 'Aslanlar Göleti', date: '—' },
     ],
     drawings: [
       { title: 'Portrait Study', description: 'Quick sketch with pencil.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
@@ -210,18 +216,30 @@ const PersonalCreativesSection = () => {
                       <div className="space-y-8 md:space-y-12">
                         {/* Her kategori için ayrı scroll container */}
                         {Object.entries(photosByCategory).map(([categoryName, photos]) => {
-                          // Montenegro için özel layout
-                          if (categoryName === 'Montenegro' && photos.length > 0) {
-                            const featuredPhoto = {
-                              title: 'Adriatic Sunrise',
-                              description: 'One evening, while sitting at Arada Coffee, a sudden idea sparked a series of events and plans that resulted in my first trip abroad, to Montenegro.',
-                              src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_main.jpg`,
-                              width: 1740,
-                              height: 1160,
-                              category: 'Montenegro',
-                              location: 'Montenegro',
-                              date: '15/07/2025'
-                            };
+                          // Montenegro ve Camp için özel layout
+                          if ((categoryName === 'Montenegro' || categoryName === 'Camp') && photos.length > 0) {
+                            const isMontenegro = categoryName === 'Montenegro';
+                            const featuredPhoto = isMontenegro
+                              ? {
+                                  title: 'Adriatic Sunrise',
+                                  description: 'One evening, while sitting at Arada Coffee, a sudden idea sparked a series of events and plans that resulted in my first trip abroad, to Montenegro.',
+                                  src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_main.jpg`,
+                                  width: 1740,
+                                  height: 1160,
+                                  category: 'Montenegro',
+                                  location: 'Montenegro',
+                                  date: '15/07/2025'
+                                }
+                              : {
+                                  title: 'Camp',
+                                  description: 'A selection of camping memories and quiet outdoor moments.',
+                                  src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_main.jpg`,
+                                  width: 1740,
+                                  height: 1160,
+                                  category: 'Camp',
+                                  location: '—',
+                                  date: undefined
+                                };
                             const galleryPhotos = photos;
                             
                             return (
