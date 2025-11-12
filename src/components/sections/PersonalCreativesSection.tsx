@@ -68,6 +68,21 @@ const PersonalCreativesSection = () => {
       { title: 'Camp 03', description: 'Camping moments 03', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_3.webp`, width: 1740, height: 1160, category: 'Camp', location: 'Aslanlar Göleti', date: '—' },
       { title: 'Camp 04', description: 'Camping moments 04', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_4.webp`, width: 1740, height: 1160, category: 'Camp', location: 'Aslanlar Göleti', date: '—' },
       { title: 'Camp 05', description: 'Camping moments 05', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_5.webp`, width: 1740, height: 1160, category: 'Camp', location: 'Aslanlar Göleti', date: '—' },
+      // Anatolia kategorisi
+      { title: 'Paragliding', description: 'Paragliding in Sakarya.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_1.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Sakarya, Türkiye', date: '10/06/2023' },
+      { title: 'Lake Gölcük', description: 'Gölcük Lake in Bolu.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_2.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Bolu, Türkiye', date: '17/05/2024' },
+      { title: 'Kumcağız Beach', description: 'Kumcağız Beach in Kocaeli.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_3.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Kocaeli, Türkiye', date: '03/06/2024' },
+      { title: 'Bicycle in Campus', description: 'Bicycle in SAU campus.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_4.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Sakarya, Türkiye', date: '06/06/2024' },
+      { title: 'Butterfly', description: 'Butterfly in Poyrazlar Lake.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_5.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Sakarya, Türkiye', date: '08/06/2024' },
+      { title: 'Sakarya University', description: 'Sakarya University in Sakarya.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_6.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Sakarya, Türkiye', date: '08/10/2024' },
+      { title: 'Bursa Walls', description: 'Historic Bursa Walls.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_7.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Bursa, Türkiye', date: '26/10/2024' },
+      { title: 'Winter at Sakarya University', description: 'Winter at Sakarya University.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_8.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Sakarya, Türkiye', date: '23/11/2024' },
+      { title: 'Sakarya Nature Park', description: 'Sakarya Nature Park.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_9.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Sakarya, Türkiye', date: '01/01/2025' },
+      { title: 'Tennis', description: 'Tennis Ball and Racket.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_10.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Sakarya, Türkiye', date: '31/07/2025' },
+      { title: 'Rahmi Koç Museum', description: 'The Fiat car at the Rahmi Koç Museum.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_11.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Ankara, Türkiye', date: '02/08/2025' },
+      { title: 'Isanbul Bosphorus', description: 'A seagull gliding over the Bosphorus.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_12.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Istanbul, Türkiye', date: '02/11/2025' },
+      { title: 'Hummingbird-Hawkmoths', description: 'Hummingbird-Hawkmoths.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_13.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Çorum, Türkiye', date: '12/10/2025' },
+      { title: 'Underground of Istanbul', description: 'Underground of Istanbul.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_14.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Istanbul, Türkiye', date: '26/09/2025' },
     ],
     drawings: [
       { title: 'Portrait Study', description: 'Quick sketch with pencil.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
@@ -216,8 +231,8 @@ const PersonalCreativesSection = () => {
                       <div className="space-y-8 md:space-y-12">
                         {/* Her kategori için ayrı scroll container */}
                         {Object.entries(photosByCategory).map(([categoryName, photos]) => {
-                          // Montenegro ve Camp için özel layout
-                          if ((categoryName === 'Montenegro' || categoryName === 'Camp') && photos.length > 0) {
+                          // Özel layout gerektiren kategoriler
+                          if ((categoryName === 'Montenegro' || categoryName === 'Camp' || categoryName === 'Mixed') && photos.length > 0) {
                             const isMontenegro = categoryName === 'Montenegro';
                             const isCamp = categoryName === 'Camp';
                             const featuredPhoto = isMontenegro
@@ -231,16 +246,27 @@ const PersonalCreativesSection = () => {
                                   location: 'Montenegro',
                                   date: '15/07/2025'
                                 }
-                              : {
-                                  title: 'Camp',
-                                  description: 'A selection of camping memories and quiet outdoor moments.',
-                                  src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_main.jpg`,
-                                  width: 1740,
-                                  height: 1160,
-                                  category: 'Camp',
-                                  location: '—',
-                                  date: undefined
-                                };
+                              : isCamp
+                                ? {
+                                    title: 'Campfire Echoes',
+                                    description: 'A selection of camping memories and quiet outdoor moments.',
+                                    src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_main.jpg`,
+                                    width: 1740,
+                                    height: 1160,
+                                    category: 'Camp',
+                                    location: '—',
+                                    date: undefined
+                                  }
+                                : {
+                                    title: 'Echoes of Mixed',
+                                    description: 'Fragments from travels across Anatolia, capturing textures of ancient towns and warm sunsets.',
+                                    src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_1.webp`,
+                                    width: 1740,
+                                    height: 1160,
+                                    category: 'Mixed',
+                                    location: 'Anadolu, Türkiye',
+                                    date: undefined
+                                  };
                             const galleryPhotos = photos;
                             
                             return (
