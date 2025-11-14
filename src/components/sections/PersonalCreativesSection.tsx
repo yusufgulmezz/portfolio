@@ -325,7 +325,7 @@ const PersonalCreativesSection = () => {
                                     <div
                                       className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[360px] xl:h-[400px] group"
                                     >
-                                      <div className="bg-[#F8F4ED] h-full w-full p-2 sm:p-3 lg:p-4 flex items-center justify-center">
+                                      <div className="bg-[#FFFFFF] h-full w-full p-2 sm:p-3 lg:p-4 flex items-center justify-center">
                                         <div className="relative h-full w-full overflow-hidden bg-[#E6E0D4]">
                                           <Image 
                                             src={featuredPhoto.src} 
@@ -365,7 +365,7 @@ const PersonalCreativesSection = () => {
                                               setSelectedPhotoIndex(index);
                                             }}
                                           >
-                                            <div className="h-full bg-[#F8F4ED] px-4 pt-4 pb-6 flex flex-col gap-4">
+                                            <div className="h-full bg-[#FFFFFF] px-4 pt-4 pb-6 flex flex-col gap-4">
                                               <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#E6E0D4]">
                                                 <Image 
                                                   src={item.src} 
@@ -433,7 +433,7 @@ const PersonalCreativesSection = () => {
                                           setSelectedPhotoIndex(index);
                                         }}
                                       >
-                                        <div className="h-full bg-[#F8F4ED] border border-[#E5DDD0] rounded-[24px] shadow-[0_10px_30px_rgba(31,41,55,0.12)] px-4 pt-4 pb-6 flex flex-col gap-4">
+                                        <div className="h-full bg-[#FFFFFF] rounded-[24px] shadow-[0_10px_30px_rgba(31,41,55,0.12)] px-4 pt-4 pb-6 flex flex-col gap-4">
                                           <div className="relative w-full aspect-[3/4] rounded-[18px] overflow-hidden bg-[#E6E0D4]">
                                             <Image 
                                               src={item.src} 
@@ -487,7 +487,7 @@ const PersonalCreativesSection = () => {
                               rel="noopener noreferrer"
                               className="block"
                             >
-                              <div className="bg-[#F8F4ED] border border-[#E5DDD0] rounded-[24px] overflow-hidden shadow-[0_10px_30px_rgba(31,41,55,0.12)] hover:shadow-[0_12px_40px_rgba(31,41,55,0.18)] transition-all duration-300">
+                              <div className="bg-[#FFFFFF] rounded-[24px] overflow-hidden hover:shadow-[0_12px_40px_rgba(31,41,55,0.18)] transition-all duration-300">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
                                   {/* Görsel */}
                                   <div className="relative h-[240px] md:h-auto md:col-span-1 overflow-hidden bg-[#E6E0D4]">
@@ -504,9 +504,17 @@ const PersonalCreativesSection = () => {
                                   {/* İçerik */}
                                   <div className="md:col-span-2 p-6 md:p-8 flex flex-col justify-between">
                                     <div>
-                                      <div className="flex items-center gap-3 mb-4">
+                                      <h3 className="text-[18px] md:text-[20px] lg:text-2xl font-bold text-[#1A1A1A] mb-3 group-hover:text-[#2E2A24] transition-colors duration-200 line-clamp-2">
+                                        {item.title}
+                                      </h3>
+                                      <p className="text-sm md:text-base text-[#4E4E4E] leading-relaxed line-clamp-3 mb-4">
+                                        {item.description}
+                                      </p>
+                                    </div>
+                                    <div className="flex items-center justify-between flex-wrap gap-3">
+                                      <div className="flex items-center gap-3">
                                         {item.readTime && (
-                                          <span className="text-xs md:text-sm text-[#6B6255] font-medium bg-white/85 border border-[#D6CCBD] px-3 py-1 rounded-[6px] shadow-[0_4px_8px_rgba(0,0,0,0.06)]">
+                                          <span className="text-xs md:text-sm text-[#6B6255] font-medium bg-white/85 px-3 py-1 rounded-[6px] shadow-[0_4px_8px_rgba(0,0,0,0.06)]">
                                             {item.readTime}
                                           </span>
                                         )}
@@ -516,18 +524,12 @@ const PersonalCreativesSection = () => {
                                           </span>
                                         )}
                                       </div>
-                                      <h3 className="text-[18px] md:text-[20px] lg:text-2xl font-bold text-[#1A1A1A] mb-3 group-hover:text-[#2E2A24] transition-colors duration-200 line-clamp-2">
-                                        {item.title}
-                                      </h3>
-                                      <p className="text-sm md:text-base text-[#4E4E4E] leading-relaxed line-clamp-3 mb-4">
-                                        {item.description}
-                                      </p>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-[#1A1A1A] font-medium text-sm md:text-base group-hover:gap-3 transition-all duration-200">
-                                      <span>Devamını Oku</span>
-                                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                      </svg>
+                                      <div className="flex items-center gap-2 text-[#1A1A1A] font-medium text-sm md:text-base group-hover:gap-3 transition-all duration-200">
+                                        <span>Read More</span>
+                                        <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                        </svg>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
