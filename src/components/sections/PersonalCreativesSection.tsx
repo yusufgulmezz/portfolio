@@ -47,10 +47,9 @@ const PersonalCreativesSection = () => {
   }, []);
   const personalY = useTransform(personalProgress, [0, 1], [personalStartY, 0]);
 
-  const [activeTab, setActiveTab] = useState<TabKey>('photos');
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string };
+  type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string; url?: string; readTime?: string };
   const contentByTab: Record<TabKey, Item[]> = {
     photos: [
       { title: 'Sveti Stefan Island View', description: 'View of Sveti Stefan Island from the St. Sava Church', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_1.webp`, width: 1740, height: 1160, category: 'Montenegro', location: 'Đenaši, Montenegro', date: '16/07/2025' },
@@ -93,14 +92,43 @@ const PersonalCreativesSection = () => {
       { title: 'Figure Studies', description: 'Selections from short poses.', src: 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 }
     ],
     blog: [
-      { title: 'Workflow Notes', description: 'Design → prototype → development pipeline.', src: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Color & Typography', description: 'Daily picks and references.', src: 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Toolbox', description: 'Tools I use and quick remarks.', src: 'https://images.unsplash.com/photo-1517511620798-cec17d428bc0?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 }
+      { 
+        title: 'Kullanıcı Odaklı İnovasyonun Rehberi: Design Thinking ve UX Tasarımı', 
+        description: 'Design Thinking metodolojisinin temel prensiplerini ve beş aşamasını inceleyerek, karmaşık sorunları anlamak ve kullanıcı odaklı çözümler geliştirmek için kullanılan insan merkezli yaklaşımı keşfedin.', 
+        src: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&h=630&q=80', 
+        width: 1200, 
+        height: 630,
+        url: 'https://yusufgulmezz.medium.com/kullan%C4%B1c%C4%B1-odakl%C4%B1-i%CC%87novasyonun-rehberi-design-thinking-ve-ux-tasar%C4%B1m%C4%B1-89a3d40dcab2',
+        readTime: '4 min read',
+        date: '21 Ekim 2025'
+      },
+      { 
+        title: 'Herkes İçin Tasarım: UX\'te Eşitlik (Equality) ve Hakkaniyet (Equity) Farkı', 
+        description: 'UX tasarımında sıkça karıştırılan iki önemli kavramı netleştiriyoruz: Eşitlik ve Hakkaniyet. Tasarımlarımızın sadece iyi değil, aynı zamanda adil olmasını sağlayan ince çizgiyi keşfedin.', 
+        src: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1200&h=630&q=80', 
+        width: 1200, 
+        height: 630,
+        url: 'https://yusufgulmezz.medium.com/herkes-i%CC%87%C3%A7in-tasar%C4%B1m-uxte-e%C5%9Fitlik-equality-ve-hakkaniyet-equity-fark%C4%B1-d42458ee18bd',
+        readTime: '2 min read',
+        date: '12 Ekim 2025'
+      },
+      { 
+        title: 'Amazon, Trendyol ve Hepsiburada\'nın Mobil Uygulamalarının Kullanıcı Arayüzü (UI) Analizi', 
+        description: 'Türkiye\'nin önde gelen e-ticaret platformlarının mobil uygulamalarını kullanıcı arayüzü açısından detaylı bir şekilde inceliyoruz.', 
+        src: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&h=630&q=80', 
+        width: 1200, 
+        height: 630,
+        url: 'https://yusufgulmezz.medium.com/amazon-trendyol-ve-hepsiburadan%C4%B1n-mobil-uygulamalar%C4%B1n%C4%B1n-kullan%C4%B1c%C4%B1-aray%C3%BCz%C3%BC-ui-ve-0f9f9ecbc301',
+        readTime: '5 min read',
+        date: '15 Eylül 2025'
+      }
     ]
   };
 
-  const items = contentByTab[activeTab];
-  const activeItem = useMemo(() => items[Math.min(activeIndex, items.length - 1)] ?? items[0], [items, activeIndex]);
+  const activeItem = useMemo(() => {
+    const photos = contentByTab.photos;
+    return photos[Math.min(activeIndex, photos.length - 1)] ?? photos[0];
+  }, [activeIndex]);
   const [selectedPhoto, setSelectedPhoto] = useState<Item | null>(null);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
@@ -108,16 +136,6 @@ const PersonalCreativesSection = () => {
   
   
 
-  const scrollToTab = (key: TabKey) => {
-    const el = rowRefs.current[key];
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const currentY = window.pageYOffset || document.documentElement.scrollTop;
-    const headerEl = document.querySelector('header') as HTMLElement | null;
-    const headerHeight = headerEl?.offsetHeight ?? 80;
-    const targetY = currentY + rect.top - headerHeight - 16;
-    window.scrollTo({ top: targetY, behavior: 'smooth' });
-  };
 
 
   // Yardımcı: diziyi n parçaya böl
@@ -452,6 +470,71 @@ const PersonalCreativesSection = () => {
                             </div>
                           );
                         })}
+                      </div>
+                    ) : tab.key === 'blog' ? (
+                      <div className="space-y-8 md:space-y-12">
+                        {contentByTab[tab.key].map((item, idx) => (
+                          <motion.article
+                            key={`${tab.key}-${idx}`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: idx * 0.1 }}
+                            className="group"
+                          >
+                            <a
+                              href={item.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block"
+                            >
+                              <div className="bg-[#F8F4ED] border border-[#E5DDD0] rounded-[24px] overflow-hidden shadow-[0_10px_30px_rgba(31,41,55,0.12)] hover:shadow-[0_12px_40px_rgba(31,41,55,0.18)] transition-all duration-300">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+                                  {/* Görsel */}
+                                  <div className="relative h-[240px] md:h-auto md:col-span-1 overflow-hidden bg-[#E6E0D4]">
+                                    <Image
+                                      src={item.src}
+                                      alt={item.title}
+                                      fill
+                                      sizes="(max-width: 768px) 100vw, 33vw"
+                                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 pointer-events-none border border-white/35" />
+                                  </div>
+                                  
+                                  {/* İçerik */}
+                                  <div className="md:col-span-2 p-6 md:p-8 flex flex-col justify-between">
+                                    <div>
+                                      <div className="flex items-center gap-3 mb-4">
+                                        {item.readTime && (
+                                          <span className="text-xs md:text-sm text-[#6B6255] font-medium bg-white/85 border border-[#D6CCBD] px-3 py-1 rounded-[6px] shadow-[0_4px_8px_rgba(0,0,0,0.06)]">
+                                            {item.readTime}
+                                          </span>
+                                        )}
+                                        {item.date && (
+                                          <span className="text-xs md:text-sm text-[#6B6255] font-normal">
+                                            {item.date}
+                                          </span>
+                                        )}
+                                      </div>
+                                      <h3 className="text-[18px] md:text-[20px] lg:text-2xl font-bold text-[#1A1A1A] mb-3 group-hover:text-[#2E2A24] transition-colors duration-200 line-clamp-2">
+                                        {item.title}
+                                      </h3>
+                                      <p className="text-sm md:text-base text-[#4E4E4E] leading-relaxed line-clamp-3 mb-4">
+                                        {item.description}
+                                      </p>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-[#1A1A1A] font-medium text-sm md:text-base group-hover:gap-3 transition-all duration-200">
+                                      <span>Devamını Oku</span>
+                                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </a>
+                          </motion.article>
+                        ))}
                       </div>
                     ) : (
                       <motion.div
