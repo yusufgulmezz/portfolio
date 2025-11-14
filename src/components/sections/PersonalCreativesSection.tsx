@@ -196,22 +196,13 @@ const PersonalCreativesSection = () => {
           </motion.h2>
         </div>
 
-        {/* CategoriesSection başlık stili ile akordeon */}
+        {/* CategoriesSection başlık stili */}
         <div className="mb-6">
           {TABS.map((tab) => {
             const itemsOfTab = contentByTab[tab.key];
-            const isActive = activeTab === tab.key;
             return (
               <div key={`pc-head-${tab.key}`} ref={(el) => { rowRefs.current[tab.key] = el; }} className="py-6">
-                <button
-                  onClick={() => {
-                    const willOpen = activeTab !== tab.key;
-                    setActiveTab(tab.key);
-                    requestAnimationFrame(() => scrollToTab(tab.key));
-                    if (willOpen) setTimeout(() => scrollToTab(tab.key), 60);
-                  }}
-                  className="w-full text-left group"
-                >
+                <div className="w-full text-left group">
                   <div className="flex items-end justify-between">
                     <div className="relative group">
                       <h3 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#4E4E4E] group-hover:text-gray-900 transition-colors relative z-10">
@@ -226,11 +217,10 @@ const PersonalCreativesSection = () => {
                     <span className="text-sm sm:text-base text-gray-500">{itemsOfTab.length}</span>
                   </div>
                   <div className="w-full h-px bg-gray-300 mt-4" />
-                </button>
-                {/* İçerik sadece aktif başlıkta gösterilir */}
-                {isActive && (
-                  <div className="mt-6">
-                    {tab.key === 'photos' ? (
+                </div>
+                {/* İçerik her zaman gösterilir */}
+                <div className="mt-6">
+                  {tab.key === 'photos' ? (
                       <div className="space-y-8 md:space-y-12">
                         {/* Her kategori için ayrı scroll container */}
                         {Object.entries(photosByCategory).map(([categoryName, photos]) => {
@@ -483,8 +473,7 @@ const PersonalCreativesSection = () => {
                         ))}
                       </motion.div>
                     )}
-                  </div>
-                )}
+                </div>
               </div>
             );
           })}
