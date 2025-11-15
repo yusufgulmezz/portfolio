@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
+import Lottie from 'lottie-react';
 
 type TabKey = 'photos' | 'drawings' | 'blog';
 
@@ -46,6 +47,15 @@ const PersonalCreativesSection = () => {
     return () => window.removeEventListener('resize', update);
   }, []);
   const personalY = useTransform(personalProgress, [0, 1], [personalStartY, 0]);
+
+  // Lottie animation data
+  const [polaroidLottieData, setPolaroidLottieData] = useState<any>(null);
+  useEffect(() => {
+    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Polaroid_Photo.json`)
+      .then(res => res.json())
+      .then(data => setPolaroidLottieData(data))
+      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
+  }, []);
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
@@ -214,17 +224,19 @@ const PersonalCreativesSection = () => {
           </motion.h2>
         </div>
 
-        {/* Polaroid Photo GIF - PERSONAL ve Photos arasında */}
-        <div className="flex justify-center py-8 md:py-12 mb-6">
-          <Image
-            src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Polaroid_Photo.gif`}
-            alt="Polaroid Photo"
-            width={150}
-            height={150}
-            unoptimized
-            className="w-full max-w-[90px] md:max-w-[120px] lg:max-w-[150px] mx-auto"
-          />
-        </div>
+        {/* Polaroid Photo Lottie Animation - PERSONAL ve Photos arasında */}
+        {polaroidLottieData && (
+          <div className="flex justify-center py-8 md:py-12 mb-6">
+            <div className="w-full max-w-[180px] md:max-w-[240px] lg:max-w-[300px] mx-auto">
+              <Lottie
+                animationData={polaroidLottieData}
+                loop={true}
+                autoplay={true}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* CategoriesSection başlık stili */}
         <div className="mb-6">
