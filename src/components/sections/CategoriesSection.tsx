@@ -41,7 +41,7 @@ const CategoriesSection = () => {
   const workY = useTransform(workProgress, [0, 1], [workStartY, 0]);
 
   // Lottie animation data
-  const [lottieData, setLottieData] = useState<any>(null);
+  const [lottieData, setLottieData] = useState<Record<string, unknown> | null>(null);
   useEffect(() => {
     fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Work.json`)
       .then(res => res.json())

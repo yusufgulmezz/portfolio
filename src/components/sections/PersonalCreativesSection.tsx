@@ -49,7 +49,7 @@ const PersonalCreativesSection = () => {
   const personalY = useTransform(personalProgress, [0, 1], [personalStartY, 0]);
 
   // Lottie animation data
-  const [polaroidLottieData, setPolaroidLottieData] = useState<any>(null);
+  const [polaroidLottieData, setPolaroidLottieData] = useState<Record<string, unknown> | null>(null);
   useEffect(() => {
     fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Polaroid_Photo.json`)
       .then(res => res.json())
