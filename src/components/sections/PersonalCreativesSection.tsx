@@ -214,6 +214,18 @@ const PersonalCreativesSection = () => {
           </motion.h2>
         </div>
 
+        {/* Polaroid Photo GIF - PERSONAL ve Photos arasında */}
+        <div className="flex justify-center py-8 md:py-12 mb-6">
+          <Image
+            src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/Polaroid_Photo.gif`}
+            alt="Polaroid Photo"
+            width={150}
+            height={150}
+            unoptimized
+            className="w-full max-w-[90px] md:max-w-[120px] lg:max-w-[150px] mx-auto"
+          />
+        </div>
+
         {/* CategoriesSection başlık stili */}
         <div className="mb-6">
           {TABS.map((tab) => {
