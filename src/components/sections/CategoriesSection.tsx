@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
+import Lottie from 'lottie-react';
 
 const CategoriesSection = () => {
   // WORK sticky header scroll control
@@ -38,6 +39,15 @@ const CategoriesSection = () => {
     return () => window.removeEventListener('resize', update);
   }, []);
   const workY = useTransform(workProgress, [0, 1], [workStartY, 0]);
+
+  // Lottie animation data
+  const [lottieData, setLottieData] = useState<any>(null);
+  useEffect(() => {
+    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Work.json`)
+      .then(res => res.json())
+      .then(data => setLottieData(data))
+      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
+  }, []);
 
   const categories = [
     {
@@ -1116,6 +1126,19 @@ const CategoriesSection = () => {
           </motion.h2>
         </div>
 
+        {/* Lottie Animation - WORK ve Poster arasında */}
+        {lottieData && (
+          <div className="flex justify-center py-8 md:py-12 mb-6">
+            <div className="w-full max-w-[240px] md:max-w-[300px] lg:max-w-[420px] mx-auto">
+              <Lottie
+                animationData={lottieData}
+                loop={true}
+                autoplay={true}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Animated Categories Sections */}
         {categories.map((category) => (
