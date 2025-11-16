@@ -57,6 +57,14 @@ const PersonalCreativesSection = () => {
       .catch(err => console.error('Lottie animation yüklenirken hata:', err));
   }, []);
 
+  const [blogLottieData, setBlogLottieData] = useState<Record<string, unknown> | null>(null);
+  useEffect(() => {
+    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Blog.json`)
+      .then(res => res.json())
+      .then(data => setBlogLottieData(data))
+      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
+  }, []);
+
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string; url?: string; readTime?: string };
@@ -240,10 +248,27 @@ const PersonalCreativesSection = () => {
 
         {/* CategoriesSection başlık stili */}
         <div className="mb-6">
-          {TABS.map((tab) => {
+          {TABS.map((tab, tabIndex) => {
             const itemsOfTab = contentByTab[tab.key];
+            const isBlog = tab.key === 'blog';
+            const prevTab = tabIndex > 0 ? TABS[tabIndex - 1] : null;
+            const isAfterDrawings = prevTab?.key === 'drawings';
+            
             return (
               <div key={`pc-head-${tab.key}`} ref={(el) => { rowRefs.current[tab.key] = el; }} className="py-6">
+                {/* Blog Lottie Animation - Blog başlığının üstüne, Drawing kategorisinin altına */}
+                {isBlog && isAfterDrawings && blogLottieData && (
+                  <div className="flex justify-center py-8 md:py-12 mb-6">
+                    <div className="w-full max-w-[180px] md:max-w-[240px] lg:max-w-[300px] mx-auto">
+                      <Lottie
+                        animationData={blogLottieData}
+                        loop={true}
+                        autoplay={true}
+                        style={{ width: '100%', height: '100%' }}
+                      />
+                    </div>
+                  </div>
+                )}
                 <div className="w-full text-left group">
                   <div className="flex items-end justify-between">
                     <div className="relative group">
