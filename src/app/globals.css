@@ -48,12 +48,20 @@ html.no-scroll, body.no-scroll {
   display: none;  /* Safari and Chrome */
 }
 
-/* Horizontal scroll animasyonu - sonsuz loop */
+/* Horizontal scroll animasyonu - sonsuz loop - GPU optimized */
 @keyframes scroll-left {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
+}
+
+/* Scroll animasyonu için performans optimizasyonu */
+.scroll-animation-container {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
