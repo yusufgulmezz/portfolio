@@ -249,7 +249,7 @@ const PersonalCreativesSection = () => {
                 Playlist for Creativity
               </h3>
               <p className="text-base md:text-lg text-[#4E4E4E] leading-relaxed max-w-2xl mx-auto">
-                If you're looking for a playlist to spark your creativity, these songs are perfect for you. Stay tuned!
+                If you&apos;re looking for a playlist to spark your creativity, these songs are perfect for you. Stay tuned!
               </p>
             </div>
             <div className="w-full">
