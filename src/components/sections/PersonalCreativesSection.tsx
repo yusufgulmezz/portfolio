@@ -228,6 +228,47 @@ const PersonalCreativesSection = () => {
   return (
     <section id="personal-creatives" className="bg-[#edede9]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Spotify Playlist - Creativity & Inspiration */}
+        <div className="mb-12 md:mb-16">
+          <div className="max-w-3xl mx-auto">
+            {/* Music Lottie Animation - Soundtrack to Creativity başlığının üstüne */}
+            {musicLottieData && (
+              <div className="flex justify-center py-2">
+                <div className="w-full max-w-[180px] md:max-w-[240px] lg:max-w-[300px] mx-auto">
+                  <Lottie
+                    animationData={musicLottieData}
+                    loop={true}
+                    autoplay={true}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
+              </div>
+            )}
+            <div className="mb-6 md:mb-8 text-center">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1A1A1A] mb-3 md:mb-4">
+                Playlist for Creativity
+              </h3>
+              <p className="text-base md:text-lg text-[#4E4E4E] leading-relaxed max-w-2xl mx-auto">
+                If you're looking for a playlist to spark your creativity, these songs are perfect for you. Stay tuned!
+              </p>
+            </div>
+            <div className="w-full">
+              <iframe
+                data-testid="embed-iframe"
+                style={{ borderRadius: '12px' }}
+                src="https://open.spotify.com/embed/playlist/3MGkD3NGtGIbgferZfr8CE?utm_source=generator&theme=0"
+                width="100%"
+                height="352"
+                frameBorder="0"
+                allowFullScreen
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title="Spotify Playlist - Soundtrack to Creativity"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Sticky PERSONAL header with scroll-scale effect */}
         <div ref={personalStickyRef} className="relative h-[160vh] mb-12">
           <motion.h2
