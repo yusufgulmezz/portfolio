@@ -65,6 +65,14 @@ const PersonalCreativesSection = () => {
       .catch(err => console.error('Lottie animation yüklenirken hata:', err));
   }, []);
 
+  const [musicLottieData, setMusicLottieData] = useState<Record<string, unknown> | null>(null);
+  useEffect(() => {
+    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Music.json`)
+      .then(res => res.json())
+      .then(data => setMusicLottieData(data))
+      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
+  }, []);
+
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string; url?: string; readTime?: string };
