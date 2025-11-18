@@ -381,6 +381,9 @@ const PersonalCreativesSection = () => {
                                             alt={featuredPhoto.title} 
                                             fill 
                                             sizes="(max-width: 1024px) 100vw, 50vw"
+                                            quality={90}
+                                            priority
+                                            loading="eager"
                                             className="object-cover transition-transform duration-500 ease-out" 
                                           />
                                           <div className="absolute inset-0 pointer-events-none border border-white/35" />
@@ -394,7 +397,7 @@ const PersonalCreativesSection = () => {
                                 {galleryPhotos.length > 0 && (
                                   <div className="relative overflow-hidden" style={{ width: '100%' }}>
                                     <div 
-                                      className="flex gap-6 md:gap-9"
+                                      className="flex gap-6 md:gap-9 scroll-animation-container"
                                       style={{
                                         width: 'max-content',
                                         animation: `scroll-left ${galleryPhotos.length * 5}s linear infinite`
@@ -403,6 +406,7 @@ const PersonalCreativesSection = () => {
                                       {/* İki set görsel (loop için) */}
                                       {[...galleryPhotos, ...galleryPhotos].map((item, idx) => {
                                         const actualIndex = idx % galleryPhotos.length;
+                                        const isFirstSet = idx < galleryPhotos.length;
                                         return (
                                           <div
                                             key={`${categoryName}-gallery-${idx}`}
@@ -421,7 +425,10 @@ const PersonalCreativesSection = () => {
                                                   alt={item.title} 
                                                   fill 
                                                   sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 372px"
-                                                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                                                  quality={85}
+                                                  priority={isFirstSet && idx < 3}
+                                                  loading={isFirstSet && idx < 3 ? "eager" : "lazy"}
+                                                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform" 
                                                 />
                                                 <div className="absolute right-3 top-3 md:right-4 md:top-4">
                                                   <span 
@@ -462,7 +469,7 @@ const PersonalCreativesSection = () => {
                               {/* Yatay scroll container - sonsuz loop */}
                               <div className="relative overflow-hidden" style={{ width: '100%' }}>
                                 <div 
-                                  className="flex gap-6 md:gap-9"
+                                  className="flex gap-6 md:gap-9 scroll-animation-container"
                                   style={{
                                     width: 'max-content',
                                     animation: `scroll-left ${photos.length * 6}s linear infinite`
@@ -471,6 +478,7 @@ const PersonalCreativesSection = () => {
                                   {/* İki set görsel (loop için) */}
                                   {[...photos, ...photos].map((item, idx) => {
                                     const actualIndex = idx % photos.length;
+                                    const isFirstSet = idx < photos.length;
                                     return (
                                       <div
                                         key={`${categoryName}-${idx}`}
@@ -489,7 +497,10 @@ const PersonalCreativesSection = () => {
                                               alt={item.title} 
                                               fill 
                                               sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 372px"
-                                              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                                              quality={85}
+                                              priority={isFirstSet && idx < 3}
+                                              loading={isFirstSet && idx < 3 ? "eager" : "lazy"}
+                                              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform" 
                                             />
                                             <div className="absolute right-3 top-3 md:right-4 md:top-4">
                                               <span 
