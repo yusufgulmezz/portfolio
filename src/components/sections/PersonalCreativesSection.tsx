@@ -141,7 +141,7 @@ const PersonalCreativesSection = () => {
       { 
         title: 'Amazon, Trendyol ve Hepsiburada\'nın Mobil Uygulamalarının Kullanıcı Arayüzü (UI) Analizi', 
         description: 'Türkiye\'nin önde gelen e-ticaret platformlarının mobil uygulamalarını kullanıcı arayüzü açısından detaylı bir şekilde inceliyoruz.', 
-        src: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&h=630&q=80', 
+        src: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*-Vlx-39CfVtjE3QcTi5miw.jpeg', 
         width: 1200, 
         height: 630,
         url: 'https://yusufgulmezz.medium.com/amazon-trendyol-ve-hepsiburadan%C4%B1n-mobil-uygulamalar%C4%B1n%C4%B1n-kullan%C4%B1c%C4%B1-aray%C3%BCz%C3%BC-ui-ve-0f9f9ecbc301',
