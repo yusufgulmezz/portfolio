@@ -4,6 +4,7 @@ import TechLogosSection from "@/components/sections/TechLogosSection";
 import CategoriesSection from "@/components/sections/CategoriesSection";
 // import CreativeProcessSection from "@/components/sections/CreativeProcessSection";
 import PersonalCreativesSection from "@/components/sections/PersonalCreativesSection";
+import ContactMeSection from "@/components/sections/ContactMeSection";
 import PageTransition from "@/components/ui/PageTransition";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       <CategoriesSection />
       {/* <CreativeProcessSection /> */}
       <PersonalCreativesSection />
+      <ContactMeSection />
     </>
   );
 }
