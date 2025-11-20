@@ -586,7 +586,7 @@ const CategoriesSection = () => {
 
     return (
       <motion.section
-        className="py-8"
+        className=""
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
