@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
@@ -12,7 +12,8 @@ const Header = () => {
     'Developer',
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isSoundOn, setIsSoundOn] = useState(true);
+  const [isSoundOn, setIsSoundOn] = useState(false); // Default: OFF
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -25,8 +26,30 @@ const Header = () => {
     window.location.reload();
   };
 
-  const handleSoundToggle = () => {
-    setIsSoundOn((prev) => !prev);
+  const handleSoundToggle = async () => {
+    const newState = !isSoundOn;
+    const audio = audioRef.current;
+    
+    if (!audio) return;
+    
+    // Update state and localStorage
+    setIsSoundOn(newState);
+    localStorage.setItem('soundEnabled', String(newState));
+
+    // Handle audio play/pause
+    if (newState) {
+      // User clicked to turn on - try to play
+      try {
+        await audio.play();
+      } catch (error) {
+        console.log('Audio play failed:', error);
+        setIsSoundOn(false);
+        localStorage.setItem('soundEnabled', 'false');
+      }
+    } else {
+      // User clicked to turn off - pause
+      audio.pause();
+    }
   };
 
   return (
@@ -35,7 +58,19 @@ const Header = () => {
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl"
     >
-             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Hidden audio element */}
+      <audio
+        ref={audioRef}
+        loop
+        preload="none"
+        style={{ display: 'none' }}
+        aria-label="Background soundtrack"
+      >
+        <source src="/audio/soundtrack.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
          <div className="relative flex justify-between items-center h-14 sm:h-20">
           {/* Left Side - Logo + rotating subtitle */}
           <div className="flex-shrink-0">
