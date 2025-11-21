@@ -132,7 +132,7 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosy
 
 - **Behance**: [Behance Profili](https://behance.net/designeverythink)
 - **LinkedIn**: [LinkedIn Profili](https://linkedin.com/in/yusufgulmz)
-- **Email**: bymrglmz@gmail.com
+- **Email**: designeverythink.co@gmail.com
 
 ---
 
