@@ -132,25 +132,33 @@ const Header = () => {
             <button
               onClick={handleSoundToggle}
               className="flex items-center cursor-pointer hover:opacity-80 transition-opacity duration-200"
-              style={{ fontFamily: 'var(--font-roboto)', gap: '10px' }}
+              style={{ 
+                fontFamily: 'var(--font-roboto)', 
+                gap: '6px',
+                backgroundColor: '#4E4E4E',
+                borderRadius: '24px',
+                padding: '8px 16px',
+                border: 'none',
+                outline: 'none'
+              }}
             >
-              <span style={{ color: '#AFAFAF', fontSize: '20px', fontWeight: 500 }}>
+              <span style={{ color: '#AFAFAF', fontSize: '16px', fontWeight: 500 }}>
                 SOUND
               </span>
-              <div className="overflow-hidden relative" style={{ height: '24px', lineHeight: '24px' }}>
+              <div className="overflow-hidden relative" style={{ height: '20px', lineHeight: '20px' }}>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={isSoundOn ? 'ON' : 'OFF'}
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -24 }}
+                    exit={{ opacity: 0, y: -16 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                     style={{ 
-                      color: '#4E4E4E', 
-                      fontSize: '20px', 
+                      color: '#EDEDE9', 
+                      fontSize: '16px', 
                       fontWeight: 500,
                       display: 'block',
-                      lineHeight: '24px',
+                      lineHeight: '20px',
                       whiteSpace: 'nowrap'
                     }}
                   >
