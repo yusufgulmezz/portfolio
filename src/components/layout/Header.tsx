@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Play, Pause } from 'lucide-react';
 
 const Header = () => {
   const rotatingTexts = [
@@ -92,7 +93,7 @@ const Header = () => {
       </audio>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-         <div className="relative flex justify-between items-center h-14 sm:h-20">
+         <div className="relative flex justify-between items-center h-16 sm:h-22">
           {/* Left Side - Logo + rotating subtitle */}
           <div className="flex-shrink-0">
             <button 
@@ -131,39 +132,80 @@ const Header = () => {
           >
             <button
               onClick={handleSoundToggle}
-              className="flex items-center cursor-pointer hover:opacity-80 transition-opacity duration-200"
+              className="cursor-pointer hover:opacity-80 transition-opacity duration-200"
               style={{ 
-                fontFamily: 'var(--font-roboto)', 
-                gap: '6px',
-                backgroundColor: '#4E4E4E',
-                borderRadius: '24px',
-                padding: '8px 16px',
                 border: 'none',
-                outline: 'none'
+                outline: 'none',
+                fontFamily: 'var(--font-roboto)'
               }}
             >
-              <span style={{ color: '#AFAFAF', fontSize: '16px', fontWeight: 500 }}>
-                SOUND
-              </span>
-              <div className="overflow-hidden relative" style={{ height: '20px', lineHeight: '20px' }}>
+              {/* Desktop: SOUND ON/OFF text with background */}
+              <div 
+                className="hidden sm:flex items-center"
+                style={{ 
+                  gap: '6px',
+                  backgroundColor: '#4E4E4E',
+                  borderRadius: '24px',
+                  padding: '8px 16px'
+                }}
+              >
+                <span style={{ color: '#AFAFAF', fontSize: '16px', fontWeight: 500 }}>
+                  SOUND
+                </span>
+                <div className="overflow-hidden relative" style={{ height: '20px', lineHeight: '20px' }}>
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={isSoundOn ? 'ON' : 'OFF'}
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -16 }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      style={{ 
+                        color: '#EDEDE9', 
+                        fontSize: '16px', 
+                        fontWeight: 500,
+                        display: 'block',
+                        lineHeight: '20px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {isSoundOn ? 'ON' : 'OFF'}
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Mobile: Play/Pause icon in circle */}
+              <div 
+                className="flex sm:hidden items-center justify-center" 
+                style={{ 
+                  width: '28px', 
+                  height: '28px', 
+                  backgroundColor: '#4E4E4E',
+                  borderRadius: '50%'
+                }}
+              >
                 <AnimatePresence mode="wait">
-                  <motion.span
-                    key={isSoundOn ? 'ON' : 'OFF'}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -16 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  <motion.div
+                    key={isSoundOn ? 'pause' : 'play'}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.2, ease: 'easeInOut' }}
                     style={{ 
-                      color: '#EDEDE9', 
-                      fontSize: '16px', 
-                      fontWeight: 500,
-                      display: 'block',
-                      lineHeight: '20px',
-                      whiteSpace: 'nowrap'
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%',
+                      height: '100%'
                     }}
                   >
-                    {isSoundOn ? 'ON' : 'OFF'}
-                  </motion.span>
+                    {isSoundOn ? (
+                      <Pause size={14} color="#EDEDE9" fill="#EDEDE9" strokeWidth={2} />
+                    ) : (
+                      <Play size={14} color="#EDEDE9" fill="#EDEDE9" strokeWidth={2} style={{ marginLeft: '2px' }} />
+                    )}
+                  </motion.div>
                 </AnimatePresence>
               </div>
             </button>
