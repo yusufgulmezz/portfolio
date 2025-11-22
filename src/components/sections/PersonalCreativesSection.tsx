@@ -481,7 +481,7 @@ const PersonalCreativesSection = () => {
                                                 />
                                                 <div className="absolute right-3 top-3 md:right-4 md:top-4">
                                                   <span 
-                                                    className="inline-flex items-center justify-center bg-white/85 text-[#1A1A1A] text-xs md:text-sm font-medium border border-[#D6CCBD] shadow-[0_4px_8px_rgba(0,0,0,0.06)]"
+                                                    className="inline-flex items-center justify-center bg-white/85 text-[#1A1A1A] text-xs md:text-sm font-medium shadow-[0_4px_8px_rgba(0,0,0,0.06)]"
                                                     style={{
                                                       width: '42px',
                                                       height: '24px',
