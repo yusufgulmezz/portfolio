@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 
 const Header = () => {
   const rotatingTexts = [
@@ -175,7 +175,7 @@ const Header = () => {
                 </div>
               </div>
 
-              {/* Mobile: Play/Pause icon in circle */}
+              {/* Mobile: Volume icons in circle */}
               <div 
                 className="flex sm:hidden items-center justify-center" 
                 style={{ 
@@ -187,7 +187,7 @@ const Header = () => {
               >
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={isSoundOn ? 'pause' : 'play'}
+                    key={isSoundOn ? 'volume-on' : 'volume-off'}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
@@ -201,9 +201,9 @@ const Header = () => {
                     }}
                   >
                     {isSoundOn ? (
-                      <Pause size={14} color="#EDEDE9" fill="#EDEDE9" strokeWidth={2} />
+                      <Volume2 size={14} color="#EDEDE9" fill="#EDEDE9" strokeWidth={2} />
                     ) : (
-                      <Play size={14} color="#EDEDE9" fill="#EDEDE9" strokeWidth={2} style={{ marginLeft: '2px' }} />
+                      <VolumeX size={14} color="#EDEDE9" fill="#EDEDE9" strokeWidth={2} />
                     )}
                   </motion.div>
                 </AnimatePresence>
