@@ -6,11 +6,11 @@ import { Play, Pause } from 'lucide-react';
 
 const Header = () => {
   const rotatingTexts = [
-    'Graphic Designer',
-    'Pixel Artist',
-    'UI/UX Designer',
-    '3D Designer',
-    'Developer',
+    'Graphic Design',
+    'Pixel Art',
+    'UI/UX',
+    '3D',
+    'Coding',
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSoundOn, setIsSoundOn] = useState(false); // Default: OFF
