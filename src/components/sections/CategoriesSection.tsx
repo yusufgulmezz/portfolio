@@ -245,7 +245,7 @@ const CategoriesSection = () => {
           title: 'Green World App',
           date: '28/08/2025',
           description: 'Clean and intuitive mobile app design with modern UI patterns.',
-          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9aa126229631387.68e57c6e5c355.jpg',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
           gallery: [
             'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/58b4f6229631387.68e3ed896f619.png',
             'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/192d40229631387.68e3ed896ec5f.png',
@@ -392,7 +392,10 @@ const CategoriesSection = () => {
     }
   ];
 
-  const [activeCategoryId, setActiveCategoryId] = useState<string>('poster');
+  // Tüm kategorileri başlangıçta açık olarak ayarla
+  const [activeCategoryIds, setActiveCategoryIds] = useState<Set<string>>(
+    new Set(categories.map(cat => cat.id))
+  );
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const scrollToCategory = (categoryId: string) => {
@@ -407,8 +410,7 @@ const CategoriesSection = () => {
   };
 
   const handleCategoryOpen = (categoryId: string) => {
-    setActiveCategoryId(categoryId);
-    // Açılan içeriğin ölçüleri yerleşsin diye bir frame bekleyip kaydır
+    // Sadece scroll yap, kategoriyi kapatma
     requestAnimationFrame(() => {
       scrollToCategory(categoryId);
     });
@@ -438,6 +440,7 @@ const CategoriesSection = () => {
     const isCoding = title.toLowerCase().includes('coding');
     const isUIUX = title.toLowerCase().includes('ui/ux');
     const [openUiuxId, setOpenUiuxId] = useState<number | null>(null);
+    const [openCodingId, setOpenCodingId] = useState<number | null>(null);
     // Coding alt başlıkları ve aktif sekme
     // Başlık değişse bile bozulmaması için GreenWorld klasör yoluna göre ayırıyoruz
     const codingGreen = isCoding ? designs.filter(d => (d.image || '').toLowerCase().includes('/greenworld/')) : designs;
@@ -487,6 +490,13 @@ const CategoriesSection = () => {
         setOpenUiuxId(designs[0].id);
       }
     }, [isUIUX, collapsed, designs, openUiuxId]);
+
+    // Coding açıldığında üstteki proje varsayılan açık gelsin
+    useEffect(() => {
+      if (isCoding && !collapsed && openCodingId === null && baseDesigns.length > 0) {
+        setOpenCodingId(baseDesigns[0].id);
+      }
+    }, [isCoding, collapsed, baseDesigns, openCodingId]);
     const [galleryImageByDesignId, setGalleryImageByDesignId] = useState<Record<number, string>>({});
     const [expandedDesign, setExpandedDesign] = useState<null | { 
       image: string; 
@@ -666,13 +676,14 @@ const CategoriesSection = () => {
                           className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6"
                         >
                           <div className="w-full">
-                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'aspect-[3/4] bg-black max-w-sm' : 'aspect-[3/4]' } overflow-hidden`}
+                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'w-full h-auto bg-black' : 'w-full h-auto' } overflow-hidden`}
                             >
                               <Image
                                 src={design.image}
                                 alt={design.title}
-                                fill
-                                className={`${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
+                                width={800}
+                                height={600}
+                                className={`w-full h-auto ${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
                               />
                             </div>
                           </div>
@@ -1147,7 +1158,7 @@ const CategoriesSection = () => {
               designs={category.projects || []}
               title={category.name}
               count={category.projects?.length || 0}
-              collapsed={activeCategoryId !== category.id}
+              collapsed={!activeCategoryIds.has(category.id)}
               onHeaderClick={() => handleCategoryOpen(category.id)}
             />
           </div>
