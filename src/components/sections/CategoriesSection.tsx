@@ -247,14 +247,10 @@ const CategoriesSection = () => {
           description: 'Clean and intuitive mobile app design with modern UI patterns.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
           gallery: [
-            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/58b4f6229631387.68e3ed896f619.png',
-            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/192d40229631387.68e3ed896ec5f.png',
-            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/6f2eed229631387.68e3ed896fd83.png',
-            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/40bf2a229631387.68e3ed897089f.png',
-            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/135097229631387.68e3ed896f163.png',
-            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/9aa7a0229631387.68e3ed8970f08.png',
-            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/20bf19229631387.68e3ed89713d6.png',
-            'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/4fe56a229631387.68e3f468ac446.png'
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`
           ],
           tags: ['UI/UX', 'Mobile']
         },
@@ -441,6 +437,8 @@ const CategoriesSection = () => {
     const isUIUX = title.toLowerCase().includes('ui/ux');
     const [openUiuxId, setOpenUiuxId] = useState<number | null>(null);
     const [openCodingId, setOpenCodingId] = useState<number | null>(null);
+    // Green World App için thumbnail slider state
+    const [currentGalleryIndex, setCurrentGalleryIndex] = useState<Record<number, number>>({});
     // Coding alt başlıkları ve aktif sekme
     // Başlık değişse bile bozulmaması için GreenWorld klasör yoluna göre ayırıyoruz
     const codingGreen = isCoding ? designs.filter(d => (d.image || '').toLowerCase().includes('/greenworld/')) : designs;
@@ -490,6 +488,19 @@ const CategoriesSection = () => {
         setOpenUiuxId(designs[0].id);
       }
     }, [isUIUX, collapsed, designs, openUiuxId]);
+
+    // Green World App açıldığında gallery index'ini sıfırla
+    useEffect(() => {
+      if (isUIUX && openUiuxId !== null) {
+        const design = designs.find(d => d.id === openUiuxId);
+        if (design && design.gallery && design.gallery.length > 0) {
+          setCurrentGalleryIndex(prev => ({
+            ...prev,
+            [design.id]: 0
+          }));
+        }
+      }
+    }, [isUIUX, openUiuxId, designs]);
 
     // Coding açıldığında üstteki proje varsayılan açık gelsin
     useEffect(() => {
@@ -676,15 +687,72 @@ const CategoriesSection = () => {
                           className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6"
                         >
                           <div className="w-full">
-                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'w-full h-auto bg-black' : 'w-full h-auto' } overflow-hidden`}
+                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'w-full h-auto bg-black rounded-lg overflow-hidden' : 'w-full h-auto' } overflow-hidden`}
                             >
-                              <Image
-                                src={design.image}
-                                alt={design.title}
-                                width={800}
-                                height={600}
-                                className={`w-full h-auto ${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
-                              />
+                              {/* Ana görsel alanı */}
+                              <div className="relative w-full">
+                                {(design.gallery && design.gallery.length > 0 ? design.gallery : [design.image]).map((img, idx) => {
+                                  const currentIdx = currentGalleryIndex[design.id] ?? 0;
+                                  if (idx === currentIdx) {
+                                    return (
+                                      <div
+                                        key={`${design.id}-${idx}`}
+                                        className="relative w-full"
+                                      >
+                                        <Image
+                                          src={img}
+                                          alt={`${design.title} - ${idx + 1}`}
+                                          width={800}
+                                          height={600}
+                                          className={`w-full h-auto ${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
+                                        />
+                                      </div>
+                                    );
+                                  }
+                                  return null;
+                                })}
+                              </div>
+
+                              {/* Thumbnail'ler - Sadece Green World App için ve gallery varsa */}
+                              {design.title.toLowerCase().includes('green world') && design.gallery && design.gallery.length > 0 && (
+                                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-3 px-4">
+                                  {design.gallery.map((img, idx) => {
+                                    const currentIdx = currentGalleryIndex[design.id] ?? 0;
+                                    return (
+                                      <button
+                                        key={`thumb-${design.id}-${idx}`}
+                                        aria-label={`Go to slide ${idx + 1}`}
+                                        className={`relative w-16 h-12 sm:w-20 sm:h-14 overflow-hidden rounded-md shadow-md transition-all duration-300 ring-1 ring-white/10 ${
+                                          idx === currentIdx 
+                                            ? 'ring-2 ring-white/70 scale-[1.03]' 
+                                            : 'opacity-80 hover:opacity-100 hover:scale-[1.02]'
+                                        }`}
+                                        onMouseEnter={() => {
+                                          setCurrentGalleryIndex(prev => ({
+                                            ...prev,
+                                            [design.id]: idx
+                                          }));
+                                        }}
+                                        onClick={() => {
+                                          setCurrentGalleryIndex(prev => ({
+                                            ...prev,
+                                            [design.id]: idx
+                                          }));
+                                        }}
+                                      >
+                                        <Image
+                                          src={img}
+                                          alt={`thumbnail ${idx + 1}`}
+                                          width={80}
+                                          height={56}
+                                          className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-black/20" />
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div className="w-full lg:max-w-xl text-left">
