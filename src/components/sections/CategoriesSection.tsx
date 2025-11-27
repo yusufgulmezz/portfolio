@@ -247,10 +247,10 @@ const CategoriesSection = () => {
           description: 'Clean and intuitive mobile app design with modern UI patterns.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
           gallery: [
-            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
-            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
-            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
-            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Screens_Page.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Typography_Page.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Components_Page.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Wireframe_Page.png`
           ],
           tags: ['UI/UX', 'Mobile']
         },
