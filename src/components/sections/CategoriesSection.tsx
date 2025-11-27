@@ -715,14 +715,14 @@ const CategoriesSection = () => {
 
                               {/* Thumbnail'ler - Sadece Green World App için ve gallery varsa */}
                               {design.title.toLowerCase().includes('green world') && design.gallery && design.gallery.length > 0 && (
-                                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-3 px-4">
+                                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 sm:gap-3 px-4">
                                   {design.gallery.map((img, idx) => {
                                     const currentIdx = currentGalleryIndex[design.id] ?? 0;
                                     return (
                                       <button
                                         key={`thumb-${design.id}-${idx}`}
                                         aria-label={`Go to slide ${idx + 1}`}
-                                        className={`relative w-16 h-12 sm:w-20 sm:h-14 overflow-hidden rounded-md shadow-md transition-all duration-300 ring-1 ring-white/10 ${
+                                        className={`relative w-12 h-9 sm:w-20 sm:h-14 overflow-hidden rounded-md shadow-md transition-all duration-300 ring-1 ring-white/10 ${
                                           idx === currentIdx 
                                             ? 'ring-2 ring-white/70 scale-[1.03]' 
                                             : 'opacity-80 hover:opacity-100 hover:scale-[1.02]'
