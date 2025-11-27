@@ -690,7 +690,27 @@ const CategoriesSection = () => {
                             <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'w-full h-auto bg-black rounded-lg overflow-hidden' : 'w-full h-auto' } overflow-hidden`}
                             >
                               {/* Ana görsel alanı */}
-                              <div className="relative w-full">
+                              <div 
+                                className="relative w-full cursor-zoom-in"
+                                onClick={() => {
+                                  const images = design.gallery && design.gallery.length > 0 ? design.gallery : [design.image];
+                                  const currentIdx = currentGalleryIndex[design.id] ?? 0;
+                                  setExpandedDesign({
+                                    image: images[currentIdx],
+                                    title: design.title,
+                                    pixel: false,
+                                    currentIndex: currentIdx,
+                                    designs: images.map((img, idx) => ({
+                                      id: idx,
+                                      title: `${design.title} - ${idx + 1}`,
+                                      date: design.date,
+                                      description: design.description,
+                                      image: img,
+                                      tags: design.tags
+                                    }))
+                                  });
+                                }}
+                              >
                                 {(design.gallery && design.gallery.length > 0 ? design.gallery : [design.image]).map((img, idx) => {
                                   const currentIdx = currentGalleryIndex[design.id] ?? 0;
                                   if (idx === currentIdx) {
@@ -1137,7 +1157,10 @@ const CategoriesSection = () => {
                           image: newDesign.image,
                           title: newDesign.title
                         });
-                        setCurrentIndex(newIndex);
+                        // UI/UX için currentIndex güncellemesi gerekmiyor
+                        if (!isUIUX) {
+                          setCurrentIndex(newIndex);
+                        }
                       }}
                       className="absolute left-4 top-1/2 -translate-y-1/2 z-[61] bg-white/90 text-gray-900 rounded-full w-12 h-12 shadow-md hover:bg-white flex items-center justify-center"
                     >
@@ -1159,7 +1182,10 @@ const CategoriesSection = () => {
                           image: newDesign.image,
                           title: newDesign.title
                         });
-                        setCurrentIndex(newIndex);
+                        // UI/UX için currentIndex güncellemesi gerekmiyor
+                        if (!isUIUX) {
+                          setCurrentIndex(newIndex);
+                        }
                       }}
                       className="absolute right-4 top-1/2 -translate-y-1/2 z-[61] bg-white/90 text-gray-900 rounded-full w-12 h-12 shadow-md hover:bg-white flex items-center justify-center"
                     >
