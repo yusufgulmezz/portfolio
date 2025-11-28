@@ -258,7 +258,7 @@ const CategoriesSection = () => {
           id: 9,
           title: 'Hepsiburada Product Card',
           date: '28/08/2025',
-          description: 'Green World is a location-based mobile application developed to raise awareness about environmental pollution, support the voluntary trash collection process, and increase social environmental awareness.',
+          description: 'Product card design featured on Hepsiburada, an e-commerce site.Colors, texts, icons, and other elements were incorporated into the design as a whole.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/7068ac238680707.6919e90f93502.png',
           tags: ['UI/UX', 'Mobile'],
           reversed: true
