@@ -244,7 +244,7 @@ const CategoriesSection = () => {
           id: 8,
           title: 'Green World App',
           date: '28/08/2025',
-          description: 'Clean and intuitive mobile app design with modern UI patterns.',
+          description: 'Green World is a location-based mobile application developed to raise awareness about environmental pollution, support the voluntary trash collection process, and increase social environmental awareness.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
           gallery: [
             `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Screens_Page.png`,
