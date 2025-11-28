@@ -242,7 +242,7 @@ const CategoriesSection = () => {
       projects: [
         {
           id: 8,
-          title: 'Green World App',
+          title: 'Green World',
           date: '28/08/2025',
           description: 'Green World is a location-based mobile application developed to raise awareness about environmental pollution, support the voluntary trash collection process, and increase social environmental awareness.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
@@ -253,6 +253,15 @@ const CategoriesSection = () => {
             `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Wireframe_Page.png`
           ],
           tags: ['UI/UX', 'Mobile']
+        },
+        {
+          id: 9,
+          title: 'Hepsiburada Product Card',
+          date: '28/08/2025',
+          description: 'Green World is a location-based mobile application developed to raise awareness about environmental pollution, support the voluntary trash collection process, and increase social environmental awareness.',
+          image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/7068ac238680707.6919e90f93502.png',
+          tags: ['UI/UX', 'Mobile'],
+          reversed: true
         },
         // {
         //   id: 9,
@@ -423,6 +432,7 @@ const CategoriesSection = () => {
       tags: string[];
       link?: string;
       gallery?: string[];
+      reversed?: boolean;
     }>, 
     title: string, 
     count: number,
@@ -435,7 +445,7 @@ const CategoriesSection = () => {
     const isPoster = title.toLowerCase().includes('poster');
     const isCoding = title.toLowerCase().includes('coding');
     const isUIUX = title.toLowerCase().includes('ui/ux');
-    const [openUiuxId, setOpenUiuxId] = useState<number | null>(null);
+    const [openUiuxIds, setOpenUiuxIds] = useState<Set<number>>(new Set());
     const [openCodingId, setOpenCodingId] = useState<number | null>(null);
     // Green World App için thumbnail slider state
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<Record<number, number>>({});
@@ -482,25 +492,26 @@ const CategoriesSection = () => {
       };
     }, [currentIndex, isUIUX, activeCodingTab, baseDesignsLength]);
 
-    // UI/UX açıldığında üstteki proje (Green World App) varsayılan açık gelsin
+    // UI/UX açıldığında tüm projeler varsayılan açık gelsin
     useEffect(() => {
-      if (isUIUX && !collapsed && openUiuxId === null && designs.length > 0) {
-        setOpenUiuxId(designs[0].id);
+      if (isUIUX && !collapsed && openUiuxIds.size === 0 && designs.length > 0) {
+        setOpenUiuxIds(new Set(designs.map(d => d.id)));
       }
-    }, [isUIUX, collapsed, designs, openUiuxId]);
+    }, [isUIUX, collapsed, designs, openUiuxIds.size]);
 
     // Green World App açıldığında gallery index'ini sıfırla
     useEffect(() => {
-      if (isUIUX && openUiuxId !== null) {
-        const design = designs.find(d => d.id === openUiuxId);
-        if (design && design.gallery && design.gallery.length > 0) {
-          setCurrentGalleryIndex(prev => ({
-            ...prev,
-            [design.id]: 0
-          }));
-        }
+      if (isUIUX && openUiuxIds.size > 0) {
+        designs.forEach(design => {
+          if (openUiuxIds.has(design.id) && design.gallery && design.gallery.length > 0) {
+            setCurrentGalleryIndex(prev => ({
+              ...prev,
+              [design.id]: 0
+            }));
+          }
+        });
       }
-    }, [isUIUX, openUiuxId, designs]);
+    }, [isUIUX, openUiuxIds, designs]);
 
     // Coding açıldığında üstteki proje varsayılan açık gelsin
     useEffect(() => {
@@ -667,26 +678,33 @@ const CategoriesSection = () => {
             transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
             {isUIUX ? (
-              <div className="flex flex-col gap-8 mt-6">
+              <div className="flex flex-col gap-16 mt-6">
                 {designs.map((design) => (
                   <div key={`${title}-${design.id}`} className="p-0">
-                    <button
-                      onClick={() => setOpenUiuxId(openUiuxId === design.id ? null : design.id)}
-                      className="w-full text-left flex items-center justify-between"
-                    >
-                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900">{design.title}</h3>
-                    </button>
-                    <div className="w-full h-px bg-gray-300 mt-3" />
                     <AnimatePresence initial={false}>
-                      {openUiuxId === design.id && (
+                      {openUiuxIds.has(design.id) && (
                         <motion.div
                           initial={{ opacity: 0, y: -6 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -6 }}
                           transition={{ duration: 0.25 }}
-                          className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6"
+                          className={`mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6 ${design.reversed ? 'lg:grid-flow-col-dense' : ''}`}
                         >
-                          <div className="w-full">
+                          {/* Açıklama kısmı - reversed ise solda, değilse sağda */}
+                          <div className={`w-full lg:max-w-xl text-left ${design.reversed ? 'lg:order-1' : 'lg:order-2'}`}>
+                            <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">{design.title}</h3>
+                            {/* <p className="text-gray-500 text-sm mb-3">{design.date}</p> */}
+                            <p className="text-gray-700 leading-relaxed mb-4">{design.description}</p>
+                            <div className="flex gap-2 flex-wrap items-start">
+                              {design.tags.map((tag, tagIndex) => (
+                                <span key={tagIndex} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          {/* Görsel kısmı - reversed ise sağda, değilse solda */}
+                          <div className={`w-full ${design.reversed ? 'lg:order-2' : 'lg:order-1'}`}>
                             <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'w-full h-auto bg-black rounded-lg overflow-hidden' : 'w-full h-auto' } overflow-hidden`}
                             >
                               {/* Ana görsel alanı */}
@@ -773,17 +791,6 @@ const CategoriesSection = () => {
                                   })}
                                 </div>
                               )}
-                            </div>
-                          </div>
-                          <div className="w-full lg:max-w-xl text-left">
-                            {/* <p className="text-gray-500 text-sm mb-3">{design.date}</p> */}
-                            <p className="text-gray-700 leading-relaxed mb-4">{design.description}</p>
-                            <div className="flex gap-2 flex-wrap items-start">
-                              {design.tags.map((tag, tagIndex) => (
-                                <span key={tagIndex} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
-                                  {tag}
-                                </span>
-                              ))}
                             </div>
                           </div>
                         </motion.div>
