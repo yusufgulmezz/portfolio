@@ -64,7 +64,7 @@ const CategoriesSection = () => {
           date: '12/09/2025',
           description: 'Poster design for Formula 1 Ferrari driver Lewis Hamilton. The “Glassy Effect” was chosen for this design created for Hamilton, a seven-time world champion. The font used is “Formula1”.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/b282c2233024129.68ea40f709d99.png',
-          tags: ['Poster', 'Design']
+          tags: ['F1', 'Poster']
         },
         {
           id: 2,
@@ -72,7 +72,7 @@ const CategoriesSection = () => {
           date: '12/09/2025',
           description: 'The poster for F1 figure Verstappen of Red Bull Racing is highly noticeable. It features three driver images on a textured white background, utilizing the brands dominant red and orange tones for maximum impact.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/b816cb235880157.68e1995cd1b62.jpg',
-          tags: ['Poster', 'Design']
+          tags: ['F1', 'Poster']
         },
         {
           id: 3,
@@ -80,7 +80,7 @@ const CategoriesSection = () => {
           date: '12/09/2025',
           description: 'Poster design of Eredin Bréacc Glas, king of the Wild Hunt, the main villain in The Witcher universe. The background features different images of Geralt, Ciri, and Eredin. Content is supported by some texts from the in-game lore.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/edad57197406813.68e44ba1ca748.jpg',
-          tags: ['Poster', 'Design']
+          tags: ['Witcher', 'Poster']
         },
         {
           id: 4,
@@ -88,7 +88,7 @@ const CategoriesSection = () => {
           date: '12/09/2025',
           description: 'This poster design for Charles Leclerc, another Ferrari F1 driver, uses the "Threshold" method. It predominantly features shades of red, white, and black. The Ferrari logo stands out among the textures used in the background. The font used is again "Formula1."',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/fd0b2e232152585.68964e11b1ccc.png',
-          tags: ['Poster', 'Design']
+          tags: ['F1', 'Poster']
         },
         {
           id: 5,
@@ -96,7 +96,7 @@ const CategoriesSection = () => {
           date: '15/09/2025',
           description: 'Contemporary poster design featuring modern aesthetics and clean composition. This design showcases innovative visual elements with a focus on typography and layout.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/32ac63236326711.68e92b5558330.jpg',
-          tags: ['Poster', 'Modern']
+          tags: ['Butterfly', 'Poster']
         }
       ]
     },
