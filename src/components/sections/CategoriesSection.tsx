@@ -1075,7 +1075,7 @@ const CategoriesSection = () => {
             <>
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
             {currentIndex < ((isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length) - 1) && (
-              <div className="hidden lg:block absolute top-32 right-4 z-10">
+              <div className="hidden lg:block absolute top-1/2 -translate-y-1/2 right-4 z-10">
                 <motion.button
                   onClick={() => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
