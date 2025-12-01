@@ -876,8 +876,8 @@ const CategoriesSection = () => {
                         className={`${isCoding
                           ? 'w-[240px] sm:w-[260px] md:w-[280px] lg:w-[320px] xl:w-[340px] h-[480px] sm:h-[520px] lg:h-[560px] aspect-[9/19]'
                           : (isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app')))
-                            ? 'w-80 h-80 sm:w-96 sm:h-96 md:w-[440px] md:h-[440px] lg:w-[520px] lg:h-[520px]'
-                            : 'w-64 h-80 sm:w-72 sm:h-96 md:w-96 md:h-[480px] lg:w-[480px] lg:h-[580px]'
+                            ? 'w-80 h-80 sm:w-96 sm:h-96 md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px]'
+                            : 'w-64 h-80 sm:w-72 sm:h-96 md:w-96 md:h-[480px] lg:w-[480px] lg:h-[600px]'
                         } bg-transparent rounded-lg overflow-hidden cursor-zoom-in relative group`}
                       >
                         {design.image ? (
