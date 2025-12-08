@@ -279,110 +279,14 @@ const CategoriesSection = () => {
       description: 'Web and mobile application development projects',
       number: '05',
       color: 'from-orange-500 to-red-500',
-      count: 14,
+      count: 2,
       projects: [
         {
           id: 16,
-          title: 'Log In & Sign Up Pages',
+          title: 'Green World',
           date: '2025-08-20',
-          description: 'The relevant screens where you can log in and sign up for the application.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/01-IPhoneLogInPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 17,
-          title: 'Main Page',
-          date: '2025-08-19',
-          description: 'The app is homepage where users share informative contents.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/02-IPhoneMainPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 18,
-          title: 'User Post Page',
-          date: '2025-08-18',
-          description: 'The details page for this content shared by the user is included.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/03-IPhoneUserPostPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 19,
-          title: 'Ranking Page',
-          date: '2025-08-17',
-          description: 'A ranking list page created based on users activity in the application.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/04-IPhoneRankingPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 20,
-          title: 'Map Page',
-          date: '2025-08-16',
-          description: 'The map page contains buttons that users can interact with. At the top are filter and navigation buttons, while zoom in and zoom out buttons are located at the bottom right. At the very bottom are buttons for reporting waste and displaying waste.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/05-IPhoneMapPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 21,
-          title: 'Report Trash',
-          date: '2025-08-15',
-          description: 'The location of the waste is marked within this area, and the waste report is initiated by clicking the "Confirm" button below. If the wrong location has been selected or you wist to cancel, click the "Cancel" button.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/06-IPhoneReportButtonPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 22,
-          title: 'Trash Points',
-          date: '2025-08-14',
-          description: 'The cleaned and uncleaned waste reporting points are shown above. Users can access the relevant waste information by clicking on these points.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/07-IPhoneTrashMapPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 23,
-          title: 'Trash Report Page',
-          date: '2025-08-13',
-          description: 'Once the waste reporting point has been determined, it is time to enter the relevant information about the waste. This section includes images of the waste, its category, quantity, and related information such as the necessary tools.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/08-IPhoneTrashReportPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 24,
-          title: 'Waste Guide',
-          date: '2025-08-12',
-          description: 'As seen here, there is an information guide on what category the waste should fall under. Users can refer to this section when determining the type of waste.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/09-IPhoneWasteGuidePage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 25,
-          title: 'Trash Info Page',
-          date: '2025-08-11',
-          description: 'On the Trash Info page, you can see a reported waste item with the necessary information entered. The page includes when, where, and by whom the waste was reported, other information, and the necessary buttons for cleaning up the waste.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/10-IPhoneTrashInfoPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 26,
-          title: 'Trash Cleaning Page',
-          date: '2025-08-10',
-          description: 'The cleaning process takes place after the images of the waste during and after cleaning are uploaded to the relevant sections on this page.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/11-IPhoneTrashCleaningPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 27,
-          title: 'Notification Page',
-          date: '2025-08-09',
-          description: 'The Notifications page is where you can see new waste reports in your area, likes on shared posts, new updates about the app, and more.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/12-IPhoneNotificationPage.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
-        },
-        {
-          id: 28,
-          title: 'Profile Page',
-          date: '2025-08-08',
-          description: 'The profile page is a page belonging to the user, where the waste they have reported and cleaned up, as well as the posts they have shared, are displayed. From here, they can also edit their personal information.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/GreenWorld/13-IPhoneProfilePage.png`,
+          description: 'Green World is a location-based mobile application developed to raise awareness about environmental pollution, support the voluntary trash collection process, and increase social environmental awareness.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/greenWorld/Coding-GreenWorld.png`,
           tags: ['Mobile', 'React Native', 'Firebase']
         },
         {
@@ -449,12 +353,7 @@ const CategoriesSection = () => {
     const [openCodingId, setOpenCodingId] = useState<number | null>(null);
     // Green World App için thumbnail slider state
     const [currentGalleryIndex, setCurrentGalleryIndex] = useState<Record<number, number>>({});
-    // Coding alt başlıkları ve aktif sekme
-    // Başlık değişse bile bozulmaması için GreenWorld klasör yoluna göre ayırıyoruz
-    const codingGreen = isCoding ? designs.filter(d => (d.image || '').toLowerCase().includes('/greenworld/')) : designs;
-    const codingPortfolio = isCoding ? designs.filter(d => !(d.image || '').toLowerCase().includes('/greenworld/')) : [];
-    const [activeCodingTab, setActiveCodingTab] = useState<'green' | 'portfolio'>('green');
-    const baseDesigns = (isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs);
+    const baseDesigns = designs;
     const baseDesignsLength = baseDesigns.length;
     // Mobilde içerik yüksekliğine göre parent container'ı ayarlamak için
     const activeContentRef = useRef<HTMLDivElement | null>(null);
@@ -490,7 +389,7 @@ const CategoriesSection = () => {
         window.removeEventListener('resize', updateHeight);
         clearTimeout(timer);
       };
-    }, [currentIndex, isUIUX, activeCodingTab, baseDesignsLength]);
+    }, [currentIndex, isUIUX, baseDesignsLength]);
 
     // UI/UX açıldığında tüm projeler varsayılan açık gelsin
     useEffect(() => {
@@ -641,33 +540,14 @@ const CategoriesSection = () => {
                 <div className="absolute -bottom-2 -left-2 w-4 h-4 border-l-2 border-b-2 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute -bottom-2 -right-2 w-4 h-4 border-r-2 border-b-2 border-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <span className="text-sm text-gray-500 mb-2">{isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length}</span>
+              <span className="text-sm text-gray-500 mb-2">{designs.length}</span>
             </div>
             <div className="w-full h-px bg-gray-300 mt-6"></div>
             {/* Design counter */}
             <div className="text-sm text-gray-500 mt-2">
-              {currentIndex + 1} / {isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length}
+              {currentIndex + 1} / {designs.length}
             </div>
           </motion.div>
-
-          {isCoding && (
-            <div className="mt-2 mb-2 flex gap-3">
-              <button
-                onClick={() => { setActiveCodingTab('green'); setCurrentIndex(0); }}
-                className={`px-4 py-2 rounded-lg transition-colors border cursor-pointer ${activeCodingTab === 'green' ? 'bg-gray-900 text-white border-gray-900' : 'bg-transparent text-gray-800 border-gray-300 hover:bg-gray-100'}`}
-                aria-pressed={activeCodingTab === 'green'}
-              >
-                Green World
-              </button>
-              <button
-                onClick={() => { setActiveCodingTab('portfolio'); setCurrentIndex(0); }}
-                className={`px-4 py-2 rounded-lg transition-colors border cursor-pointer ${activeCodingTab === 'portfolio' ? 'bg-gray-900 text-white border-gray-900' : 'bg-transparent text-gray-800 border-gray-300 hover:bg-gray-100'}`}
-                aria-pressed={activeCodingTab === 'portfolio'}
-              >
-                Portfolio Website
-              </button>
-            </div>
-          )}
 
           <motion.div
             ref={containerRef}
@@ -799,8 +679,70 @@ const CategoriesSection = () => {
                   </div>
                 ))}
               </div>
+            ) : isCoding ? (
+              <div className="flex flex-col gap-16 mt-6">
+                {designs.map((design) => {
+                  // Portfolio Website için reversed düzen (görsel sağda, açıklama solda)
+                  const isReversed = design.title.toLowerCase().includes('portfolio');
+                  return (
+                    <div key={`${title}-${design.id}`} className="p-0">
+                      <motion.div
+                        initial={{ opacity: 0, y: -6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className={`mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6 ${isReversed ? 'lg:grid-flow-col-dense' : ''}`}
+                      >
+                        {/* Açıklama kısmı - reversed ise solda, değilse sağda */}
+                        <div className={`w-full lg:max-w-xl text-left ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
+                          <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">{design.title}</h3>
+                          <p className="text-gray-700 leading-relaxed mb-4">{design.description}</p>
+                          <div className="flex gap-2 flex-wrap items-start">
+                            {design.tags.map((tag, tagIndex) => (
+                              <span key={tagIndex} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        {/* Görsel kısmı - reversed ise sağda, değilse solda */}
+                        <div className={`w-full ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
+                          <div className="relative w-full h-auto bg-black rounded-lg overflow-hidden">
+                            <div 
+                              className="relative w-full cursor-zoom-in"
+                              onClick={() => {
+                                setExpandedDesign({
+                                  image: design.image,
+                                  title: design.title,
+                                  pixel: false,
+                                  currentIndex: 0,
+                                  designs: [{
+                                    id: design.id,
+                                    title: design.title,
+                                    date: design.date,
+                                    description: design.description,
+                                    image: design.image,
+                                    tags: design.tags
+                                  }]
+                                });
+                              }}
+                            >
+                              <Image
+                                src={design.image}
+                                alt={design.title}
+                                width={800}
+                                height={600}
+                                className="w-full h-auto object-contain"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
+                  );
+                })}
+              </div>
             ) : (
-            (isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs).map((design, index) => {
+            designs.map((design, index) => {
               // Ana tasarım için animasyon değerleri
               const isActive = index === currentIndex;
               const isNext = index === currentIndex + 1;
@@ -858,8 +800,7 @@ const CategoriesSection = () => {
                       <motion.div
                         onClick={() => {
                           if (isActive) {
-                            const base = isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs;
-                            const d = base[currentIndex];
+                            const d = designs[currentIndex];
                             if (d.link) {
                               window.open(d.link, '_blank', 'noopener,noreferrer');
                             } else {
@@ -868,7 +809,7 @@ const CategoriesSection = () => {
                                 title: d.title, 
                                 pixel: isPixelArt || is3D,
                                 currentIndex: currentIndex,
-                                designs: base
+                                designs: designs
                               });
                             }
                           }
@@ -910,8 +851,7 @@ const CategoriesSection = () => {
                             onClick={(e) => {
                               e.stopPropagation();
                               if (isActive) {
-                                const base = isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs;
-                                const d = base[currentIndex];
+                                const d = designs[currentIndex];
                                 if (d.link) {
                                   window.open(d.link, '_blank', 'noopener,noreferrer');
                                 } else {
@@ -920,7 +860,7 @@ const CategoriesSection = () => {
                                     title: d.title, 
                                     pixel: isPixelArt || is3D,
                                     currentIndex: currentIndex,
-                                    designs: base
+                                    designs: designs
                                   });
                                 }
                               }
@@ -944,8 +884,7 @@ const CategoriesSection = () => {
                             onClick={(e) => {
                               e.stopPropagation();
                               if (isActive) {
-                                const base = isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs;
-                                const d = base[currentIndex];
+                                const d = designs[currentIndex];
                                 if (d.link) {
                                   window.open(d.link, '_blank', 'noopener,noreferrer');
                                 } else {
@@ -954,7 +893,7 @@ const CategoriesSection = () => {
                                     title: d.title, 
                                     pixel: isPixelArt || is3D,
                                     currentIndex: currentIndex,
-                                    designs: base
+                                    designs: designs
                                   });
                                 }
                               }
@@ -1071,10 +1010,10 @@ const CategoriesSection = () => {
             })
             )}
 
-            {!isUIUX && (
+            {!isUIUX && !isCoding && (
             <>
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
-            {currentIndex < ((isCoding ? (activeCodingTab === 'green' ? codingGreen.length : codingPortfolio.length) : designs.length) - 1) && (
+            {currentIndex < (designs.length - 1) && (
               <div className="hidden lg:block absolute top-1/2 -translate-y-1/2 right-4 z-10">
                 <motion.button
                   onClick={() => {
@@ -1092,8 +1031,8 @@ const CategoriesSection = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Image
-                    src={(isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs)[currentIndex + 1]?.image || ''}
-                    alt={(isCoding ? (activeCodingTab === 'green' ? codingGreen : codingPortfolio) : designs)[currentIndex + 1]?.title || ''}
+                    src={designs[currentIndex + 1]?.image || ''}
+                    alt={designs[currentIndex + 1]?.title || ''}
                     width={400}
                     height={300}
                     className="w-full h-full object-contain"
