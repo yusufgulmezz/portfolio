@@ -73,6 +73,14 @@ const PersonalCreativesSection = () => {
       .catch(err => console.error('Lottie animation yüklenirken hata:', err));
   }, []);
 
+  const [drawingLottieData, setDrawingLottieData] = useState<Record<string, unknown> | null>(null);
+  useEffect(() => {
+    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/drawing.json`)
+      .then(res => res.json())
+      .then(data => setDrawingLottieData(data))
+      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
+  }, []);
+
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string; url?: string; readTime?: string };
@@ -305,6 +313,19 @@ const PersonalCreativesSection = () => {
             
             return (
               <div key={`pc-head-${tab.key}`} ref={(el) => { rowRefs.current[tab.key] = el; }} className="py-6">
+                {/* Drawing Lottie Animation - Drawing başlığının üstüne */}
+                {tab.key === 'drawings' && drawingLottieData && (
+                  <div className="flex justify-center py-16 md:py-20 lg:py-24">
+                    <div className="w-full max-w-[180px] md:max-w-[240px] lg:max-w-[300px] mx-auto">
+                      <Lottie
+                        animationData={drawingLottieData}
+                        loop={true}
+                        autoplay={true}
+                        style={{ width: '100%', height: '100%' }}
+                      />
+                    </div>
+                  </div>
+                )}
                 {/* Blog Lottie Animation - Blog başlığının üstüne, Drawing kategorisinin altına */}
                 {isBlog && isAfterDrawings && blogLottieData && (
                   <div className="flex justify-center py-8 md:py-12 mb-6">
