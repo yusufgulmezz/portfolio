@@ -4,6 +4,9 @@ import { useMemo, useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import Lottie from 'lottie-react';
+import { useLottieAnimation } from '@/hooks/useLottieAnimation';
+import { useThrottledResize } from '@/hooks/useThrottledResize';
+import { HorizontalScrollGallery } from '@/components/ui/HorizontalScrollGallery';
 
 type TabKey = 'photos' | 'drawings' | 'blog';
 
@@ -20,20 +23,24 @@ const PersonalCreativesSection = () => {
     target: personalStickyRef,
     offset: ["start start", "end start"],
   });
-  // Mobilde daha az küçülme: min scale 0.7
+  // Mobilde daha az küçülme: min scale 0.7 - Throttled resize ile optimize edildi
   const [isMobile, setIsMobile] = useState(false);
+  useThrottledResize(() => {
+    setIsMobile(window.innerWidth < 1024);
+  }, 150);
+  
   useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 1024);
-    onResize();
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    setIsMobile(window.innerWidth < 1024);
   }, []);
   const personalScale = useTransform(personalProgress, [0, 0.8], isMobile ? [1, 0.7] : [1, 0.4]);
   const personalHeadingRef = useRef<HTMLSpanElement | null>(null);
   const [personalTopOffset, setPersonalTopOffset] = useState<number>(0);
   const [personalStartY, setPersonalStartY] = useState<number>(0);
-  useEffect(() => {
-    const update = () => {
+  const [personalFontSize, setPersonalFontSize] = useState<string>('clamp(36px, 18vw, 248px)');
+  
+  // Throttled resize ile optimize edildi
+  const updateLayout = useMemo(() => {
+    return () => {
       const headerEl = document.querySelector('header') as HTMLElement | null;
       const headerH = headerEl?.offsetHeight ?? 0;
       setPersonalTopOffset(headerH + 8);
@@ -41,45 +48,45 @@ const PersonalCreativesSection = () => {
       const headingH = personalHeadingRef.current?.offsetHeight ?? 0;
       const startY = Math.max(0, (viewportH - headerH - headingH) / 2);
       setPersonalStartY(startY);
+
+      // Font size hesaplama - Parent div'in (h-[160vh]) genişliğine göre
+      const viewportW = window.innerWidth;
+      const isDesktop = viewportW >= 1024;
+
+      if (isDesktop && personalStickyRef.current) {
+        // Desktop'ta: Parent div'in genişliğine göre dinamik hesaplama
+        const parentDivWidth = personalStickyRef.current.offsetWidth;
+
+        // PERSONAL yazısı için genişlik hesabı: font-size * 4.1 (7 karakter, letter spacing dahil)
+        // PERSONAL: 7 karakter, WORK: 4 karakter (2.5 faktör)
+        // 7/4 = 1.75, 2.5 * 1.75 ≈ 4.375, güvenli faktör: 4.1
+        const safeWidth = parentDivWidth * 0.9; // %90 kullan (güvenli margin)
+        const calculatedSize = safeWidth / 4.1;
+
+        const minSize = 36;
+        const maxSize = 248;
+        const finalSize = Math.max(minSize, Math.min(calculatedSize, maxSize));
+        setPersonalFontSize(`${finalSize}px`);
+      } else {
+        // Mobil/Tablet: clamp kullan
+        setPersonalFontSize('clamp(36px, 18vw, 248px)');
+      }
     };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
   }, []);
+
+  useEffect(() => {
+    updateLayout();
+  }, [updateLayout]);
+
+  useThrottledResize(updateLayout, 150);
   const personalY = useTransform(personalProgress, [0, 1], [personalStartY, 0]);
 
-  // Lottie animation data
-  const [polaroidLottieData, setPolaroidLottieData] = useState<Record<string, unknown> | null>(null);
-  useEffect(() => {
-    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Polaroid_Photo.json`)
-      .then(res => res.json())
-      .then(data => setPolaroidLottieData(data))
-      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
-  }, []);
-
-  const [blogLottieData, setBlogLottieData] = useState<Record<string, unknown> | null>(null);
-  useEffect(() => {
-    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Blog.json`)
-      .then(res => res.json())
-      .then(data => setBlogLottieData(data))
-      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
-  }, []);
-
-  const [musicLottieData, setMusicLottieData] = useState<Record<string, unknown> | null>(null);
-  useEffect(() => {
-    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Music.json`)
-      .then(res => res.json())
-      .then(data => setMusicLottieData(data))
-      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
-  }, []);
-
-  const [drawingLottieData, setDrawingLottieData] = useState<Record<string, unknown> | null>(null);
-  useEffect(() => {
-    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/drawing.json`)
-      .then(res => res.json())
-      .then(data => setDrawingLottieData(data))
-      .catch(err => console.error('Lottie animation yüklenirken hata:', err));
-  }, []);
+  // Lottie animation data - Cache mekanizması ile optimize edildi
+  const basePath = process.env.NODE_ENV === 'production' ? '/portfolio' : '';
+  const { data: polaroidLottieData } = useLottieAnimation(`${basePath}/animations/Polaroid_Photo.json`);
+  const { data: blogLottieData } = useLottieAnimation(`${basePath}/animations/Blog.json`);
+  const { data: musicLottieData } = useLottieAnimation(`${basePath}/animations/Music.json`);
+  const { data: drawingLottieData } = useLottieAnimation(`${basePath}/animations/drawing.json`);
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
@@ -126,31 +133,31 @@ const PersonalCreativesSection = () => {
       { title: 'Figure Studies', description: 'Selections from short poses.', src: 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 }
     ],
     blog: [
-      { 
-        title: 'Kullanıcı Odaklı İnovasyonun Rehberi: Design Thinking ve UX Tasarımı', 
-        description: 'Design Thinking metodolojisinin temel prensiplerini ve beş aşamasını inceleyerek, karmaşık sorunları anlamak ve kullanıcı odaklı çözümler geliştirmek için kullanılan insan merkezli yaklaşımı keşfedin.', 
-        src: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&h=630&q=80', 
-        width: 1200, 
+      {
+        title: 'Kullanıcı Odaklı İnovasyonun Rehberi: Design Thinking ve UX Tasarımı',
+        description: 'Design Thinking metodolojisinin temel prensiplerini ve beş aşamasını inceleyerek, karmaşık sorunları anlamak ve kullanıcı odaklı çözümler geliştirmek için kullanılan insan merkezli yaklaşımı keşfedin.',
+        src: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&h=630&q=80',
+        width: 1200,
         height: 630,
         url: 'https://yusufgulmezz.medium.com/kullan%C4%B1c%C4%B1-odakl%C4%B1-i%CC%87novasyonun-rehberi-design-thinking-ve-ux-tasar%C4%B1m%C4%B1-89a3d40dcab2',
         readTime: '4 min read',
         date: '21 Ekim 2025'
       },
-      { 
-        title: 'Herkes İçin Tasarım: UX\'te Eşitlik (Equality) ve Hakkaniyet (Equity) Farkı', 
-        description: 'UX tasarımında sıkça karıştırılan iki önemli kavramı netleştiriyoruz: Eşitlik ve Hakkaniyet. Tasarımlarımızın sadece iyi değil, aynı zamanda adil olmasını sağlayan ince çizgiyi keşfedin.', 
-        src: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1200&h=630&q=80', 
-        width: 1200, 
+      {
+        title: 'Herkes İçin Tasarım: UX\'te Eşitlik (Equality) ve Hakkaniyet (Equity) Farkı',
+        description: 'UX tasarımında sıkça karıştırılan iki önemli kavramı netleştiriyoruz: Eşitlik ve Hakkaniyet. Tasarımlarımızın sadece iyi değil, aynı zamanda adil olmasını sağlayan ince çizgiyi keşfedin.',
+        src: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1200&h=630&q=80',
+        width: 1200,
         height: 630,
         url: 'https://yusufgulmezz.medium.com/herkes-i%CC%87%C3%A7in-tasar%C4%B1m-uxte-e%C5%9Fitlik-equality-ve-hakkaniyet-equity-fark%C4%B1-d42458ee18bd',
         readTime: '2 min read',
         date: '12 Ekim 2025'
       },
-      { 
-        title: 'Amazon, Trendyol ve Hepsiburada\'nın Mobil Uygulamalarının Kullanıcı Arayüzü (UI) Analizi', 
-        description: 'Türkiye\'nin önde gelen e-ticaret platformlarının mobil uygulamalarını kullanıcı arayüzü açısından detaylı bir şekilde inceliyoruz.', 
-        src: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*-Vlx-39CfVtjE3QcTi5miw.jpeg', 
-        width: 1200, 
+      {
+        title: 'Amazon, Trendyol ve Hepsiburada\'nın Mobil Uygulamalarının Kullanıcı Arayüzü (UI) Analizi',
+        description: 'Türkiye\'nin önde gelen e-ticaret platformlarının mobil uygulamalarını kullanıcı arayüzü açısından detaylı bir şekilde inceliyoruz.',
+        src: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*-Vlx-39CfVtjE3QcTi5miw.jpeg',
+        width: 1200,
         height: 630,
         url: 'https://yusufgulmezz.medium.com/amazon-trendyol-ve-hepsiburadan%C4%B1n-mobil-uygulamalar%C4%B1n%C4%B1n-kullan%C4%B1c%C4%B1-aray%C3%BCz%C3%BC-ui-ve-0f9f9ecbc301',
         readTime: '5 min read',
@@ -166,9 +173,9 @@ const PersonalCreativesSection = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<Item | null>(null);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
-  
-  
-  
+
+
+
 
 
 
@@ -283,7 +290,7 @@ const PersonalCreativesSection = () => {
             style={{ scale: personalScale, y: personalY, top: personalTopOffset as unknown as string }}
             className="sticky text-center font-bold text-[#1A1A1A]"
           >
-            <span ref={personalHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: 'clamp(36px, 18vw, 248px)' }}>
+            <span ref={personalHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: personalFontSize }}>
               PERSONAL
             </span>
           </motion.h2>
@@ -310,7 +317,7 @@ const PersonalCreativesSection = () => {
             const isBlog = tab.key === 'blog';
             const prevTab = tabIndex > 0 ? TABS[tabIndex - 1] : null;
             const isAfterDrawings = prevTab?.key === 'drawings';
-            
+
             return (
               <div key={`pc-head-${tab.key}`} ref={(el) => { rowRefs.current[tab.key] = el; }} className="py-6">
                 {/* Drawing Lottie Animation - Drawing başlığının üstüne */}
@@ -358,336 +365,240 @@ const PersonalCreativesSection = () => {
                 {/* İçerik her zaman gösterilir */}
                 <div className="mt-6">
                   {tab.key === 'photos' ? (
-                      <div className="space-y-8 md:space-y-12">
-                        {/* Her kategori için ayrı scroll container */}
-                        {Object.entries(photosByCategory).map(([categoryName, photos]) => {
-                          // Özel layout gerektiren kategoriler
-                          if ((categoryName === 'Montenegro' || categoryName === 'Camp' || categoryName === 'Mixed') && photos.length > 0) {
-                            const isMontenegro = categoryName === 'Montenegro';
-                            const isCamp = categoryName === 'Camp';
-                            const featuredPhoto = isMontenegro
+                    <div className="space-y-8 md:space-y-12">
+                      {/* Her kategori için ayrı scroll container */}
+                      {Object.entries(photosByCategory).map(([categoryName, photos]) => {
+                        // Özel layout gerektiren kategoriler
+                        if ((categoryName === 'Montenegro' || categoryName === 'Camp' || categoryName === 'Mixed') && photos.length > 0) {
+                          const isMontenegro = categoryName === 'Montenegro';
+                          const isCamp = categoryName === 'Camp';
+                          const featuredPhoto = isMontenegro
+                            ? {
+                              title: 'Adriatic Sunrise',
+                              description: 'One evening, while sitting at Arada Coffee, a sudden idea sparked a series of events and plans that resulted in my first trip abroad, to Montenegro.',
+                              src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_main.jpg`,
+                              width: 1740,
+                              height: 1160,
+                              category: 'Montenegro',
+                              location: 'Montenegro',
+                              date: '15/07/2025'
+                            }
+                            : isCamp
                               ? {
-                                  title: 'Adriatic Sunrise',
-                                  description: 'One evening, while sitting at Arada Coffee, a sudden idea sparked a series of events and plans that resulted in my first trip abroad, to Montenegro.',
-                                  src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/montenegro/MNE_image_main.jpg`,
-                                  width: 1740,
-                                  height: 1160,
-                                  category: 'Montenegro',
-                                  location: 'Montenegro',
-                                  date: '15/07/2025'
-                                }
-                              : isCamp
-                                ? {
-                                    title: 'Campfire Echoes',
-                                    description: 'A selection of camping memories and quiet outdoor moments.',
-                                    src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_main.jpg`,
-                                    width: 1740,
-                                    height: 1160,
-                                    category: 'Camp',
-                                    location: '—',
-                                    date: undefined
-                                  }
-                                : {
-                                    title: 'Echoes of Mixed',
-                                    description: 'Fragments from travels across Anatolia, capturing textures of ancient towns and warm sunsets.',
-                                    src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_1.webp`,
-                                    width: 1740,
-                                    height: 1160,
-                                    category: 'Mixed',
-                                    location: 'Anadolu, Türkiye',
-                                    date: undefined
-                                  };
-                            const galleryPhotos = photos;
-                            
-                            return (
-                              <div key={categoryName} className="space-y-6 md:space-y-8">
-                                {isCamp && (
-                                  <div className="flex justify-center py-16 md:py-20 lg:py-24">
-                                    <Image
-                                      src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/Fire_Anim.gif`}
-                                      alt="Campfire animation"
-                                      width={480}
-                                      height={240}
-                                      unoptimized
-                                      className="w-full max-w-[240px] md:max-w-[260px] lg:max-w-[300px] mx-auto"
-                                    />
-                                  </div>
-                                )}
-                                {/* Featured görsel ve açıklama bölümü */}
-                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-start">
-                                  {/* Metin içeriği */}
-                                  <div className={`space-y-4 lg:col-span-6 ${isCamp ? 'lg:order-2' : 'lg:order-1'}`}>
-                                    <div>
-                                      <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1A1A1A] mb-2">
-                                        {categoryName}
-                                      </h4>
-                                      {featuredPhoto.date && (
-                                        <p className="text-[#4E4E4E] text-base md:text-lg font-normal">
-                                          {featuredPhoto.date}
-                                        </p>
-                                      )}
-                                    </div>
-                                    <div className="space-y-3 text-[#1A1A1A]">
-                                      <p className="text-sm md:text-base leading-relaxed">
-                                        {featuredPhoto.description || 'A beautiful collection of photographs capturing the essence of this stunning destination.'}
+                                title: 'Campfire Echoes',
+                                description: 'A selection of camping memories and quiet outdoor moments.',
+                                src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/camp_main.jpg`,
+                                width: 1740,
+                                height: 1160,
+                                category: 'Camp',
+                                location: '—',
+                                date: undefined
+                              }
+                              : {
+                                title: 'Echoes of Mixed',
+                                description: 'Fragments from travels across Anatolia, capturing textures of ancient towns and warm sunsets.',
+                                src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_1.webp`,
+                                width: 1740,
+                                height: 1160,
+                                category: 'Mixed',
+                                location: 'Anadolu, Türkiye',
+                                date: undefined
+                              };
+                          const galleryPhotos = photos;
+
+                          return (
+                            <div key={categoryName} className="space-y-6 md:space-y-8">
+                              {isCamp && (
+                                <div className="flex justify-center py-16 md:py-20 lg:py-24">
+                                  <Image
+                                    src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/camp/Fire_Anim.gif`}
+                                    alt="Campfire animation"
+                                    width={480}
+                                    height={240}
+                                    unoptimized
+                                    className="w-full max-w-[240px] md:max-w-[260px] lg:max-w-[300px] mx-auto"
+                                  />
+                                </div>
+                              )}
+                              {/* Featured görsel ve açıklama bölümü */}
+                              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-start">
+                                {/* Metin içeriği */}
+                                <div className={`space-y-4 lg:col-span-6 ${isCamp ? 'lg:order-2' : 'lg:order-1'}`}>
+                                  <div>
+                                    <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1A1A1A] mb-2">
+                                      {categoryName}
+                                    </h4>
+                                    {featuredPhoto.date && (
+                                      <p className="text-[#4E4E4E] text-base md:text-lg font-normal">
+                                        {featuredPhoto.date}
                                       </p>
-                                      {photos.length > 1 && (
-                                        <p className="text-sm md:text-base leading-relaxed">
-                                          Explore more images from this collection in the gallery below, each telling a unique story of the journey.
-                                        </p>
-                                      )}
-                                    </div>
+                                    )}
                                   </div>
-                                  
-                                  {/* Featured görsel - Yatay format */}
-                                  <div className={`flex justify-center ${isCamp ? 'lg:justify-start lg:order-1' : 'lg:justify-end lg:order-2'} lg:col-span-6`}>
-                                    <div
-                                      className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[360px] xl:h-[400px] group"
-                                    >
-                                      <div className="bg-[#FFFFFF] h-full w-full p-2 sm:p-3 lg:p-4 flex items-center justify-center">
-                                        <div className="relative h-full w-full overflow-hidden bg-[#E6E0D4]">
-                                          <Image 
-                                            src={featuredPhoto.src} 
-                                            alt={featuredPhoto.title} 
-                                            fill 
-                                            sizes="(max-width: 1024px) 100vw, 50vw"
-                                            quality={90}
-                                            priority
-                                            loading="eager"
-                                            className="object-cover transition-transform duration-500 ease-out" 
-                                          />
-                                          <div className="absolute inset-0 pointer-events-none border border-white/35" />
-                                        </div>
+                                  <div className="space-y-3 text-[#1A1A1A]">
+                                    <p className="text-sm md:text-base leading-relaxed">
+                                      {featuredPhoto.description || 'A beautiful collection of photographs capturing the essence of this stunning destination.'}
+                                    </p>
+                                    {photos.length > 1 && (
+                                      <p className="text-sm md:text-base leading-relaxed">
+                                        Explore more images from this collection in the gallery below, each telling a unique story of the journey.
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {/* Featured görsel - Yatay format */}
+                                <div className={`flex justify-center ${isCamp ? 'lg:justify-start lg:order-1' : 'lg:justify-end lg:order-2'} lg:col-span-6`}>
+                                  <div
+                                    className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[360px] xl:h-[400px] group"
+                                  >
+                                    <div className="bg-[#FFFFFF] h-full w-full p-2 sm:p-3 lg:p-4 flex items-center justify-center">
+                                      <div className="relative h-full w-full overflow-hidden bg-[#E6E0D4]">
+                                        <Image
+                                          src={featuredPhoto.src}
+                                          alt={featuredPhoto.title}
+                                          fill
+                                          sizes="(max-width: 1024px) 100vw, 50vw"
+                                          quality={75}
+                                          loading="eager"
+                                          priority
+                                          fetchPriority="high"
+                                          className="object-cover transition-transform duration-300 ease-out"
+                                        />
+                                        <div className="absolute inset-0 pointer-events-none border border-white/35" />
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                                
-                                {/* Yatay scroll galeri */}
-                                {galleryPhotos.length > 0 && (
-                                  <div className="relative overflow-hidden" style={{ width: '100%' }}>
-                                    <div 
-                                      className="flex gap-6 md:gap-9 scroll-animation-container"
-                                      style={{
-                                        width: 'max-content',
-                                        animation: `scroll-left ${galleryPhotos.length * 5}s linear infinite`
-                                      }}
-                                    >
-                                      {/* İki set görsel (loop için) */}
-                                      {[...galleryPhotos, ...galleryPhotos].map((item, idx) => {
-                                        const actualIndex = idx % galleryPhotos.length;
-                                        const isFirstSet = idx < galleryPhotos.length;
-                                        return (
-                                          <div
-                                            key={`${categoryName}-gallery-${idx}`}
-                                            className="group flex-shrink-0 w-[280px] sm:w-[320px] md:w-[372px] lg:w-[400px] cursor-pointer"
-                                            onClick={() => {
-                                              const photosList = photosByCategory[categoryName] || [];
-                                              const index = photosList.findIndex(p => p.src === item.src);
-                                              setSelectedPhoto(item);
-                                              setSelectedPhotoIndex(index);
-                                            }}
-                                          >
-                                            <div className="h-full bg-[#FFFFFF] px-4 pt-4 pb-6 flex flex-col gap-4">
-                                              <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#E6E0D4]">
-                                                <Image 
-                                                  src={item.src} 
-                                                  alt={item.title} 
-                                                  fill 
-                                                  sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 372px"
-                                                  quality={85}
-                                                  priority={isFirstSet && idx < 3}
-                                                  loading={isFirstSet && idx < 3 ? "eager" : "lazy"}
-                                                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform" 
-                                                />
-                                                <div className="absolute right-3 top-3 md:right-4 md:top-4">
-                                                  <span 
-                                                    className="inline-flex items-center justify-center bg-white/85 text-[#1A1A1A] text-xs md:text-sm font-medium shadow-[0_4px_8px_rgba(0,0,0,0.06)]"
-                                                    style={{
-                                                      width: '42px',
-                                                      height: '24px',
-                                                      borderRadius: '6px'
-                                                    }}
-                                                  >
-                                                    {actualIndex + 1}/{galleryPhotos.length}
-                                                  </span>
-                                                </div>
-                                              </div>
-                                              <div className="px-1">
-                                                <h5 className="text-[#2E2A24] text-[18px] md:text-[20px] font-bold mb-2">{item.title}</h5>
-                                                {item.date && (
-                                                  <p className="text-[#6B6255] text-sm md:text-base font-normal">{item.date}</p>
-                                                )}
-                                              </div>
-                                            </div>
-                                          </div>
-                                        );
-                                      })}
+                              </div>
+
+                              {/* Yatay scroll galeri - Optimize edilmiş component */}
+                              {galleryPhotos.length > 0 && (
+                                <HorizontalScrollGallery
+                                  items={galleryPhotos}
+                                  categoryName={categoryName}
+                                  onItemClick={(item, index) => {
+                                    setSelectedPhoto(item);
+                                    setSelectedPhotoIndex(index);
+                                  }}
+                                  speed={0.5}
+                                />
+                              )}
+                            </div>
+                          );
+                        }
+
+                        // Diğer kategoriler için mevcut tasarım
+                        return (
+                          <div key={categoryName} className="space-y-3 md:space-y-4">
+                            {/* Kategori başlığı */}
+                            <h4 className="text-xl md:text-2xl font-bold text-[#1A1A1A]">{categoryName}</h4>
+
+                            {/* Yatay scroll container - Optimize edilmiş component */}
+                            <HorizontalScrollGallery
+                              items={photos}
+                              categoryName={categoryName}
+                              onItemClick={(item, index) => {
+                                setSelectedPhoto(item);
+                                setSelectedPhotoIndex(index);
+                              }}
+                              speed={0.5}
+                              rounded={true}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : tab.key === 'blog' ? (
+                    <div className="space-y-8 md:space-y-12">
+                      {contentByTab[tab.key].map((item, idx) => (
+                        <motion.article
+                          key={`${tab.key}-${idx}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: '-100px' }}
+                          transition={{ duration: 0.4, delay: idx * 0.1 }}
+                          className="group"
+                        >
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block"
+                          >
+                            <div className="bg-[#FFFFFF] rounded-[24px] overflow-hidden hover:shadow-[0_12px_40px_rgba(31,41,55,0.18)] transition-all duration-300">
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+                                {/* Görsel */}
+                                <div className="relative h-[240px] md:h-auto md:col-span-1 overflow-hidden bg-[#E6E0D4]">
+                                  <Image
+                                    src={item.src}
+                                    alt={item.title}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 33vw"
+                                    quality={75}
+                                    loading="eager"
+                                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                                  />
+                                  <div className="absolute inset-0 pointer-events-none border border-white/35" />
+                                </div>
+
+                                {/* İçerik */}
+                                <div className="md:col-span-2 p-6 md:p-8 flex flex-col justify-between">
+                                  <div>
+                                    <h3 className="text-[18px] md:text-[20px] lg:text-2xl font-bold text-[#1A1A1A] mb-3 group-hover:text-[#2E2A24] transition-colors duration-200 line-clamp-2">
+                                      {item.title}
+                                    </h3>
+                                    <p className="text-sm md:text-base text-[#4E4E4E] leading-relaxed line-clamp-3 mb-4">
+                                      {item.description}
+                                    </p>
+                                  </div>
+                                  <div className="flex items-center justify-between flex-wrap gap-3">
+                                    <div className="flex items-center gap-3">
+                                      {item.readTime && (
+                                        <span className="text-xs md:text-sm text-[#6B6255] font-medium bg-white/85 px-3 py-1 rounded-[6px] shadow-[0_4px_8px_rgba(0,0,0,0.06)]">
+                                          {item.readTime}
+                                        </span>
+                                      )}
+                                      {item.date && (
+                                        <span className="text-xs md:text-sm text-[#6B6255] font-normal">
+                                          {item.date}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <div className="flex items-center gap-2 text-[#1A1A1A] font-medium text-sm md:text-base group-hover:gap-3 transition-all duration-200">
+                                      <span>Read More</span>
+                                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                      </svg>
                                     </div>
                                   </div>
-                                )}
-                              </div>
-                            );
-                          }
-                          
-                          // Diğer kategoriler için mevcut tasarım
-                          return (
-                            <div key={categoryName} className="space-y-3 md:space-y-4">
-                              {/* Kategori başlığı */}
-                              <h4 className="text-xl md:text-2xl font-bold text-[#1A1A1A]">{categoryName}</h4>
-                              
-                              {/* Yatay scroll container - sonsuz loop */}
-                              <div className="relative overflow-hidden" style={{ width: '100%' }}>
-                                <div 
-                                  className="flex gap-6 md:gap-9 scroll-animation-container"
-                                  style={{
-                                    width: 'max-content',
-                                    animation: `scroll-left ${photos.length * 6}s linear infinite`
-                                  }}
-                                >
-                                  {/* İki set görsel (loop için) */}
-                                  {[...photos, ...photos].map((item, idx) => {
-                                    const actualIndex = idx % photos.length;
-                                    const isFirstSet = idx < photos.length;
-                                    return (
-                                      <div
-                                        key={`${categoryName}-${idx}`}
-                                        className="group flex-shrink-0 w-[280px] sm:w-[320px] md:w-[372px] lg:w-[400px] cursor-pointer"
-                                        onClick={() => {
-                                          const photosList = photosByCategory[categoryName] || [];
-                                          const index = photosList.findIndex(p => p.src === item.src);
-                                          setSelectedPhoto(item);
-                                          setSelectedPhotoIndex(index);
-                                        }}
-                                      >
-                                        <div className="h-full bg-[#FFFFFF] rounded-[24px] shadow-[0_10px_30px_rgba(31,41,55,0.12)] px-4 pt-4 pb-6 flex flex-col gap-4">
-                                          <div className="relative w-full aspect-[3/4] rounded-[18px] overflow-hidden bg-[#E6E0D4]">
-                                            <Image 
-                                              src={item.src} 
-                                              alt={item.title} 
-                                              fill 
-                                              sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 372px"
-                                              quality={85}
-                                              priority={isFirstSet && idx < 3}
-                                              loading={isFirstSet && idx < 3 ? "eager" : "lazy"}
-                                              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform" 
-                                            />
-                                            <div className="absolute right-3 top-3 md:right-4 md:top-4">
-                                              <span 
-                                                className="inline-flex items-center justify-center bg-white/85 text-[#1A1A1A] text-xs md:text-sm font-medium border border-[#D6CCBD] shadow-[0_4px_8px_rgba(0,0,0,0.06)]"
-                                                style={{
-                                                  width: '42px',
-                                                  height: '24px',
-                                                  borderRadius: '6px'
-                                                }}
-                                              >
-                                                {actualIndex + 1}/{photos.length}
-                                              </span>
-                                            </div>
-                                          </div>
-                                          <div className="px-1">
-                                            <h5 className="text-[#2E2A24] text-[18px] md:text-[20px] font-bold mb-2">{item.title}</h5>
-                                            {item.date && (
-                                              <p className="text-[#6B6255] text-sm md:text-base font-normal">{item.date}</p>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    );
-                                  })}
                                 </div>
                               </div>
                             </div>
-                          );
-                        })}
-                      </div>
-                    ) : tab.key === 'blog' ? (
-                      <div className="space-y-8 md:space-y-12">
-                        {contentByTab[tab.key].map((item, idx) => (
-                          <motion.article
-                            key={`${tab.key}-${idx}`}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4, delay: idx * 0.1 }}
-                            className="group"
-                          >
-                            <a
-                              href={item.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block"
-                            >
-                              <div className="bg-[#FFFFFF] rounded-[24px] overflow-hidden hover:shadow-[0_12px_40px_rgba(31,41,55,0.18)] transition-all duration-300">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-                                  {/* Görsel */}
-                                  <div className="relative h-[240px] md:h-auto md:col-span-1 overflow-hidden bg-[#E6E0D4]">
-                                    <Image
-                                      src={item.src}
-                                      alt={item.title}
-                                      fill
-                                      sizes="(max-width: 768px) 100vw, 33vw"
-                                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 pointer-events-none border border-white/35" />
-                                  </div>
-                                  
-                                  {/* İçerik */}
-                                  <div className="md:col-span-2 p-6 md:p-8 flex flex-col justify-between">
-                                    <div>
-                                      <h3 className="text-[18px] md:text-[20px] lg:text-2xl font-bold text-[#1A1A1A] mb-3 group-hover:text-[#2E2A24] transition-colors duration-200 line-clamp-2">
-                                        {item.title}
-                                      </h3>
-                                      <p className="text-sm md:text-base text-[#4E4E4E] leading-relaxed line-clamp-3 mb-4">
-                                        {item.description}
-                                      </p>
-                                    </div>
-                                    <div className="flex items-center justify-between flex-wrap gap-3">
-                                      <div className="flex items-center gap-3">
-                                        {item.readTime && (
-                                          <span className="text-xs md:text-sm text-[#6B6255] font-medium bg-white/85 px-3 py-1 rounded-[6px] shadow-[0_4px_8px_rgba(0,0,0,0.06)]">
-                                            {item.readTime}
-                                          </span>
-                                        )}
-                                        {item.date && (
-                                          <span className="text-xs md:text-sm text-[#6B6255] font-normal">
-                                            {item.date}
-                                          </span>
-                                        )}
-                                      </div>
-                                      <div className="flex items-center gap-2 text-[#1A1A1A] font-medium text-sm md:text-base group-hover:gap-3 transition-all duration-200">
-                                        <span>Read More</span>
-                                        <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                        </svg>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </a>
-                          </motion.article>
-                        ))}
-                      </div>
-                    ) : (
-                      <motion.div
-                        key={tab.key}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.35 }}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                      >
-                        {contentByTab[tab.key].map((item, idx) => (
-                          <div
-                            key={`${tab.key}-${idx}`}
-                            className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-5 hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
-                          >
-                            <div className="aspect-[4/3] w-full rounded-xl bg-gray-100 mb-4 overflow-hidden" />
-                            <h4 className="text-lg font-medium text-gray-900 mb-1">{item.title}</h4>
-                            <p className="text-sm text-gray-600">{item.description}</p>
-                          </div>
-                        ))}
-                      </motion.div>
-                    )}
+                          </a>
+                        </motion.article>
+                      ))}
+                    </div>
+                  ) : (
+                    <motion.div
+                      key={tab.key}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-50px' }}
+                      transition={{ duration: 0.35 }}
+                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                    >
+                      {contentByTab[tab.key].map((item, idx) => (
+                        <div
+                          key={`${tab.key}-${idx}`}
+                          className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-5 hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
+                        >
+                          <div className="aspect-[4/3] w-full rounded-xl bg-gray-100 mb-4 overflow-hidden" />
+                          <h4 className="text-lg font-medium text-gray-900 mb-1">{item.title}</h4>
+                          <p className="text-sm text-gray-600">{item.description}</p>
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
                 </div>
               </div>
             );
@@ -695,7 +606,7 @@ const PersonalCreativesSection = () => {
         </div>
         {/* İçerikler başlık altında render edildiği için ayrıca genel grid yok */}
       </div>
-      
+
       {/* Detail Modal */}
       <AnimatePresence>
         {selectedPhoto && (
@@ -722,14 +633,14 @@ const PersonalCreativesSection = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
-                <Image 
-                  src={selectedPhoto.src} 
-                  alt={selectedPhoto.title} 
+                <Image
+                  src={selectedPhoto.src}
+                  alt={selectedPhoto.title}
                   width={selectedPhoto.width}
                   height={selectedPhoto.height}
                   className="max-w-[90vw] max-h-[80vh] w-auto h-auto object-contain"
                 />
-                
+
                 {/* Close button */}
                 <button
                   onClick={() => setSelectedPhoto(null)}
@@ -738,7 +649,7 @@ const PersonalCreativesSection = () => {
                 >
                   ×
                 </button>
-                
+
                 {/* Navigation buttons */}
                 {(() => {
                   const category = selectedPhoto.category || 'Other';
@@ -746,7 +657,7 @@ const PersonalCreativesSection = () => {
                   const hasValidIndex = selectedPhotoIndex >= 0 && selectedPhotoIndex < photos.length;
                   const hasPrevious = hasValidIndex && selectedPhotoIndex > 0;
                   const hasNext = hasValidIndex && selectedPhotoIndex < photos.length - 1;
-                  
+
                   return (
                     <>
                       {/* Previous button */}
@@ -765,7 +676,7 @@ const PersonalCreativesSection = () => {
                           </svg>
                         </button>
                       )}
-                      
+
                       {/* Next button */}
                       {hasNext && (
                         <button
@@ -785,7 +696,7 @@ const PersonalCreativesSection = () => {
                     </>
                   );
                 })()}
-                
+
                 {/* Image info overlay */}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
                   <div className="flex items-start justify-between">
