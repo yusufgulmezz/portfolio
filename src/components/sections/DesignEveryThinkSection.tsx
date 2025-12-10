@@ -113,7 +113,7 @@ const DesignEveryThinkSection = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8">
         {/* Main Title */}
         <motion.h1 
           className="text-[52px] sm:text-[80px] md:text-[104px] lg:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] mb-12 text-center"
