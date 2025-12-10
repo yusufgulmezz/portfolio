@@ -1,23 +1,63 @@
-import DesignEveryThinkSection from "@/components/sections/DesignEveryThinkSection";
-import HeroSection from "@/components/sections/HeroSection";
-import TechLogosSection from "@/components/sections/TechLogosSection";
-import CategoriesSection from "@/components/sections/CategoriesSection";
-// import CreativeProcessSection from "@/components/sections/CreativeProcessSection";
-import PersonalCreativesSection from "@/components/sections/PersonalCreativesSection";
-import ContactMeSection from "@/components/sections/ContactMeSection";
+'use client';
+
+import { lazy, Suspense, useEffect, useState } from 'react';
 import PageTransition from "@/components/ui/PageTransition";
 
+// Lazy load tüm section'lar - PageTransition bitene kadar yüklenmesin
+const DesignEveryThinkSection = lazy(() => import("@/components/sections/DesignEveryThinkSection"));
+const HeroSection = lazy(() => import("@/components/sections/HeroSection"));
+const TechLogosSection = lazy(() => import("@/components/sections/TechLogosSection"));
+const CategoriesSection = lazy(() => import("@/components/sections/CategoriesSection"));
+const PersonalCreativesSection = lazy(() => import("@/components/sections/PersonalCreativesSection"));
+const ContactMeSection = lazy(() => import("@/components/sections/ContactMeSection"));
+
+// Loading fallback
+const SectionLoader = () => (
+  <div className="min-h-screen bg-[#edede9]" />
+);
+
 export default function Home() {
+  const [shouldLoadSections, setShouldLoadSections] = useState(false);
+
+  useEffect(() => {
+    const onTransitionDone = () => {
+      // PageTransition bittiğinde section'ları yükle
+      setShouldLoadSections(true);
+    };
+
+    window.addEventListener('page-transition:done', onTransitionDone as EventListener);
+    
+    // Eğer event zaten tetiklenmişse (sayfa yeniden yüklendiğinde)
+    // Hemen yükle
+    if (document.readyState === 'complete') {
+      // Biraz bekle, transition'ın başlaması için
+      const timer = setTimeout(() => {
+        setShouldLoadSections(true);
+      }, 100);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('page-transition:done', onTransitionDone as EventListener);
+      };
+    }
+
+    return () => {
+      window.removeEventListener('page-transition:done', onTransitionDone as EventListener);
+    };
+  }, []);
+
   return (
     <>
       <PageTransition />
-      <DesignEveryThinkSection />
-      <HeroSection />
-      <TechLogosSection />
-      <CategoriesSection />
-      {/* <CreativeProcessSection /> */}
-      <PersonalCreativesSection />
-      <ContactMeSection />
+      {shouldLoadSections && (
+        <Suspense fallback={<SectionLoader />}>
+          <DesignEveryThinkSection />
+          <HeroSection />
+          <TechLogosSection />
+          <CategoriesSection />
+          <PersonalCreativesSection />
+          <ContactMeSection />
+        </Suspense>
+      )}
     </>
   );
 }
