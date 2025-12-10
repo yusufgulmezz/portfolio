@@ -15,7 +15,7 @@ const ContactMeSection = () => {
 
   return (
     <section id="contact" className="py-20 bg-[#edede9]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         {contactLottieData && (
           <div className="flex justify-center py-8 md:py-12">
             <div className="w-full max-w-[180px] md:max-w-[2400px] lg:max-w-[300px] mx-auto">

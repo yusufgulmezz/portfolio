@@ -45,7 +45,7 @@ const TypewriterRoleText = () => {
     <div className="relative h-[44px] sm:h-[56px] md:h-[72px] lg:h-[88px] flex items-center justify-start sm:justify-end">
       <div className="flex items-center">
         <motion.h1
-          className="text-[36px] sm:text-[56px] md:text-[72px] lg:text-[88px] font-medium text-[#1A1A1A] leading-[0.95]"
+          className="text-[32px] sm:text-[48px] md:text-[60px] lg:text-[80px] font-medium text-[#1A1A1A] leading-[0.95]"
           style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
         >
           {displayedText}
@@ -100,7 +100,7 @@ const HeroSection = () => {
   return (
     <section id="hero" className="relative min-h-screen bg-[#edede9]">
       {/* Main Content Container */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="min-h-screen flex items-start pt-8 sm:pt-12 lg:pt-32">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
 
@@ -110,11 +110,11 @@ const HeroSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
               viewport={{ once: false, amount: 0.5 }}
-              className="lg:col-span-5 order-1"
+              className="lg:col-span-5 order-1 flex justify-end"
             >
-              <div className="relative w-full overflow-hidden rounded-2xl backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
+              <div className="relative w-full max-w-[520px] sm:max-w-[420px] md:max-w-[520x] lg:max-w-none overflow-hidden rounded-2xl backdrop-blur-sm shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
                 {/* Büyük görsel alanı */}
-                <div className="relative w-full h-[340px] sm:h-[420px] md:h-[500px] lg:h-[560px]">
+                <div className="relative w-full h-[280px] sm:h-[360px] md:h-[380px] lg:h-[560px]">
                   <AnimatePresence mode="wait">
                     {heroImages.map((img, idx) => (
                       idx === currentHeroIdx && (
@@ -257,7 +257,7 @@ const HeroSection = () => {
                 className="mb-8"
               >
                 <p 
-                  className="text-[16px] sm:text-[20px] md:text-[24px] font-normal text-[#1A1A1A] leading-relaxed max-w-2xl text-left sm:text-right sm:ml-auto"
+                  className="text-[15px] sm:text-[18px] md:text-[21px] font-normal text-[#1A1A1A] leading-relaxed max-w-2xl text-left sm:text-right sm:ml-auto"
                   style={{ fontFamily: 'var(--font-roboto)' }}
                 >
                   I design and develop high-end digital experiences for design-driven companies that value attention to detail.

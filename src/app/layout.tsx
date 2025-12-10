@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
+import HeaderNew from "@/components/layout/HeaderNew";
 import Footer from "@/components/layout/Footer";
 import BlobCursor from "@/components/ui/BlobCursor";
 
@@ -51,8 +51,8 @@ export default function RootLayout({
           borderWidth={1}
           zIndex={100}
         />
-        <Header />
-        <main className="pt-20 sm:pt-24 lg:pt-18">
+        <HeaderNew />
+        <main className="pt-16 lg:pt-0 lg:ml-[160px] lg:mr-[160px] xl:ml-[160px] xl:mr-[160px]">
           {children}
         </main>
         <Footer />
