@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useMemo } from 'react';
 
 const TypewriterRoleText = () => {
-  const roles = ['DESIGNER', 'DEVELOPER'];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    const roles = ['DESIGNER', 'DEVELOPER'];
     const currentText = roles[currentRoleIndex];
     let timeoutId: NodeJS.Timeout;
 
@@ -39,7 +39,7 @@ const TypewriterRoleText = () => {
     }
 
     return () => clearTimeout(timeoutId);
-  }, [displayedText, isDeleting, currentRoleIndex, roles]);
+  }, [displayedText, isDeleting, currentRoleIndex]);
 
   return (
     <div className="relative h-[44px] sm:h-[56px] md:h-[72px] lg:h-[88px] flex items-center justify-start sm:justify-end">
@@ -87,7 +87,7 @@ const HeroSection = () => {
     []
   );
 
-  const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+  const [currentHeroIdx] = useState(0);
 
   // Basit preloader
   useEffect(() => {

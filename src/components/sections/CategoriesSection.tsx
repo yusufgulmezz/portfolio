@@ -324,7 +324,7 @@ const CategoriesSection = () => {
   ];
 
   // Tüm kategorileri başlangıçta açık olarak ayarla
-  const [activeCategoryIds, setActiveCategoryIds] = useState<Set<string>>(
+  const [activeCategoryIds] = useState<Set<string>>(
     new Set(categories.map(cat => cat.id))
   );
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -404,9 +404,10 @@ const CategoriesSection = () => {
       }
       window.addEventListener('resize', updateHeight);
       const timer = setTimeout(updateHeight, 150);
+      const currentRef = activeContentRef.current;
       return () => {
-        if (resizeObserver && activeContentRef.current) {
-          resizeObserver.unobserve(activeContentRef.current);
+        if (resizeObserver && currentRef) {
+          resizeObserver.unobserve(currentRef);
         }
         window.removeEventListener('resize', updateHeight);
         clearTimeout(timer);
@@ -440,7 +441,7 @@ const CategoriesSection = () => {
         setOpenCodingId(baseDesigns[0].id);
       }
     }, [isCoding, collapsed, baseDesigns, openCodingId]);
-    const [galleryImageByDesignId, setGalleryImageByDesignId] = useState<Record<number, string>>({});
+    const [galleryImageByDesignId] = useState<Record<number, string>>({});
     const [expandedDesign, setExpandedDesign] = useState<null | { 
       image: string; 
       title: string; 
@@ -1164,10 +1165,13 @@ const CategoriesSection = () => {
                   )}
 
                   {/* Image */}
-                  <img
+                  <Image
                     src={expandedDesign.image}
                     alt={expandedDesign.title}
+                    width={1200}
+                    height={800}
                     className={`max-w-[90vw] max-h-[75vh] w-auto h-auto ${expandedDesign.pixel ? 'object-contain' : 'object-contain'}`}
+                    unoptimized
                   />
 
                   {/* Image counter */}

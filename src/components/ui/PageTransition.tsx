@@ -1,10 +1,9 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) => {
-  const roles = ['UI/UX', 'Poster', 'Pixel Art', '3D', 'Coding'];
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -14,6 +13,7 @@ const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) =>
     // Eğer tüm roller tamamlandıysa, başka bir şey yapma
     if (isCompleted) return;
 
+    const roles = ['UI/UX', 'Poster', 'Pixel Art', '3D', 'Coding'];
     const currentText = roles[currentRoleIndex];
     let timeoutId: NodeJS.Timeout;
 
@@ -51,7 +51,7 @@ const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) =>
     }
 
     return () => clearTimeout(timeoutId);
-  }, [displayedText, isDeleting, currentRoleIndex, roles, onComplete, isCompleted]);
+  }, [displayedText, isDeleting, currentRoleIndex, onComplete, isCompleted]);
 
   return (
     <div className="flex items-center justify-center">

@@ -32,7 +32,6 @@ export const HorizontalScrollGallery = ({
   items,
   categoryName,
   onItemClick,
-  speed = 0.5,
   rounded = false,
 }: HorizontalScrollGalleryProps) => {
   // Görselleri preload et - otomatik loop için gerekli
@@ -78,7 +77,6 @@ export const HorizontalScrollGallery = ({
         {/* İki set görsel (loop için) */}
         {[...items, ...items].map((item, idx) => {
           const actualIndex = idx % items.length;
-          const isFirstSet = idx < items.length;
           const loadingStrategy = getLoadingStrategy();
 
           return (

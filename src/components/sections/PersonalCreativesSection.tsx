@@ -88,7 +88,7 @@ const PersonalCreativesSection = () => {
   const { data: musicLottieData } = useLottieAnimation(`${basePath}/animations/Music.json`);
   const { data: drawingLottieData } = useLottieAnimation(`${basePath}/animations/drawing.json`);
 
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [activeIndex] = useState<number>(0);
 
   type Item = { title: string; description: string; src: string; width: number; height: number; category?: string; location?: string; date?: string; url?: string; readTime?: string };
   const contentByTab: Record<TabKey, Item[]> = {
@@ -166,10 +166,7 @@ const PersonalCreativesSection = () => {
     ]
   };
 
-  const activeItem = useMemo(() => {
-    const photos = contentByTab.photos;
-    return photos[Math.min(activeIndex, photos.length - 1)] ?? photos[0];
-  }, [activeIndex]);
+  // activeItem kullanılmıyor, kaldırıldı
   const [selectedPhoto, setSelectedPhoto] = useState<Item | null>(null);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
   const rowRefs = useRef<Record<TabKey, HTMLDivElement | null>>({ photos: null, drawings: null, blog: null });
@@ -179,13 +176,7 @@ const PersonalCreativesSection = () => {
 
 
 
-  // Yardımcı: diziyi n parçaya böl
-  const chunk = <T,>(arr: T[], parts: number): T[][] => {
-    if (arr.length === 0) return Array.from({ length: parts }, () => []);
-    const out: T[][] = Array.from({ length: parts }, () => []);
-    arr.forEach((it, idx) => out[idx % parts].push(it));
-    return out;
-  };
+  // chunk fonksiyonu kullanılmıyor, kaldırıldı
 
   // Photos kategorilere göre grupla
   const photosByCategory = useMemo(() => {
@@ -198,47 +189,11 @@ const PersonalCreativesSection = () => {
       grouped[category].push(photo);
     });
     return grouped;
-  }, [contentByTab.photos]);
+  }, []);
 
 
 
-  const VerticalGalleryCard = ({ data, label }: { data: Item[]; label?: string }) => {
-    const current = data[0];
-    return (
-      <div className="relative mx-auto w-full max-w-[220px] sm:max-w-[240px] md:max-w-[220px] lg:max-w-[240px] xl:max-w-[260px] rounded-2xl border border-gray-200 bg-white/70 backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.06)] overflow-hidden">
-        <div className="relative w-full aspect-[3/5] bg-gray-100">
-          {label && (
-            <div className="absolute left-2 top-2 z-[1]">
-              <span className="inline-block rounded-md bg-black/35 text-white px-2 py-1 text-xs sm:text-sm font-medium backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.18)]">
-                {label}
-              </span>
-            </div>
-          )}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current?.src}
-              initial={{ opacity: 0, y: 12, scale: 0.995 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -12, scale: 0.995 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0"
-            >
-              {current && (
-                <Image
-                  src={current.src}
-                  alt={current.title}
-                  fill
-                  sizes="(max-width: 1024px) 92vw, 360px"
-                  className="object-cover"
-                  priority
-                />
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-    );
-  };
+  // VerticalGalleryCard kullanılmıyor, kaldırıldı
 
   return (
     <section id="personal-creatives" className="bg-[#edede9]">

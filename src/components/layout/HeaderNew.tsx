@@ -44,7 +44,7 @@ const HeaderNew = () => {
     if (next) {
       try {
         await audio.play();
-      } catch (e) {
+      } catch {
         setIsSoundOn(false);
         localStorage.setItem('soundEnabled', 'false');
       }
