@@ -24,6 +24,7 @@ const CategoriesSection = () => {
   const workHeadingRef = useRef<HTMLSpanElement | null>(null);
   const [workTopOffset, setWorkTopOffset] = useState<number>(0);
   const [workStartY, setWorkStartY] = useState<number>(0);
+  const [workFontSize, setWorkFontSize] = useState<string>('clamp(96px, 32vw, 420px)');
   useEffect(() => {
     const update = () => {
       const headerEl = document.querySelector('header') as HTMLElement | null;
@@ -33,6 +34,27 @@ const CategoriesSection = () => {
       const headingH = workHeadingRef.current?.offsetHeight ?? 0;
       const startY = Math.max(0, (viewportH - headerH - headingH) / 2);
       setWorkStartY(startY);
+
+      // Font size hesaplama - Parent div'in (h-[160vh]) genişliğine göre
+      const viewportW = window.innerWidth;
+      const isDesktop = viewportW >= 1024;
+
+      if (isDesktop && workStickyRef.current) {
+        // Desktop'ta: Parent div'in genişliğine göre dinamik hesaplama
+        const parentDivWidth = workStickyRef.current.offsetWidth;
+        
+        // WORK yazısı için genişlik hesabı: font-size * 2.5 (4 karakter, letter spacing dahil)
+        const safeWidth = parentDivWidth * 0.9; // %90 kullan (güvenli margin)
+        const calculatedSize = safeWidth / 2.5;
+        
+        const minSize = 96;
+        const maxSize = 420;
+        const finalSize = Math.max(minSize, Math.min(calculatedSize, maxSize));
+        setWorkFontSize(`${finalSize}px`);
+      } else {
+        // Mobil/Tablet: clamp kullan
+        setWorkFontSize('clamp(96px, 32vw, 420px)');
+      }
     };
     update();
     window.addEventListener('resize', update);
@@ -285,17 +307,17 @@ const CategoriesSection = () => {
           id: 16,
           title: 'Green World',
           date: '2025-08-20',
-          description: 'Green World is a location-based mobile application developed to raise awareness about environmental pollution, support the voluntary trash collection process, and increase social environmental awareness.',
+          description: 'A location-based mobile application developed with React Native and TypeScript, featuring Firebase integration. Green World aims to raise environmental awareness by facilitating voluntary trash collection activities, connecting users through location services, and promoting community-driven environmental action.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/greenWorld/Coding-GreenWorld.png`,
-          tags: ['Mobile', 'React Native', 'Firebase']
+          tags: ['Mobile', 'React Native','TypeScript', 'Firebase']
         },
         {
           id: 29,
           title: 'Portfolio Website',
           date: '2025-08-15',
-          description: '',
-          image: 'https://raw.githubusercontent.com/yusufgulmezz/yusufgulmezz/refs/heads/main/DET_Portfolio.jpg',
-          tags: ['Web', 'Portfolio']
+          description: 'A modern, responsive portfolio website showcasing design and development work across multiple disciplines including UI/UX design, poster art, pixel art, 3D modeling, and web development projects. Built with Next.js and featuring smooth animations, interactive elements, and a clean, minimalist design that emphasizes attention to detail and user experience.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/portfolio/DET_Mockup_2.png`,
+          tags: ['Web', 'Portfolio', 'Next.js', 'Tailwind CSS', 'Framer Motion']
         }
       ]
     }
@@ -584,8 +606,8 @@ const CategoriesSection = () => {
                             </div>
                           </div>
                           {/* Görsel kısmı - reversed ise sağda, değilse solda */}
-                          <div className={`w-full ${design.reversed ? 'lg:order-2' : 'lg:order-1'}`}>
-                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'w-full h-auto bg-black rounded-lg overflow-hidden' : 'w-full h-auto' } overflow-hidden`}
+                          <div className={`w-full flex ${design.reversed ? 'lg:order-2 lg:justify-end' : 'lg:order-1 lg:justify-start'} justify-center`}>
+                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'max-w-[600px] md:max-w-[500px] lg:max-w-none bg-black rounded-lg overflow-hidden' : 'max-w-[600px] md:max-w-[500px] lg:max-w-none' } overflow-hidden`}
                             >
                               {/* Ana görsel alanı */}
                               <div 
@@ -622,7 +644,7 @@ const CategoriesSection = () => {
                                           alt={`${design.title} - ${idx + 1}`}
                                           width={800}
                                           height={600}
-                                          className={`w-full h-auto ${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
+                                          className={`w-full h-auto max-h-[50vh] md:max-h-[45vh] lg:max-h-none ${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
                                         />
                                       </div>
                                     );
@@ -705,35 +727,33 @@ const CategoriesSection = () => {
                           </div>
                         </div>
                         {/* Görsel kısmı - reversed ise sağda, değilse solda */}
-                        <div className={`w-full ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
-                          <div className="relative w-full h-auto bg-black rounded-lg overflow-hidden">
-                            <div 
-                              className="relative w-full cursor-zoom-in"
-                              onClick={() => {
-                                setExpandedDesign({
-                                  image: design.image,
+                        <div className={`w-full flex ${isReversed ? 'lg:order-2 lg:justify-end' : 'lg:order-1 lg:justify-start'} justify-center`}>
+                          <div 
+                            className="relative max-w-[600px] md:max-w-[500px] lg:max-w-none cursor-zoom-in rounded-lg overflow-hidden"
+                            onClick={() => {
+                              setExpandedDesign({
+                                image: design.image,
+                                title: design.title,
+                                pixel: false,
+                                currentIndex: 0,
+                                designs: [{
+                                  id: design.id,
                                   title: design.title,
-                                  pixel: false,
-                                  currentIndex: 0,
-                                  designs: [{
-                                    id: design.id,
-                                    title: design.title,
-                                    date: design.date,
-                                    description: design.description,
-                                    image: design.image,
-                                    tags: design.tags
-                                  }]
-                                });
-                              }}
-                            >
-                              <Image
-                                src={design.image}
-                                alt={design.title}
-                                width={800}
-                                height={600}
-                                className="w-full h-auto object-contain"
-                              />
-                            </div>
+                                  date: design.date,
+                                  description: design.description,
+                                  image: design.image,
+                                  tags: design.tags
+                                }]
+                              });
+                            }}
+                          >
+                            <Image
+                              src={design.image}
+                              alt={design.title}
+                              width={800}
+                              height={600}
+                              className="w-full h-auto object-contain max-h-[50vh] md:max-h-[45vh] lg:max-h-none"
+                            />
                           </div>
                         </div>
                       </motion.div>
@@ -774,7 +794,7 @@ const CategoriesSection = () => {
               return (
                 <motion.div
                   key={`${title}-${design.id}`}
-                  className="absolute inset-0 flex flex-col lg:flex-row items-start mt-6"
+                  className="absolute inset-0 mt-6"
                   style={{
                     transform: `translateX(${x}) scale(${scale})`,
                     opacity: opacity,
@@ -783,11 +803,11 @@ const CategoriesSection = () => {
                 >
                   <div
                     ref={isActive ? activeContentRef : undefined}
-                    className="flex flex-col lg:flex-row items-start gap-6 w-full"
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start w-full"
                   >
                     {/* Sol taraf - Tasarım görüntüsü */}
                     <motion.div 
-                      className="flex-shrink-0 mx-auto lg:mx-0"
+                      className={`w-full max-w-full flex ${isPoster ? 'justify-center lg:justify-start' : 'justify-center'}`}
                       animate={{
                         scale: isActive ? 1 : 0.8
                       }}
@@ -815,10 +835,12 @@ const CategoriesSection = () => {
                           }
                         }}
                         className={`${isCoding
-                          ? 'w-[240px] sm:w-[260px] md:w-[280px] lg:w-[320px] xl:w-[340px] h-[480px] sm:h-[520px] lg:h-[560px] aspect-[9/19]'
+                          ? 'w-full max-w-[360px] aspect-[9/19] max-h-[65vh] md:max-h-[60vh] lg:max-h-none'
                           : (isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app')))
-                            ? 'w-80 h-80 sm:w-96 sm:h-96 md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px]'
-                            : 'w-64 h-80 sm:w-72 sm:h-96 md:w-96 md:h-[480px] lg:w-[480px] lg:h-[600px]'
+                            ? 'w-full max-w-[360px] sm:max-w-[420px] lg:max-w-[520px] aspect-square max-h-[55vh] sm:max-h-[50vh] md:max-h-[45vh] lg:max-h-none'
+                            : isPoster
+                              ? 'w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[400px] xl:max-w-[440px] aspect-[4/5] max-h-[92vh] sm:max-h-[84vh] md:max-h-[70vh] lg:max-h-none'
+                              : 'w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[440px] aspect-[4/5] max-h-[100vh] sm:max-h-[100vh] md:max-h-[100vh] lg:max-h-none'
                         } bg-transparent rounded-lg overflow-hidden cursor-zoom-in relative group`}
                       >
                         {design.image ? (
@@ -831,7 +853,7 @@ const CategoriesSection = () => {
                               isCoding
                                 ? 'object-contain'
                                 : (isPixelArt || is3D || (isUIUX && design.title.toLowerCase().includes('green world app')))
-                                  ? 'object-contain bg-black'
+                                  ? 'object-contain'
                                   : 'object-cover'
                             } transition-transform duration-300 group-hover:scale-105`}
                           />
@@ -974,7 +996,7 @@ const CategoriesSection = () => {
 
                     {/* Sağ taraf - İçerik */}
                     <motion.div 
-                      className="flex-1 w-full lg:max-w-md lg:mt-0 px-4 lg:px-0"
+                      className="w-full lg:w-full lg:max-w-full lg:mt-0 px-4 lg:px-0"
                       animate={{
                         opacity: isActive ? 1 : 0.6,
                         x: isActive ? 0 : 50
@@ -1014,7 +1036,7 @@ const CategoriesSection = () => {
             <>
             {/* Sağda sadece 1 tane thumbnail - sonraki tasarım */}
             {currentIndex < (designs.length - 1) && (
-              <div className="hidden lg:block absolute top-1/2 -translate-y-1/2 right-4 z-10">
+              <div className="hidden xl:block absolute top-1/2 -translate-y-1/2 right-4 z-10">
                 <motion.button
                   onClick={() => {
                     console.log('Thumbnail tıklandı, sonraki tasarıma geçiliyor');
@@ -1171,7 +1193,7 @@ const CategoriesSection = () => {
             style={{ scale: workScale, y: workY, top: workTopOffset as unknown as string }}
             className="sticky text-center font-bold text-[#1A1A1A]"
           >
-            <span ref={workHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: 'clamp(96px, 32vw, 420px)' }}>
+            <span ref={workHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: workFontSize }}>
               WORK
             </span>
           </motion.h2>
