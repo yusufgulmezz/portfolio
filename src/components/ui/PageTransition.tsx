@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const TypewriterTransitionText = ({ onComplete }: { onComplete: () => void }) => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
@@ -116,6 +116,18 @@ const TypewriterDesignEveryThink = () => {
 const PageTransition = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [showEveryThink, setShowEveryThink] = useState(false);
+  const startEventFired = useRef(false);
+
+  // Transition başladığında event yayınla
+  useEffect(() => {
+    if (!startEventFired.current) {
+      startEventFired.current = true;
+      try {
+        const evt = new CustomEvent('page-transition:start');
+        window.dispatchEvent(evt);
+      } catch {}
+    }
+  }, []);
 
   const handleTypewriterComplete = () => {
     setShowEveryThink(true);

@@ -1,9 +1,9 @@
 'use client';
 
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState, useRef } from 'react';
 import PageTransition from "@/components/ui/PageTransition";
 
-// Lazy load tüm section'lar - PageTransition bitene kadar yüklenmesin
+// Lazy load tüm section'lar
 const DesignEveryThinkSection = lazy(() => import("@/components/sections/DesignEveryThinkSection"));
 const HeroSection = lazy(() => import("@/components/sections/HeroSection"));
 const TechLogosSection = lazy(() => import("@/components/sections/TechLogosSection"));
@@ -17,38 +17,66 @@ const SectionLoader = () => (
 );
 
 export default function Home() {
-  const [shouldLoadSections, setShouldLoadSections] = useState(false);
+  const [shouldRenderSections, setShouldRenderSections] = useState(false);
+  const [shouldPreloadSections, setShouldPreloadSections] = useState(false);
+  const transitionDoneRef = useRef(false);
 
   useEffect(() => {
     const onTransitionDone = () => {
-      // PageTransition bittiğinde section'ları yükle
-      setShouldLoadSections(true);
+      transitionDoneRef.current = true;
+      // Transition bittiğinde section'ları render et
+      setShouldRenderSections(true);
+    };
+
+    // Transition başladığında section'ları preload et (yükle ama render etme)
+    const onTransitionStart = () => {
+      setShouldPreloadSections(true);
     };
 
     window.addEventListener('page-transition:done', onTransitionDone as EventListener);
+    window.addEventListener('page-transition:start', onTransitionStart as EventListener);
     
-    // Eğer event zaten tetiklenmişse (sayfa yeniden yüklendiğinde)
-    // Hemen yükle
+    // Sayfa yüklendiğinde hemen preload başlat
     if (document.readyState === 'complete') {
-      // Biraz bekle, transition'ın başlaması için
-      const timer = setTimeout(() => {
-        setShouldLoadSections(true);
-      }, 100);
+      setShouldPreloadSections(true);
+      // Eğer transition event'i gelmezse, 4 saniye sonra render et (fallback)
+      const fallbackTimer = setTimeout(() => {
+        if (!transitionDoneRef.current) {
+          setShouldRenderSections(true);
+        }
+      }, 4000);
+      
       return () => {
-        clearTimeout(timer);
+        clearTimeout(fallbackTimer);
         window.removeEventListener('page-transition:done', onTransitionDone as EventListener);
+        window.removeEventListener('page-transition:start', onTransitionStart as EventListener);
       };
     }
 
     return () => {
       window.removeEventListener('page-transition:done', onTransitionDone as EventListener);
+      window.removeEventListener('page-transition:start', onTransitionStart as EventListener);
     };
   }, []);
 
   return (
     <>
       <PageTransition />
-      {shouldLoadSections && (
+      {/* Preload: Transition başladığında yükle ama render etme - görünmez */}
+      {shouldPreloadSections && !shouldRenderSections && (
+        <div style={{ position: 'absolute', visibility: 'hidden', height: 0, overflow: 'hidden' }}>
+          <Suspense fallback={null}>
+            <DesignEveryThinkSection />
+            <HeroSection />
+            <TechLogosSection />
+            <CategoriesSection />
+            <PersonalCreativesSection />
+            <ContactMeSection />
+          </Suspense>
+        </div>
+      )}
+      {/* Render: Transition bittiğinde göster */}
+      {shouldRenderSections && (
         <Suspense fallback={<SectionLoader />}>
           <DesignEveryThinkSection />
           <HeroSection />
