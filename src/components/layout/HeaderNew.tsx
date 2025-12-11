@@ -11,6 +11,16 @@ const socials = [
 
 const navItems = ['HOME', 'WORK', 'PERSONAL', 'CONTACT'];
 
+const textRevealTop = {
+  rest: { y: '0%' },
+  hover: { y: '-100%' },
+};
+
+const textRevealBottom = {
+  rest: { y: '100%' },
+  hover: { y: '0%' },
+};
+
 const HeaderNew = () => {
   const [isSoundOn, setIsSoundOn] = useState(false);
   const [activeNav, setActiveNav] = useState<'HOME' | 'WORK' | 'PERSONAL' | 'CONTACT'>('HOME');
@@ -127,6 +137,42 @@ const HeaderNew = () => {
     };
     const id = idMap[item] || item.toLowerCase().replace(' ', '-');
     scrollToSection(id);
+  };
+
+  const renderNavItem = (item: (typeof navItems)[number], opts?: { size?: 'md' | 'lg' }) => {
+    const isActive = activeNav === item;
+    const sizeClass = opts?.size === 'md' ? 'text-lg' : 'text-[18px]';
+    return (
+      <button
+        key={item}
+        onClick={() => handleNavClick(item)}
+        className={`text-left ${sizeClass} font-medium transition-colors ${isActive ? 'text-[#1A1A1A]' : 'text-[#AFAFAF] hover:text-[#1A1A1A]'}`}
+        aria-current={isActive ? 'page' : undefined}
+      >
+        <motion.span
+          initial="rest"
+          animate="rest"
+          whileHover="hover"
+          className="relative inline-block overflow-hidden align-middle"
+          style={{ height: '22px', lineHeight: '22px' }}
+        >
+          <motion.span
+            variants={textRevealTop}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="block"
+          >
+            {item}
+          </motion.span>
+          <motion.span
+            variants={textRevealBottom}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="block absolute left-0 top-0"
+          >
+            {item}
+          </motion.span>
+        </motion.span>
+      </button>
+    );
   };
 
   return (
@@ -254,19 +300,11 @@ const HeaderNew = () => {
             >
               <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
                 <nav className="flex flex-col gap-3" style={{ fontFamily: 'var(--font-roboto)' }}>
-                  {navItems.map((item) => {
-                    const isActive = activeNav === item;
-                    return (
-                      <button
-                        key={item}
-                        onClick={() => handleNavClick(item)}
-                        className={`text-left text-lg font-medium transition-colors py-2 ${isActive ? 'text-[#1A1A1A]' : 'text-[#AFAFAF] hover:text-[#4E4E4E]'}`}
-                        aria-current={isActive ? 'page' : undefined}
-                      >
-                        {item}
-                      </button>
-                    );
-                  })}
+                  {navItems.map((item) => (
+                    <div key={item} className="py-2">
+                      {renderNavItem(item, { size: 'md' })}
+                    </div>
+                  ))}
                 </nav>
               </div>
             </motion.div>
@@ -301,19 +339,11 @@ const HeaderNew = () => {
       {/* Desktop Header - Right rail */}
       <div className="hidden lg:flex fixed right-[72px] top-[72px] bottom-[72px] w-[88px] z-[60] flex-col justify-between items-center">
         <div className="flex flex-col items-end w-full text-right" style={{ fontFamily: 'var(--font-roboto)' }}>
-          {navItems.map((item) => {
-            const isActive = activeNav === item;
-            return (
-              <button
-                key={item}
-                onClick={() => handleNavClick(item)}
-                className={`text-[18px] font-medium transition-colors ${isActive ? 'text-[#1A1A1A]' : 'text-[#AFAFAF] hover:text-[#1A1A1A]'}`}
-                aria-current={isActive ? 'page' : undefined}
-              >
-                {item}
-              </button>
-            );
-          })}
+          {navItems.map((item) => (
+            <div key={item} className="py-1">
+              {renderNavItem(item, { size: 'lg' })}
+            </div>
+          ))}
         </div>
 
         <button
