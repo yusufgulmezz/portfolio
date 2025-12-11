@@ -1,34 +1,24 @@
 'use client';
 
-import { lazy, Suspense } from 'react';
 import PageTransition from "@/components/ui/PageTransition";
-
-// Lazy load tüm section'lar
-const DesignEveryThinkSection = lazy(() => import("@/components/sections/DesignEveryThinkSection"));
-const HeroSection = lazy(() => import("@/components/sections/HeroSection"));
-const TechLogosSection = lazy(() => import("@/components/sections/TechLogosSection"));
-const CategoriesSection = lazy(() => import("@/components/sections/CategoriesSection"));
-const PersonalCreativesSection = lazy(() => import("@/components/sections/PersonalCreativesSection"));
-const ContactMeSection = lazy(() => import("@/components/sections/ContactMeSection"));
-
-// Loading fallback
-const SectionLoader = () => (
-  <div className="min-h-screen bg-[#edede9]" />
-);
+import DesignEveryThinkSection from "@/components/sections/DesignEveryThinkSection";
+import HeroSection from "@/components/sections/HeroSection";
+import TechLogosSection from "@/components/sections/TechLogosSection";
+import CategoriesSection from "@/components/sections/CategoriesSection";
+import PersonalCreativesSection from "@/components/sections/PersonalCreativesSection";
+import ContactMeSection from "@/components/sections/ContactMeSection";
 
 export default function Home() {
   return (
     <>
       <PageTransition />
-      {/* PageTransition overlay üstteyken içerik arkaplanda yüklenir, hazır bekler */}
-      <Suspense fallback={<SectionLoader />}>
-        <DesignEveryThinkSection />
-        <HeroSection />
-        <TechLogosSection />
-        <CategoriesSection />
-        <PersonalCreativesSection />
-        <ContactMeSection />
-      </Suspense>
+      {/* GH Pages için: lazy kaldırıldı, içerik hemen yükleniyor */}
+      <DesignEveryThinkSection />
+      <HeroSection />
+      <TechLogosSection />
+      <CategoriesSection />
+      <PersonalCreativesSection />
+      <ContactMeSection />
     </>
   );
 }
