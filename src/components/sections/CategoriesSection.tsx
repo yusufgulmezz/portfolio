@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Lottie from 'lottie-react';
+import { useLottieAnimation } from '@/hooks/useLottieAnimation';
 
 const CategoriesSection = () => {
   // WORK sticky header scroll control
@@ -64,12 +65,14 @@ const CategoriesSection = () => {
 
   // Lottie animation data
   const [lottieData, setLottieData] = useState<Record<string, unknown> | null>(null);
+  const basePath = process.env.NODE_ENV === 'production' ? '/portfolio' : '';
+  const { data: musicLottieData } = useLottieAnimation(`${basePath}/animations/Music.json`);
   useEffect(() => {
-    fetch(`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/animations/Work.json`)
+    fetch(`${basePath}/animations/Work.json`)
       .then(res => res.json())
       .then(data => setLottieData(data))
       .catch(err => console.error('Lottie animation yüklenirken hata:', err));
-  }, []);
+  }, [basePath]);
 
   const categories = [
     {
@@ -1229,6 +1232,46 @@ const CategoriesSection = () => {
             />
           </div>
         ))}
+
+        {/* Playlist for Creativity - moved from Personal section */}
+        <div className="mt-16">
+          <div className="max-w-3xl mx-auto">
+            {musicLottieData && (
+              <div className="flex justify-center py-2">
+                <div className="w-full max-w-[180px] md:max-w-[240px] lg:max-w-[300px] mx-auto">
+                  <Lottie
+                    animationData={musicLottieData}
+                    loop={true}
+                    autoplay={true}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
+              </div>
+            )}
+            <div className="mb-6 md:mb-8 text-center">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1A1A1A] mb-3 md:mb-4">
+                Playlist for Creativity
+              </h3>
+              <p className="text-base md:text-lg text-[#4E4E4E] leading-relaxed max-w-2xl mx-auto">
+                If you&apos;re looking for a playlist to spark your creativity, these songs are perfect for you. Stay tuned!
+              </p>
+            </div>
+            <div className="w-full">
+              <iframe
+                data-testid="embed-iframe"
+                style={{ borderRadius: '12px' }}
+                src="https://open.spotify.com/embed/playlist/3MGkD3NGtGIbgferZfr8CE?utm_source=generator&theme=0"
+                width="100%"
+                height="352"
+                frameBorder="0"
+                allowFullScreen
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title="Spotify Playlist - Soundtrack to Creativity"
+              />
+            </div>
+          </div>
+        </div>
 
         {/* Bottom CTA */}
         <motion.div
