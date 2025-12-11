@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaBehance, FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 const socials = [
-  { label: 'Bé', href: 'https://www.behance.net/', aria: 'Behance' },
-  { label: 'in', href: 'https://www.linkedin.com/', aria: 'LinkedIn' },
-  { label: '○', href: '#', aria: 'Contact' },
+  { icon: FaBehance, href: 'https://behance.net/designeverythink', aria: 'Behance' },
+  { icon: FaGithub, href: 'https://github.com/yusufgulmezz', aria: 'GitHub' },
+  { icon: FaLinkedin, href: 'https://www.linkedin.com/in/yusufglmz/', aria: 'LinkedIn' },
+  { icon: FaInstagram, href: 'https://www.instagram.com/design.everythink/', aria: 'Instagram' },
+  { icon: FaEnvelope, href: 'mailto:designeverythink.co@gmail.com', aria: 'Email' },
 ];
 
 const navItems = ['HOME', 'WORK', 'PERSONAL', 'CONTACT'];
@@ -115,9 +118,9 @@ const HeaderNew = () => {
       // WORK: biraz aşağı, daha az offset
       const targetY = currentY + rect.top - headerOffset + 120;
       window.scrollTo({ top: targetY, behavior: 'smooth' });
-    } else if (id === 'personal-anchor') {
-      // PERSONAL: başlık ortalansın
-      const targetY = currentY + rect.top - headerOffset - window.innerHeight / 2 + rect.height / 2;
+    } else if (id === 'personal-creatives') {
+      // PERSONAL: bölümün üstünü viewport üstüne hizala; sticky başlık ortalanacak
+      const targetY = currentY + rect.top - headerOffset;
       window.scrollTo({ top: targetY, behavior: 'smooth' });
     } else {
       // Varsayılan
@@ -132,7 +135,7 @@ const HeaderNew = () => {
     const idMap: Record<string, string> = {
       'HOME': 'design-every-think',
       'WORK': 'categories',
-      'PERSONAL': 'personal-anchor',
+      'PERSONAL': 'personal-creatives',
       'CONTACT': 'contact'
     };
     const id = idMap[item] || item.toLowerCase().replace(' ', '-');
@@ -319,20 +322,23 @@ const HeaderNew = () => {
           <div className="text-xs text-[#6B6B6B] mt-1">Developer</div>
         </div>
 
-        <div className="flex flex-col items-start gap-5 relative w-full">
-          {socials.map((s, i) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={s.aria}
-              className="relative z-10 w-11 h-11 rounded-full bg-[#4A4A4A] text-white text-base font-semibold flex items-center justify-center hover:bg-[#2f2f2f] transition-colors"
-              style={{ marginTop: i === 0 ? 0 : 2 }}
-            >
-              {s.label}
-            </a>
-          ))}
+        <div className="flex flex-col items-start gap-6 relative w-full">
+          {socials.map((s, i) => {
+            const IconComponent = s.icon;
+            return (
+              <a
+                key={s.aria}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={s.aria}
+                className="relative z-10 text-[#1A1A1A] flex items-center justify-center transition-all duration-200 bg-[#4e4e4e] hover:bg-[#1a1a1a] hover:scale-110 rounded-full w-12 h-12"
+                style={{ marginTop: i === 0 ? 0 : 2 }}
+              >
+                <IconComponent size={20} className="text-[#edede9]" />
+              </a>
+            );
+          })}
         </div>
       </div>
 
