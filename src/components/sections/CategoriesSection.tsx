@@ -308,7 +308,7 @@ const CategoriesSection = () => {
           title: 'Green World',
           date: '2025-08-20',
           description: 'A location-based mobile application developed with React Native and TypeScript, featuring Firebase integration. Green World aims to raise environmental awareness by facilitating voluntary trash collection activities, connecting users through location services, and promoting community-driven environmental action.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/greenWorld/Coding_GreenWorld.png`,
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/coding/GreenWorldApp.png`,
           tags: ['Mobile', 'React Native','TypeScript', 'Firebase']
         },
         {
@@ -316,7 +316,7 @@ const CategoriesSection = () => {
           title: 'Portfolio Website',
           date: '2025-08-15',
           description: 'A modern, responsive portfolio website showcasing design and development work across multiple disciplines including UI/UX design, poster art, pixel art, 3D modeling, and web development projects. Built with Next.js and featuring smooth animations, interactive elements, and a clean, minimalist design that emphasizes attention to detail and user experience.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/portfolio/DET_Mockup_2.png`,
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/coding/DET_Mockup_2.png`,
           tags: ['Web', 'Portfolio', 'Next.js', 'Tailwind CSS', 'Framer Motion']
         }
       ]
