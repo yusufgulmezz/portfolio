@@ -245,8 +245,13 @@ const PersonalCreativesSection = () => {
             style={{ scale: personalScale, y: personalY, top: personalTopOffset as unknown as string }}
             className="sticky text-center font-bold text-[#1A1A1A]"
           >
-            <span ref={personalHeadingRef} className="block" style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: personalFontSize }}>
-              PERSONAL
+            <span
+              id="personal-anchor"
+              ref={personalHeadingRef}
+              className="block"
+              style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em', fontSize: personalFontSize }}
+            >
+              PERSONAL  
             </span>
           </motion.h2>
         </div>
@@ -432,9 +437,9 @@ const PersonalCreativesSection = () => {
                                   items={galleryPhotos}
                                   categoryName={categoryName}
                                   onItemClick={(item, index) => {
-                                    setSelectedPhoto(item);
-                                    setSelectedPhotoIndex(index);
-                                  }}
+                                            setSelectedPhoto(item);
+                                            setSelectedPhotoIndex(index);
+                                          }}
                                   speed={0.5}
                                 />
                               )}
@@ -453,9 +458,9 @@ const PersonalCreativesSection = () => {
                               items={photos}
                               categoryName={categoryName}
                               onItemClick={(item, index) => {
-                                setSelectedPhoto(item);
-                                setSelectedPhotoIndex(index);
-                              }}
+                                        setSelectedPhoto(item);
+                                        setSelectedPhotoIndex(index);
+                                      }}
                               speed={0.5}
                               rounded={true}
                             />

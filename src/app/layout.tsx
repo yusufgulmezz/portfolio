@@ -35,7 +35,7 @@ export default function RootLayout({
           blobType="circle"
           fillColor="#1A1A1A"
           trailCount={3}
-          sizes={[42, 12, 24  ]}
+          sizes={[36, 8, 20  ]}
           innerSizes={[10, 18]}
           innerColor="rgba(255,255,255,0.8)"
           opacities={[0.25, 0.25]}

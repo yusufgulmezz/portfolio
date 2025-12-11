@@ -13,6 +13,7 @@ const navItems = ['HOME', 'WORK', 'PERSONAL', 'CONTACT'];
 
 const HeaderNew = () => {
   const [isSoundOn, setIsSoundOn] = useState(false);
+  const [activeNav, setActiveNav] = useState<'HOME' | 'WORK' | 'PERSONAL' | 'CONTACT'>('HOME');
   const audioRef = useRef<HTMLAudioElement>(null);
   const [audioSrc, setAudioSrc] = useState('/audio/soundtrack.mp3');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,6 +36,41 @@ const HeaderNew = () => {
     }
   }, [audioSrc]);
 
+  // Scroll-based nav highlight
+  useEffect(() => {
+    const getTopY = (id: string) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const rect = el.getBoundingClientRect();
+      return window.scrollY + rect.top;
+    };
+
+    const handleScroll = () => {
+      const viewportCenter = window.scrollY + window.innerHeight / 2;
+      const workTop = getTopY('categories');
+      const personalTop = getTopY('personal-anchor');
+      const contactTop = getTopY('contact');
+
+      if (contactTop !== null && viewportCenter >= contactTop) {
+        setActiveNav('CONTACT');
+      } else if (personalTop !== null && viewportCenter >= personalTop) {
+        setActiveNav('PERSONAL');
+      } else if (workTop !== null && viewportCenter >= workTop) {
+        setActiveNav('WORK');
+      } else {
+        setActiveNav('HOME');
+      }
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
   const handleSoundToggle = async () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -55,15 +91,30 @@ const HeaderNew = () => {
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    if (element) {
-      const headerOffset = 0;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    if (!element) {
+      setIsMobileMenuOpen(false);
+      return;
     }
+
+    const rect = element.getBoundingClientRect();
+    const currentY = window.pageYOffset || document.documentElement.scrollTop;
+    const headerOffset = 0;
+
+    // Özel offset/pivot ayarları
+    if (id === 'categories') {
+      // WORK: biraz aşağı, daha az offset
+      const targetY = currentY + rect.top - headerOffset + 120;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+    } else if (id === 'personal-anchor') {
+      // PERSONAL: başlık ortalansın
+      const targetY = currentY + rect.top - headerOffset - window.innerHeight / 2 + rect.height / 2;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+    } else {
+      // Varsayılan
+      const targetY = currentY + rect.top - headerOffset;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+    }
+
     setIsMobileMenuOpen(false);
   };
 
@@ -71,7 +122,7 @@ const HeaderNew = () => {
     const idMap: Record<string, string> = {
       'HOME': 'design-every-think',
       'WORK': 'categories',
-      'PERSONAL': 'personal-creatives',
+      'PERSONAL': 'personal-anchor',
       'CONTACT': 'contact'
     };
     const id = idMap[item] || item.toLowerCase().replace(' ', '-');
@@ -203,15 +254,19 @@ const HeaderNew = () => {
             >
               <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
                 <nav className="flex flex-col gap-3" style={{ fontFamily: 'var(--font-roboto)' }}>
-                  {navItems.map((item) => (
-                    <button
-                      key={item}
-                      onClick={() => handleNavClick(item)}
-                      className="text-left text-lg font-medium text-[#1A1A1A] hover:text-[#4E4E4E] transition-colors py-2"
-                    >
-                      {item}
-                    </button>
-                  ))}
+                  {navItems.map((item) => {
+                    const isActive = activeNav === item;
+                    return (
+                      <button
+                        key={item}
+                        onClick={() => handleNavClick(item)}
+                        className={`text-left text-lg font-medium transition-colors py-2 ${isActive ? 'text-[#1A1A1A]' : 'text-[#AFAFAF] hover:text-[#4E4E4E]'}`}
+                        aria-current={isActive ? 'page' : undefined}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
                 </nav>
               </div>
             </motion.div>
@@ -246,15 +301,19 @@ const HeaderNew = () => {
       {/* Desktop Header - Right rail */}
       <div className="hidden lg:flex fixed right-[72px] top-[72px] bottom-[72px] w-[88px] z-[60] flex-col justify-between items-center">
         <div className="flex flex-col items-end w-full text-right" style={{ fontFamily: 'var(--font-roboto)' }}>
-          {navItems.map((item) => (
-            <button
-              key={item}
-              onClick={() => handleNavClick(item)}
-              className="text-[18px] font-medium text-[#AFAFAF] hover:text-[#1A1A1A] transition-colors"
-            >
-              {item}
-            </button>
-          ))}
+          {navItems.map((item) => {
+            const isActive = activeNav === item;
+            return (
+              <button
+                key={item}
+                onClick={() => handleNavClick(item)}
+                className={`text-[18px] font-medium transition-colors ${isActive ? 'text-[#1A1A1A]' : 'text-[#AFAFAF] hover:text-[#1A1A1A]'}`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {item}
+              </button>
+            );
+          })}
         </div>
 
         <button
