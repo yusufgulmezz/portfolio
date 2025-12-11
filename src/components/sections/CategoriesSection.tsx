@@ -308,7 +308,7 @@ const CategoriesSection = () => {
           title: 'Green World',
           date: '2025-08-20',
           description: 'A location-based mobile application developed with React Native and TypeScript, featuring Firebase integration. Green World aims to raise environmental awareness by facilitating voluntary trash collection activities, connecting users through location services, and promoting community-driven environmental action.',
-          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/greenWorld/Coding-GreenWorld.png`,
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/greenWorld/Coding_GreenWorld.png`,
           tags: ['Mobile', 'React Native','TypeScript', 'Firebase']
         },
         {
