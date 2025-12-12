@@ -304,7 +304,7 @@ const CategoriesSection = () => {
       description: 'Web and mobile application development projects',
       number: '05',
       color: 'from-orange-500 to-red-500',
-      count: 2,
+      count: 3,
       projects: [
         {
           id: 16,
@@ -321,6 +321,14 @@ const CategoriesSection = () => {
           description: 'A modern, responsive portfolio website showcasing design and development work across multiple disciplines including UI/UX design, poster art, pixel art, 3D modeling, and web development projects. Built with Next.js and featuring smooth animations, interactive elements, and a clean, minimalist design that emphasizes attention to detail and user experience.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/coding/DET_Mockup_2.png`,
           tags: ['Web', 'Portfolio', 'Next.js', 'Tailwind CSS', 'Framer Motion']
+        },
+        {
+          id: 30,
+          title: 'Trip Planner',
+          date: '2025-01-10',
+          description: 'A comprehensive travel planning mobile application designed to help users organize their perfect journey effortlessly. Trip Planner features itinerary management, budget tracking, smart packing lists, and interactive trip planning tools. The app provides an intuitive interface for managing travel activities, dates, and destinations, making trip planning seamless and enjoyable.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/coding/Trip_Plan_Mockup.png`,
+          tags: ['Mobile', 'UI/UX', 'Travel', 'Planning']
         }
       ]
     }
@@ -1234,7 +1242,7 @@ const CategoriesSection = () => {
         ))}
 
         {/* Playlist for Creativity - moved from Personal section */}
-        <div className="mt-16">
+        <div className="mt-32">
           <div className="max-w-3xl mx-auto">
             {musicLottieData && (
               <div className="flex justify-center py-2">
