@@ -18,7 +18,7 @@ const ContactMeSection = () => {
       <div className="w-full px-4 sm:px-6 lg:px-8">
         {contactLottieData && (
           <div className="flex justify-center py-8 md:py-12">
-            <div className="w-full max-w-[180px] md:max-w-[2400px] lg:max-w-[300px] mx-auto">
+            <div className="w-full max-w-[180px] md:max-w-[200px] lg:max-w-[300px] mx-auto">
               <Lottie
                 animationData={contactLottieData}
                 loop={true}

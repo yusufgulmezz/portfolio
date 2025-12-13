@@ -1,10 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useMemo, useState, lazy, Suspense } from 'react';
-
-// MetaBalls'ı lazy load et - ağır bir component
-const MetaBalls = lazy(() => import('../ui/MetaBalls'));
+import { useEffect, useMemo, useState } from 'react';
 
 const DesignEveryThinkSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -89,26 +86,6 @@ const DesignEveryThinkSection = () => {
       className="relative bg-[#edede9] flex flex-col justify-center items-center overflow-hidden"
       style={{ minHeight: sectionMinHeight ? `${sectionMinHeight}px` : '100vh' }}
     >
-      {/* MetaBalls Background - Only behind title area - Lazy loaded */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center">
-        <div className="w-full max-w-4xl h-56 sm:h-68 md:h-80 lg:h-88">
-          <Suspense fallback={null}>
-            <MetaBalls
-              color="#1A1A1A"
-              cursorBallColor="#4E4E4E"
-              cursorBallSize={3}
-              ballCount={20}
-              animationSize={35}
-              enableMouseInteraction={false}
-              enableTransparency={true}
-              hoverSmoothness={0.08}
-              clumpFactor={1}
-              speed={0.7}
-              className="opacity"
-            />
-          </Suspense>
-        </div>
-      </div>
 
       {/* Main Content */}
       <div className="relative z-10 px-4 sm:px-6 lg:px-8">

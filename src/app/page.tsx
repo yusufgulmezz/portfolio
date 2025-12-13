@@ -1,6 +1,6 @@
 'use client';
 
-import PageTransition from "@/components/ui/PageTransition";
+import PageTransitionNew from "@/components/ui/PageTransitionNew";
 import DesignEveryThinkSection from "@/components/sections/DesignEveryThinkSection";
 import HeroSection from "@/components/sections/HeroSection";
 import TechLogosSection from "@/components/sections/TechLogosSection";
@@ -11,7 +11,7 @@ import ContactMeSection from "@/components/sections/ContactMeSection";
 export default function Home() {
   return (
     <>
-      <PageTransition />
+      <PageTransitionNew />
       {/* GH Pages için: lazy kaldırıldı, içerik hemen yükleniyor */}
       <DesignEveryThinkSection />
       <HeroSection />
