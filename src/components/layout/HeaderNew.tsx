@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBehance, FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import Image from 'next/image';
 
 const socials = [
   { icon: FaBehance, href: 'https://behance.net/designeverythink', aria: 'Behance' },
@@ -120,32 +121,35 @@ const HeaderNew = () => {
   };
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (!element) {
-      setIsMobileMenuOpen(false);
-      return;
-    }
-
-    const rect = element.getBoundingClientRect();
-    const currentY = window.pageYOffset || document.documentElement.scrollTop;
-    const headerOffset = 0;
-
-    // Özel offset/pivot ayarları
-    if (id === 'categories') {
-      // WORK: biraz aşağı, daha az offset
-      const targetY = currentY + rect.top - headerOffset + 120;
-      window.scrollTo({ top: targetY, behavior: 'smooth' });
-    } else if (id === 'personal-creatives') {
-      // PERSONAL: bölümün üstünü viewport üstüne hizala; sticky başlık ortalanacak
-      const targetY = currentY + rect.top - headerOffset;
-      window.scrollTo({ top: targetY, behavior: 'smooth' });
-    } else {
-      // Varsayılan
-      const targetY = currentY + rect.top - headerOffset;
-      window.scrollTo({ top: targetY, behavior: 'smooth' });
-    }
-
+    // Mobil menüyü önce kapat
     setIsMobileMenuOpen(false);
+    
+    // Kısa bir gecikme ile scroll işlemini başlat (menü animasyonunun tamamlanması için)
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (!element) {
+        return;
+      }
+
+      const rect = element.getBoundingClientRect();
+      const currentY = window.pageYOffset || document.documentElement.scrollTop;
+      const headerOffset = 0;
+
+      // Özel offset/pivot ayarları
+      if (id === 'categories') {
+        // WORK: biraz aşağı, daha az offset
+        const targetY = currentY + rect.top - headerOffset + 120;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      } else if (id === 'personal-creatives') {
+        // PERSONAL: bölümün üstünü viewport üstüne hizala; sticky başlık ortalanacak
+        const targetY = currentY + rect.top - headerOffset;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      } else {
+        // Varsayılan
+        const targetY = currentY + rect.top - headerOffset;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   const handleNavClick = (item: string) => {
@@ -165,7 +169,11 @@ const HeaderNew = () => {
     return (
       <button
         key={item}
-        onClick={() => handleNavClick(item)}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleNavClick(item);
+        }}
         className={`text-left ${sizeClass} font-medium transition-colors ${isActive ? 'text-[#1A1A1A]' : 'text-[#AFAFAF] hover:text-[#1A1A1A]'}`}
         aria-current={isActive ? 'page' : undefined}
       >
@@ -218,21 +226,14 @@ const HeaderNew = () => {
                 className="block cursor-pointer hover:opacity-80 transition-opacity duration-200"
               >
                 <div className="leading-tight text-left">
-                  <span className="block text-lg font-bold text-[#1A1A1A]">DET</span>
-                  <div className="h-4 overflow-hidden text-left">
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={rotatingTexts[currentIndex]}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ duration: 0.15 }}
-                        className="block text-xs text-[#4E4E4E] font-regular"
-                        aria-live="polite"
-                      >
-                        {rotatingTexts[currentIndex]}
-                      </motion.span>
-                    </AnimatePresence>
+                  <div className="block">
+                    <Image
+                      src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/DET_Logo.svg`}
+                      alt="DET Logo"
+                      width={40}
+                      height={40}
+                      className="w-[40px] h-[40px]"
+                    />
                   </div>
                 </div>
               </button>
@@ -257,29 +258,29 @@ const HeaderNew = () => {
                 <div
                   className="flex items-center"
                   style={{
-                    gap: '6px',
+                    gap: '4px',
                     backgroundColor: '#4E4E4E',
-                    borderRadius: '24px',
-                    padding: '8px 16px'
+                    borderRadius: '20px',
+                    padding: '6px 12px'
                   }}
                 >
-                  <span style={{ color: '#AFAFAF', fontSize: '16px', fontWeight: 500 }}>
+                  <span style={{ color: '#AFAFAF', fontSize: '13px', fontWeight: 500 }}>
                     SOUND
                   </span>
-                  <div className="overflow-hidden relative" style={{ height: '18px', lineHeight: '18px' }}>
+                  <div className="overflow-hidden relative" style={{ height: '15px', lineHeight: '15px' }}>
                     <AnimatePresence mode="wait">
                       <motion.span
                         key={isSoundOn ? 'ON' : 'OFF'}
-                        initial={{ opacity: 0, y: 16 }}
+                        initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -16 }}
+                        exit={{ opacity: 0, y: -12 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                         style={{
                           color: '#EDEDE9',
-                          fontSize: '16px',
+                          fontSize: '13px',
                           fontWeight: 500,
                           display: 'block',
-                          lineHeight: '18px',
+                          lineHeight: '15px',
                           whiteSpace: 'nowrap'
                         }}
                       >
@@ -349,8 +350,19 @@ const HeaderNew = () => {
       {/* Desktop Header - Left rail */}
       <div className="hidden lg:flex fixed left-[72px] top-[72px] bottom-[72px] w-[88px] z-[60] flex-col justify-between items-center">
         <div className="w-full text-left">
-          <div className="text-lg font-bold text-[#1A1A1A] leading-tight">DET</div>
-          <div className="min-h-[42px] overflow-visible text-left mt-1">
+          <button
+            onClick={() => window.location.reload()}
+            className="block cursor-pointer hover:opacity-80 transition-opacity duration-200 mb-1"
+          >
+            <Image
+              src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/DET_Logo.svg`}
+              alt="DET Logo"
+              width={64}
+              height={64}
+              className="w-[64px] h-[64px]"
+            />
+          </button>
+          <div className="min-h-[42px] overflow-visible text-left mt-3">
             <AnimatePresence mode="wait">
               <motion.span
                 key={rotatingTexts[currentIndex]}
