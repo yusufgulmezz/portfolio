@@ -14,6 +14,14 @@ const socials = [
 
 const navItems = ['HOME', 'WORK', 'PERSONAL', 'CONTACT'];
 
+const rotatingTexts = [
+  'Poster',
+  'Pixel Art',
+  'UI/UX',
+  '3D',
+  'Coding',
+];
+
 const textRevealTop = {
   rest: { y: '0%' },
   hover: { y: '-100%' },
@@ -27,6 +35,7 @@ const textRevealBottom = {
 const HeaderNew = () => {
   const [isSoundOn, setIsSoundOn] = useState(false);
   const [activeNav, setActiveNav] = useState<'HOME' | 'WORK' | 'PERSONAL' | 'CONTACT'>('HOME');
+  const [currentIndex, setCurrentIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [audioSrc, setAudioSrc] = useState('/audio/soundtrack.mp3');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -48,6 +57,14 @@ const HeaderNew = () => {
       audioRef.current.load();
     }
   }, [audioSrc]);
+
+  // Rotating texts animation
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % rotatingTexts.length);
+    }, 2000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   // Scroll-based nav highlight
   useEffect(() => {
@@ -202,7 +219,21 @@ const HeaderNew = () => {
               >
                 <div className="leading-tight text-left">
                   <span className="block text-lg font-bold text-[#1A1A1A]">DET</span>
-                  <span className="block text-xs text-[#4E4E4E] font-regular">Developer</span>
+                  <div className="h-4 overflow-hidden text-left">
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={rotatingTexts[currentIndex]}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.15 }}
+                        className="block text-xs text-[#4E4E4E] font-regular"
+                        aria-live="polite"
+                      >
+                        {rotatingTexts[currentIndex]}
+                      </motion.span>
+                    </AnimatePresence>
+                  </div>
                 </div>
               </button>
             </div>
@@ -319,7 +350,22 @@ const HeaderNew = () => {
       <div className="hidden lg:flex fixed left-[72px] top-[72px] bottom-[72px] w-[88px] z-[60] flex-col justify-between items-center">
         <div className="w-full text-left">
           <div className="text-lg font-bold text-[#1A1A1A] leading-tight">DET</div>
-          <div className="text-xs text-[#6B6B6B] mt-1">Developer</div>
+          <div className="min-h-[42px] overflow-visible text-left mt-1">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={rotatingTexts[currentIndex]}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.15 }}
+                className="block text-[#6B6B6B] font-regular leading-tight"
+                style={{ fontSize: '14px' }}
+                aria-live="polite"
+              >
+                {rotatingTexts[currentIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </div>
         </div>
 
         <div className="flex flex-col items-start gap-6 relative w-full">
