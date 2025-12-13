@@ -593,17 +593,18 @@ const CategoriesSection = () => {
           >
             {isUIUX ? (
               <div className="flex flex-col gap-16 mt-6">
-                {designs.map((design) => (
+                {designs.map((design, index) => (
                   <div key={`${title}-${design.id}`} className="p-0">
                     <AnimatePresence initial={false}>
                       {openUiuxIds.has(design.id) && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{ duration: 0.25 }}
-                          className={`mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6 ${design.reversed ? 'lg:grid-flow-col-dense' : ''}`}
-                        >
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, y: -6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -6 }}
+                            transition={{ duration: 0.25 }}
+                            className={`mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6 ${design.reversed ? 'lg:grid-flow-col-dense' : ''}`}
+                          >
                           {/* Açıklama kısmı - reversed ise solda, değilse sağda */}
                           <div className={`w-full lg:max-w-xl text-left ${design.reversed ? 'lg:order-1' : 'lg:order-2'}`}>
                             <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">{design.title}</h3>
@@ -708,6 +709,10 @@ const CategoriesSection = () => {
                             </div>
                           </div>
                         </motion.div>
+                        {index < designs.length - 1 && (
+                          <div className="w-full h-px bg-gray-300 mt-16"></div>
+                        )}
+                      </>
                       )}
                     </AnimatePresence>
                   </div>
@@ -715,7 +720,7 @@ const CategoriesSection = () => {
               </div>
             ) : isCoding ? (
               <div className="flex flex-col gap-16 mt-6">
-                {designs.map((design) => {
+                {designs.map((design, index) => {
                   // Portfolio Website için reversed düzen (görsel sağda, açıklama solda)
                   const isReversed = design.title.toLowerCase().includes('portfolio');
                   return (
@@ -769,6 +774,9 @@ const CategoriesSection = () => {
                           </div>
                         </div>
                       </motion.div>
+                      {index < designs.length - 1 && (
+                        <div className="w-full h-px bg-gray-300 mt-16"></div>
+                      )}
                     </div>
                   );
                 })}
