@@ -15,7 +15,7 @@ const Header = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSoundOn, setIsSoundOn] = useState(false); // Default: OFF
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [audioSrc, setAudioSrc] = useState('/audio/soundtrack.mp3');
+  const [audioSrc, setAudioSrc] = useState('/audio/soundtrack_2.mp3');
   
   // Detect basePath for GitHub Pages
   useEffect(() => {
@@ -23,9 +23,9 @@ const Header = () => {
       const pathname = window.location.pathname;
       // If URL starts with /portfolio, we're on GitHub Pages
       if (pathname.startsWith('/portfolio')) {
-        setAudioSrc('/portfolio/audio/soundtrack.mp3');
+        setAudioSrc('/portfolio/audio/soundtrack_2.mp3');
       } else {
-        setAudioSrc('/audio/soundtrack.mp3');
+        setAudioSrc('/audio/soundtrack_2.mp3');
       }
     }
   }, []);
@@ -86,7 +86,7 @@ const Header = () => {
         loop
         preload="none"
         style={{ display: 'none' }}
-        aria-label="Background soundtrack"
+        aria-label="Background soundtrack_2"
       >
         <source src={audioSrc} type="audio/mpeg" key={audioSrc} />
         Your browser does not support the audio element.
