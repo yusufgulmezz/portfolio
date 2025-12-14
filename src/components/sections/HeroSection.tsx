@@ -235,15 +235,21 @@ const HeroSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 viewport={{ once: false, amount: 0.5 }}
-                className="mb-6"
+                className="mb-6 flex flex-col items-start sm:items-end"
               >
-                <div className="flex items-baseline gap-4 mb-2 justify-start sm:justify-end">
+                <div className="flex flex-row sm:flex-row-reverse items-start gap-2 mb-2">
                   <span 
-                    className="text-[16px] sm:text-[18px] md:text-[30px] lg:text-[36px] font-small text-[#4E4E4E] leading-[0.95] text-left sm:text-right"
+                    className="text-[14px] sm:text-[16px] md:text-[20px] lg:text-[24px] font-small text-[#4E4E4E] leading-[0.95] text-left sm:text-right"
                     style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
                   >
                     DIGITAL
                   </span>
+                  <span 
+                    className="text-[10px] sm:text-[12px] md:text-[14px] lg:text-[16px] font-normal text-[#E43A0F] opacity-75 leading-[0.95]"
+                    style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
+                  >
+                    Yusuf Gülmez
+                  </span> 
                 </div>
                 <TypewriterRoleText />
               </motion.div>
