@@ -127,9 +127,9 @@ const PersonalCreativesSection = () => {
       { title: 'Underground of Istanbul', description: 'Underground of Istanbul.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/anatolia/Anatolia_Image_14.webp`, width: 1740, height: 1160, category: 'Mixed', location: 'Istanbul, Türkiye', date: '26/09/2025' },
     ],
     drawings: [
-      { title: 'Portrait Study', description: 'Quick sketch with pencil.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Space Perspective', description: 'Two-point perspective practice.', src: 'https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 },
-      { title: 'Figure Studies', description: 'Selections from short poses.', src: 'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?auto=format&fit=crop&w=1080&h=1620&q=80', width: 1080, height: 1620 }
+      { title: 'Atatürk', description: 'Portrait drawing of Atatürk.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/draw/atatürk.webp`, width: 1080, height: 1620 },
+      { title: 'Witcher', description: 'Character drawing from The Witcher.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/draw/witcher.webp`, width: 1080, height: 1620 },
+      { title: 'Paul Walker', description: 'Portrait drawing of Paul Walker.', src: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/draw/paulWalker.webp`, width: 1080, height: 1620 }
     ],
     blog: [
       {
@@ -282,7 +282,48 @@ const PersonalCreativesSection = () => {
                 </div>
                 {/* İçerik her zaman gösterilir */}
                 <div className="mt-6">
-                  {tab.key === 'photos' ? (
+                  {tab.key === 'drawings' ? (
+                    <>
+                      {/* Drawing açıklama metni */}
+                      <div className="mb-8 md:mb-10">
+                        <p className="text-base md:text-lg text-[#1A1A1A] leading-relaxed max-w-3xl">
+                          A collection of hand-drawn portraits and character studies, exploring different techniques and styles in traditional drawing.
+                        </p>
+                      </div>
+                      {/* Drawing görselleri */}
+                      <motion.div
+                        key={tab.key}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-50px' }}
+                        transition={{ duration: 0.35 }}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                      >
+                        {contentByTab[tab.key].map((item, idx) => (
+                          <div
+                            key={`${tab.key}-${idx}`}
+                            className="group rounded-xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-3 hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow cursor-pointer"
+                            onClick={() => {
+                              setSelectedPhoto(item);
+                              setSelectedPhotoIndex(idx);
+                            }}
+                          >
+                            <div className="relative w-full rounded-lg bg-gray-100 mb-3 overflow-hidden aspect-[3/4]">
+                              <Image
+                                src={item.src}
+                                alt={item.title}
+                                width={item.width}
+                                height={item.height}
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
+                            <h4 className="text-sm font-medium text-gray-900 mb-1">{item.title}</h4>
+                            <p className="text-xs text-gray-600 line-clamp-2">{item.description}</p>
+                          </div>
+                        ))}
+                      </motion.div>
+                    </>
+                  ) : tab.key === 'photos' ? (
                     <div className="space-y-8 md:space-y-12">
                       {/* Her kategori için ayrı scroll container */}
                       {Object.entries(photosByCategory).map(([categoryName, photos]) => {
@@ -496,27 +537,7 @@ const PersonalCreativesSection = () => {
                         </motion.article>
                       ))}
                     </div>
-                  ) : (
-                    <motion.div
-                      key={tab.key}
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: '-50px' }}
-                      transition={{ duration: 0.35 }}
-                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                    >
-                      {contentByTab[tab.key].map((item, idx) => (
-                        <div
-                          key={`${tab.key}-${idx}`}
-                          className="group rounded-2xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-5 hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow"
-                        >
-                          <div className="aspect-[4/3] w-full rounded-xl bg-gray-100 mb-4 overflow-hidden" />
-                          <h4 className="text-lg font-medium text-gray-900 mb-1">{item.title}</h4>
-                          <p className="text-sm text-gray-600">{item.description}</p>
-                        </div>
-                      ))}
-                    </motion.div>
-                  )}
+                  ) : null}
                 </div>
               </div>
             );
@@ -570,11 +591,18 @@ const PersonalCreativesSection = () => {
 
                 {/* Navigation buttons */}
                 {(() => {
-                  const category = selectedPhoto.category || 'Other';
-                  const photos = photosByCategory[category] || [];
-                  const hasValidIndex = selectedPhotoIndex >= 0 && selectedPhotoIndex < photos.length;
+                  // Determine which array to use based on whether item has category (photos) or not (drawings)
+                  const isDrawing = !selectedPhoto.category;
+                  const items = isDrawing 
+                    ? contentByTab.drawings 
+                    : (() => {
+                        const category = selectedPhoto.category || 'Other';
+                        return photosByCategory[category] || [];
+                      })();
+                  
+                  const hasValidIndex = selectedPhotoIndex >= 0 && selectedPhotoIndex < items.length;
                   const hasPrevious = hasValidIndex && selectedPhotoIndex > 0;
-                  const hasNext = hasValidIndex && selectedPhotoIndex < photos.length - 1;
+                  const hasNext = hasValidIndex && selectedPhotoIndex < items.length - 1;
 
                   return (
                     <>
@@ -582,12 +610,12 @@ const PersonalCreativesSection = () => {
                       {hasPrevious && (
                         <button
                           onClick={() => {
-                            const prevPhoto = photos[selectedPhotoIndex - 1];
-                            setSelectedPhoto(prevPhoto);
+                            const prevItem = items[selectedPhotoIndex - 1];
+                            setSelectedPhoto(prevItem);
                             setSelectedPhotoIndex(selectedPhotoIndex - 1);
                           }}
                           className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 text-white rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg"
-                          aria-label="Previous photo"
+                          aria-label="Previous"
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -599,12 +627,12 @@ const PersonalCreativesSection = () => {
                       {hasNext && (
                         <button
                           onClick={() => {
-                            const nextPhoto = photos[selectedPhotoIndex + 1];
-                            setSelectedPhoto(nextPhoto);
+                            const nextItem = items[selectedPhotoIndex + 1];
+                            setSelectedPhoto(nextItem);
                             setSelectedPhotoIndex(selectedPhotoIndex + 1);
                           }}
                           className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 text-white rounded-full flex items-center justify-center transition-all duration-200 backdrop-blur-sm border border-white/30 shadow-lg"
-                          aria-label="Next photo"
+                          aria-label="Next"
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

@@ -2,14 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaBehance, FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaBehance, FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { SiMedium } from 'react-icons/si';
 import Image from 'next/image';
 
 const socials = [
   { icon: FaBehance, href: 'https://behance.net/designeverythink', aria: 'Behance' },
   { icon: FaGithub, href: 'https://github.com/yusufgulmezz', aria: 'GitHub' },
   { icon: FaLinkedin, href: 'https://www.linkedin.com/in/yusufglmz/', aria: 'LinkedIn' },
-  { icon: FaInstagram, href: 'https://www.instagram.com/design.everythink/', aria: 'Instagram' },
+  { icon: SiMedium, href: 'https://medium.com/@yusufgulmezz', aria: 'Medium' },
   { icon: FaEnvelope, href: 'mailto:designeverythink.co@gmail.com', aria: 'Email' },
 ];
 
@@ -399,7 +400,7 @@ const HeaderNew = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-start gap-6 relative w-full">
+        <div className="flex flex-col items-start gap-4 relative w-full">
           {socials.map((s, i) => {
             const IconComponent = s.icon;
             return (
@@ -412,7 +413,7 @@ const HeaderNew = () => {
                 className="relative z-10 text-[#1A1A1A] flex items-center justify-center transition-all duration-200 bg-[#4e4e4e] hover:bg-[#1a1a1a] hover:scale-110 rounded-full w-12 h-12"
                 style={{ marginTop: i === 0 ? 0 : 2 }}
               >
-                <IconComponent size={20} className="text-[#edede9]" />
+                <IconComponent size={18} className="text-[#edede9]" />
               </a>
             );
           })}
