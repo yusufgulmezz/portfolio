@@ -1,16 +1,16 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Palette, Instagram } from 'lucide-react';
-import Link from 'next/link';
+import { FaBehance, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { SiMedium } from 'react-icons/si';
+import Image from 'next/image';
 
 const Footer = () => {
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: 'https://github.com/yusufgulmezz' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/yusufglmz/' },
-    { name: 'Behance', icon: Palette, href: 'https://behance.net/designeverythink' },
-    { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/design.everythink/' },
-    { name: 'Email', icon: Mail, href: 'mailto:designeverythink.co@gmail.com' },
+    { name: 'Behance', icon: FaBehance, href: 'https://behance.net/designeverythink' },
+    { name: 'GitHub', icon: FaGithub, href: 'https://github.com/yusufgulmezz' },
+    { name: 'LinkedIn', icon: FaLinkedin, href: 'https://www.linkedin.com/in/yusufglmz/' },
+    { name: 'Medium', icon: SiMedium, href: 'https://medium.com/@yusufgulmezz' },
   ];
 
   return (
@@ -24,25 +24,95 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-lg sm:text-xl font-bold mb-4 text-[#1A1A1A]">DesignEveryThink</h3>
+            <div className="flex items-center gap-3 mb-8">
+              <Image
+                src={`${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/DET_Logo.svg`}
+                alt="DET Logo"
+                width={48}
+                height={48}
+                className="w-[48px] h-[48px]"
+              />
+              <h3 className="text-lg sm:text-xl">
+                <span className="font-regular text-[#4E4E4E]">DesignEvery</span>
+                <span className="font-bold text-[#1A1A1A]">Think</span>
+              </h3>
+            </div>
             <p className="text-[#1A1A1A] mb-4">
               A portfolio website showcasing creative solutions in design and development.
             </p>
           </motion.div>
 
-          {/* Quick Links */}
+          {/* Navigation */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="text-base sm:text-lg font-semibold mb-4 text-[#1A1A1A]">Quick Links</h4>
+            <h4 className="text-base sm:text-lg font-semibold mb-4 text-[#1A1A1A]">Navigation</h4>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-[#1A1A1A] hover:opacity-70 transition-opacity">Home</Link></li>
-              <li><Link href="/projects" className="text-[#1A1A1A] hover:opacity-70 transition-opacity">Projects</Link></li>
-              <li><Link href="/about" className="text-[#1A1A1A] hover:opacity-70 transition-opacity">About</Link></li>
-              <li><Link href="/contact" className="text-[#1A1A1A] hover:opacity-70 transition-opacity">Contact</Link></li>
+              <li>
+                <a 
+                  href="#design-every-think" 
+                  className="text-[#1A1A1A] hover:opacity-70 transition-opacity cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById('design-every-think');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#categories" 
+                  className="text-[#1A1A1A] hover:opacity-70 transition-opacity cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById('categories');
+                    if (element) {
+                      const rect = element.getBoundingClientRect();
+                      const currentY = window.pageYOffset || document.documentElement.scrollTop;
+                      window.scrollTo({ top: currentY + rect.top + 120, behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Work
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#personal-creatives" 
+                  className="text-[#1A1A1A] hover:opacity-70 transition-opacity cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById('personal-creatives');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Personal
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#contact" 
+                  className="text-[#1A1A1A] hover:opacity-70 transition-opacity cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const element = document.getElementById('contact');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Contact
+                </a>
+              </li>
             </ul>
           </motion.div>
 
@@ -54,7 +124,7 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h4 className="text-base sm:text-lg font-semibold mb-4 text-[#1A1A1A]">Social Media</h4>
-            <div className="flex space-x-4">
+            <div className="flex flex-wrap gap-3">
               {socialLinks.map((social) => (
                 <motion.a
                   key={social.name}
@@ -63,9 +133,10 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="text-[#1A1A1A] hover:opacity-70 transition-opacity"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-[#4e4e4e] hover:bg-[#1a1a1a] transition-colors duration-200"
+                  aria-label={social.name}
                 >
-                  <social.icon size={24} />
+                  <social.icon size={20} className="text-[#edede9]" />
                 </motion.a>
               ))}
             </div>
