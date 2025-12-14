@@ -86,6 +86,7 @@ const PersonalCreativesSection = () => {
   const { data: polaroidLottieData } = useLottieAnimation(`${basePath}/animations/Polaroid_Photo.json`);
   const { data: blogLottieData } = useLottieAnimation(`${basePath}/animations/Blog.json`);
   const { data: drawingLottieData } = useLottieAnimation(`${basePath}/animations/drawing.json`);
+  const { data: cameraLottieData } = useLottieAnimation(`${basePath}/animations/photographer.json`);
 
   const [activeIndex] = useState<number>(0);
 
@@ -377,6 +378,18 @@ const PersonalCreativesSection = () => {
                                     unoptimized
                                     className="w-full max-w-[240px] md:max-w-[260px] lg:max-w-[300px] mx-auto"
                                   />
+                                </div>
+                              )}
+                              {categoryName === 'Mixed' && cameraLottieData && (
+                                <div className="flex justify-center py-16 md:py-20 lg:py-24">
+                                  <div className="w-full max-w-[180px] md:max-w-[240px] lg:max-w-[300px] mx-auto">
+                                    <Lottie
+                                      animationData={cameraLottieData}
+                                      loop={true}
+                                      autoplay={true}
+                                      style={{ width: '100%', height: '100%' }}
+                                    />
+                                  </div>
                                 </div>
                               )}
                               {/* Featured görsel ve açıklama bölümü */}
