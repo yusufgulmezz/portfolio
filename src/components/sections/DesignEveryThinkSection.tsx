@@ -91,7 +91,7 @@ const DesignEveryThinkSection = () => {
       <div className="relative z-10 px-4 sm:px-6 lg:px-8">
         {/* Main Title */}
         <motion.h1 
-          className="text-[52px] sm:text-[80px] md:text-[104px] lg:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] mb-12 text-center"
+          className="text-[52px] sm:text-[72px] md:text-[88px] lg:text-[104px] xl:text-[120px] 2xl:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] mb-8 sm:mb-10 md:mb-12 text-center max-w-[95vw] mx-auto"
           style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
           initial={{ opacity: 0, y: 50 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}

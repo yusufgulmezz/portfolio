@@ -624,7 +624,7 @@ const CategoriesSection = () => {
                             >
                               {/* Ana görsel alanı */}
                               <div 
-                                className="relative w-full cursor-zoom-in"
+                                className="relative w-full cursor-zoom-in overflow-hidden"
                                 onClick={() => {
                                   const images = design.gallery && design.gallery.length > 0 ? design.gallery : [design.image];
                                   const currentIdx = currentGalleryIndex[design.id] ?? 0;
@@ -650,14 +650,14 @@ const CategoriesSection = () => {
                                     return (
                                       <div
                                         key={`${design.id}-${idx}`}
-                                        className="relative w-full"
+                                        className="relative w-full overflow-hidden"
                                       >
                                         <Image
                                           src={img}
                                           alt={`${design.title} - ${idx + 1}`}
                                           width={800}
                                           height={600}
-                                          className={`w-full h-auto max-h-[50vh] md:max-h-[45vh] lg:max-h-none ${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
+                                          className={`w-full h-auto max-h-[50vh] md:max-h-[45vh] lg:max-h-none transition-transform duration-500 ease-out hover:scale-110 ${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
                                         />
                                       </div>
                                     );
@@ -769,7 +769,7 @@ const CategoriesSection = () => {
                               alt={design.title}
                               width={800}
                               height={600}
-                              className="w-full h-auto object-contain max-h-[50vh] md:max-h-[45vh] lg:max-h-none"
+                              className="w-full h-auto object-contain max-h-[50vh] md:max-h-[45vh] lg:max-h-none transition-transform duration-500 ease-out hover:scale-110"
                             />
                           </div>
                         </div>
