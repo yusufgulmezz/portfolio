@@ -38,7 +38,7 @@ const HeaderNew = () => {
   const [activeNav, setActiveNav] = useState<'HOME' | 'WORK' | 'PERSONAL' | 'CONTACT'>('HOME');
   const [currentIndex, setCurrentIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [audioSrc, setAudioSrc] = useState('/audio/soundtrack.mp3');
+  const [audioSrc, setAudioSrc] = useState('/audio/soundtrack_2.mp3');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Detect basePath for GitHub Pages
@@ -46,9 +46,9 @@ const HeaderNew = () => {
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname;
       if (pathname.startsWith('/portfolio')) {
-        setAudioSrc('/portfolio/audio/soundtrack.mp3');
+        setAudioSrc('/portfolio/audio/soundtrack_2.mp3');
       } else {
-        setAudioSrc('/audio/soundtrack.mp3');
+        setAudioSrc('/audio/soundtrack_2.mp3');
       }
     }
   }, []);
@@ -110,13 +110,32 @@ const HeaderNew = () => {
     localStorage.setItem('soundEnabled', String(next));
     if (next) {
       try {
+        // Fade-in efekti: 0'dan 1'e 3 saniyede
+        audio.volume = 0;
         await audio.play();
+        
+        const fadeInDuration = 3000; // 3 saniye
+        const fadeInSteps = 30; // 30 adım
+        const stepDuration = fadeInDuration / fadeInSteps;
+        const volumeStep = 1 / fadeInSteps;
+        
+        let currentStep = 0;
+        const fadeInterval = setInterval(() => {
+          currentStep++;
+          audio.volume = Math.min(currentStep * volumeStep, 1);
+          
+          if (currentStep >= fadeInSteps) {
+            clearInterval(fadeInterval);
+            audio.volume = 1; // Son değeri garanti et
+          }
+        }, stepDuration);
       } catch {
         setIsSoundOn(false);
         localStorage.setItem('soundEnabled', 'false');
       }
     } else {
       audio.pause();
+      // Volume'u 1'de bırak ki tekrar açıldığında fade-in çalışsın
     }
   };
 
@@ -206,7 +225,7 @@ const HeaderNew = () => {
   return (
     <>
       {/* Hidden audio */}
-      <audio ref={audioRef} loop preload="none" style={{ display: 'none' }} aria-label="Background soundtrack">
+      <audio ref={audioRef} loop preload="none" style={{ display: 'none' }} aria-label="Background soundtrack_2">
         <source src={audioSrc} type="audio/mpeg" key={audioSrc} />
         Your browser does not support the audio element.
       </audio>
@@ -412,7 +431,7 @@ const HeaderNew = () => {
 
         <button
           onClick={handleSoundToggle}
-          className="flex flex-col items-end gap-2 w-full text-right"
+          className="flex flex-col items-end gap-2 w-full text-right group"
           style={{ fontFamily: 'var(--font-roboto)' }}
           aria-label="Sound toggle"
         >
@@ -423,8 +442,38 @@ const HeaderNew = () => {
               transform: 'rotate(180deg)',
             }}
           >
-            <span className="text-[#AFAFAF]">SOUND </span>
-            <span className="text-[#1A1A1A]">{isSoundOn ? 'ON' : 'OFF'}</span>
+            <span className="text-[#AFAFAF] group-hover:text-[#1A1A1A] transition-colors duration-200 inline-block" style={{ marginBottom: '4px' }}>SOUND </span>
+            <span 
+              className="relative inline-block overflow-hidden text-[#1A1A1A]"
+              style={{ 
+                height: 'auto',
+                minHeight: '36px',
+                lineHeight: '18px',
+                width: '18px',
+                display: 'inline-block'
+              }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={isSoundOn ? 'ON' : 'OFF'}
+                  initial={{ x: '100%' }}
+                  animate={{ x: '0%' }}
+                  exit={{ x: '-100%' }}
+                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                  className="block absolute left-0 top-0"
+                  style={{ 
+                    whiteSpace: 'nowrap',
+                    writingMode: 'vertical-rl',
+                    transform: 'rotate(180deg)',
+                    width: '18px',
+                    height: 'auto',
+                    lineHeight: '18px'
+                  }}
+                >
+                  {isSoundOn ? 'ON' : 'OFF'}
+                </motion.span>
+              </AnimatePresence>
+            </span>
           </span>
         </button>
       </div>
