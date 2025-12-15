@@ -75,7 +75,7 @@ const PageTransitionNew = () => {
                 <Suspense fallback={null}>
                   <MetaBalls
                     color="#1A1A1A"
-                    cursorBallColor="#edede9"
+                    cursorBallColor="#E43A0F"
                     cursorBallSize={3}
                     ballCount={20}
                     animationSize={35}

@@ -91,13 +91,13 @@ const DesignEveryThinkSection = () => {
       <div className="relative z-10 px-4 sm:px-6 lg:px-8">
         {/* Main Title */}
         <motion.h1 
-          className="text-[52px] sm:text-[72px] md:text-[88px] lg:text-[104px] xl:text-[120px] 2xl:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] mb-8 sm:mb-10 md:mb-12 text-center max-w-[95vw] mx-auto"
+          className="text-[36px] sm:text-[60px] md:text-[88px] lg:text-[96px] xl:text-[120px] 2xl:text-[128px] font-medium text-[#1A1A1A] leading-[0.95] mb-8 sm:mb-10 md:mb-12 text-center max-w-[95vw] mx-auto"
           style={{ fontFamily: 'var(--font-roboto)', letterSpacing: '-0.0226em' }}
           initial={{ opacity: 0, y: 50 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          DESIGN EVERY THINK
+          DESIGN EVERY THINK<span className="text-[#E43A0F]">.</span>
         </motion.h1>
 
         {/* Horizontal Line */}
@@ -110,7 +110,7 @@ const DesignEveryThinkSection = () => {
 
         {/* Description Text with typewriter animation */}
         <motion.div 
-          className="text-[16px] sm:text-[20px] md:text-[24px] font-normal text-[#1A1A1A] leading-relaxed text-left mx-auto"
+          className="text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[22px] font-normal text-[#1A1A1A] leading-relaxed text-left mx-auto"
           style={{ fontFamily: 'var(--font-roboto)' }}
           initial={{ opacity: 0, y: 30 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}

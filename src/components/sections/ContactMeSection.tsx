@@ -58,11 +58,11 @@ const ContactMeSection = () => {
           {/* Email Address */}
           <a
             href="mailto:designeverythink.co@gmail.com"
-            className="inline-block text-base sm:text-lg md:text-xl text-[#1A1A1A] font-medium transition-opacity duration-200 relative group"
+            className="inline-block text-base sm:text-lg md:text-xl text-[#1A1A1A] hover:text-[#E43A0F] font-medium transition-opacity duration-200 relative group"
             style={{ fontFamily: 'var(--font-roboto)' }}
           >
             DESIGNEVERYTHINK.CO@GMAIL.COM
-            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#1A1A1A] group-hover:w-full transition-all duration-300 ease-in-out"></span>
+            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#E43A0F] group-hover:w-full transition-all duration-300 ease-in-out"></span>
           </a>
         </motion.div>
       </div>

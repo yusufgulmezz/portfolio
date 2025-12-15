@@ -303,13 +303,13 @@ const PersonalCreativesSection = () => {
                         {contentByTab[tab.key].map((item, idx) => (
                           <div
                             key={`${tab.key}-${idx}`}
-                            className="group rounded-xl bg-white/70 backdrop-blur-sm border border-gray-200/80 shadow-[0_6px_24px_rgba(0,0,0,0.06)] p-3 hover:shadow-[0_10px_32px_rgba(0,0,0,0.08)] transition-shadow cursor-pointer"
+                            className="group rounded-[18px] bg-white/85 backdrop-blur-sm border border-gray-200/80 shadow-[0_10px_28px_rgba(0,0,0,0.08)] p-3 hover:shadow-[0_12px_36px_rgba(0,0,0,0.12)] transition-shadow cursor-pointer"
                             onClick={() => {
                               setSelectedPhoto(item);
                               setSelectedPhotoIndex(idx);
                             }}
                           >
-                            <div className="relative w-full rounded-lg bg-gray-100 mb-3 overflow-hidden aspect-[3/4]">
+                            <div className="relative w-full rounded-xl bg-[#E6E0D4] mb-3 overflow-hidden aspect-[3/4]">
                               <Image
                                 src={item.src}
                                 alt={item.title}
@@ -317,9 +317,10 @@ const PersonalCreativesSection = () => {
                                 height={item.height}
                                 className="w-full h-full object-contain"
                               />
+                              <div className="absolute inset-0 pointer-events-none border border-white/40 rounded-xl" />
                             </div>
-                            <h4 className="text-sm font-medium text-gray-900 mb-1">{item.title}</h4>
-                            <p className="text-xs text-gray-600 line-clamp-2">{item.description}</p>
+                            <h4 className="text-base md:text-lg font-semibold text-[#1A1A1A] mb-1">{item.title}</h4>
+                            <p className="text-sm md:text-base text-[#4E4E4E] leading-relaxed line-clamp-2">{item.description}</p>
                           </div>
                         ))}
                       </motion.div>

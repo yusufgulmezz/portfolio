@@ -281,7 +281,7 @@ const HeroSection = () => {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-8 py-4 bg-[#4E4E4E] text-[#edede9] font-medium rounded-lg hover:bg-[#1A1A1A] transition-colors duration-300"
+                  className="px-8 py-4 text-[#4E4E4E] font-medium rounded-lg hover:text-[#E43A0F] transition-colors duration-300 border border-[#4E4E4E] hover:border-[#E43A0F]"
                   onClick={() => {
                     const el = document.getElementById('tech-logos');
                     if (!el) return;

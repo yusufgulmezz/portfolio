@@ -296,7 +296,7 @@ const HeaderNew = () => {
                         exit={{ opacity: 0, y: -12 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                         style={{
-                          color: '#EDEDE9',
+                          color: isSoundOn ? '#E43A0F' : '#EDEDE9',
                           fontSize: '13px',
                           fontWeight: 500,
                           display: 'block',
@@ -390,7 +390,7 @@ const HeaderNew = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.15 }}
-                className="block text-[#6B6B6B] font-regular leading-tight"
+                className="block text-[#4E4E4E] font-regular leading-tight"
                 style={{ fontSize: '14px' }}
                 aria-live="polite"
               >
@@ -430,14 +430,18 @@ const HeaderNew = () => {
           ))}
         </div>
 
-        <button
+        <div
           onClick={handleSoundToggle}
-          className="flex flex-col items-end gap-2 w-full text-right group"
+          className="flex flex-col items-end gap-2 w-full text-right group cursor-pointer"
           style={{ fontFamily: 'var(--font-roboto)' }}
+          role="button"
+          tabIndex={0}
           aria-label="Sound toggle"
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSoundToggle()}
         >
           <span
-            className="text-[18px] font-medium"
+            onClick={handleSoundToggle}
+            className="text-[18px] font-medium cursor-pointer"
             style={{
               writingMode: 'vertical-rl',
               transform: 'rotate(180deg)',
@@ -445,7 +449,7 @@ const HeaderNew = () => {
           >
             <span className="text-[#AFAFAF] group-hover:text-[#1A1A1A] transition-colors duration-200 inline-block" style={{ marginBottom: '4px' }}>SOUND </span>
             <span 
-              className="relative inline-block overflow-hidden text-[#1A1A1A]"
+                className="relative inline-block overflow-hidden"
               style={{ 
                 height: 'auto',
                 minHeight: '36px',
@@ -468,7 +472,8 @@ const HeaderNew = () => {
                     transform: 'rotate(180deg)',
                     width: '18px',
                     height: 'auto',
-                    lineHeight: '18px'
+                    lineHeight: '18px',
+                    color: isSoundOn ? '#E43A0F' : '#1A1A1A'
                   }}
                 >
                   {isSoundOn ? 'ON' : 'OFF'}
@@ -476,7 +481,7 @@ const HeaderNew = () => {
               </AnimatePresence>
             </span>
           </span>
-        </button>
+        </div>
       </div>
     </>
   );

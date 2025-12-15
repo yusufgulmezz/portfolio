@@ -35,6 +35,7 @@ const Footer = () => {
               <h3 className="text-lg sm:text-xl">
                 <span className="font-regular text-[#4E4E4E]">DesignEvery</span>
                 <span className="font-bold text-[#1A1A1A]">Think</span>
+                <span className="font-bold text-[#E43A0F]">.</span>
               </h3>
             </div>
             <p className="text-[#1A1A1A] mb-4">
