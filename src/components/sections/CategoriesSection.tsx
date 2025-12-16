@@ -266,18 +266,34 @@ const CategoriesSection = () => {
       count: 20,
       projects: [
         {
+          id: 31,
+          title: 'DesignEveryThink Portfolio',
+          date: '2025-09-01',
+          description: 'DesignEveryThink is my personal portfolio experience, created to unify my skills in UI/UX, coding, and visual experimentation under one consistent visual language. The project focuses on bold typography, a dark cinematic canvas, and motion-driven interactions that reflect my design philosophy. This UI/UX case covers the overall structure, cover layout, about section, design process, typography system, and color strategy behind the website.',
+          image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/det/Cover.png`,
+          gallery: [
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/det/Cover.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/det/About.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/det/DesignProcess.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/det/Typography.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/det/Color.png`
+          ],
+          tags: ['UI/UX', 'Portfolio', 'Web'],
+        },
+        {
           id: 8,
           title: 'Green World',
           date: '28/08/2025',
           description: 'Green World is a location-based mobile application developed to raise awareness about environmental pollution, support the voluntary trash collection process, and increase social environmental awareness.',
           image: `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Mockup.png`,
           gallery: [
-            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Screens_Page.png`,
-            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Typography_Page.png`,
-            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Components_Page.png`,
-            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/Wireframe_Page.png`
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/greenWorld/Screens_Page.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/greenWorld/Typography_Page.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/greenWorld/Components_Page.png`,
+            `${process.env.NODE_ENV === 'production' ? '/portfolio' : ''}/images/ui_ux/greenWorld/Wireframe_Page.png`
           ],
-          tags: ['UI/UX', 'Mobile']
+          tags: ['UI/UX', 'Mobile'],
+          reversed: true,
         },
         {
           id: 9,
@@ -285,8 +301,7 @@ const CategoriesSection = () => {
           date: '28/08/2025',
           description: 'Product card design featured on Hepsiburada, an e-commerce site.Colors, texts, icons, and other elements were incorporated into the design as a whole.',
           image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/7068ac238680707.6919e90f93502.png',
-          tags: ['UI/UX', 'Mobile'],
-          reversed: true
+          tags: ['UI/UX', 'Mobile']
         },
         // {
         //   id: 9,
@@ -620,7 +635,8 @@ const CategoriesSection = () => {
                           </div>
                           {/* Görsel kısmı - reversed ise sağda, değilse solda */}
                           <div className={`w-full flex ${design.reversed ? 'lg:order-2 lg:justify-end' : 'lg:order-1 lg:justify-start'} justify-center`}>
-                            <div className={`relative ${design.title.toLowerCase().includes('green world') ? 'max-w-[600px] md:max-w-[500px] lg:max-w-none bg-black rounded-lg overflow-hidden' : 'max-w-[600px] md:max-w-[500px] lg:max-w-none' } overflow-hidden`}
+                          <div
+                            className="relative w-full max-w-[720px] lg:max-w-full"
                             >
                               {/* Ana görsel alanı */}
                               <div 
@@ -644,66 +660,100 @@ const CategoriesSection = () => {
                                   });
                                 }}
                               >
-                                {(design.gallery && design.gallery.length > 0 ? design.gallery : [design.image]).map((img, idx) => {
-                                  const currentIdx = currentGalleryIndex[design.id] ?? 0;
-                                  if (idx === currentIdx) {
+                                <AnimatePresence mode="wait">
+                                  {(() => {
+                                    const images = design.gallery && design.gallery.length > 0 ? design.gallery : [design.image];
+                                    const currentIdx = currentGalleryIndex[design.id] ?? 0;
+                                    const img = images[currentIdx] ?? images[0];
                                     return (
-                                      <div
-                                        key={`${design.id}-${idx}`}
-                                        className="relative w-full overflow-hidden"
-                                      >
-                                        <Image
-                                          src={img}
-                                          alt={`${design.title} - ${idx + 1}`}
-                                          width={800}
-                                          height={600}
-                                          className={`w-full h-auto max-h-[50vh] md:max-h-[45vh] lg:max-h-none transition-transform duration-500 ease-out hover:scale-110 ${design.title.toLowerCase().includes('green world') ? 'object-contain' : 'object-cover'}`}
-                                        />
+                                      <div className="relative w-full overflow-hidden aspect-[16/9]">
+                                        <motion.div
+                                          key={`${design.id}-${currentIdx}`}
+                                          initial={{ opacity: 0, x: 20 }}
+                                          animate={{ opacity: 1, x: 0 }}
+                                          exit={{ opacity: 0, x: -20 }}
+                                          transition={{ duration: 0.35, ease: 'easeInOut' }}
+                                          className="absolute inset-0"
+                                        >
+                                          <Image
+                                            src={img}
+                                            alt={`${design.title} - ${currentIdx + 1}`}
+                                            width={800}
+                                            height={600}
+                                            className="w-full h-full object-contain transition-transform duration-500 ease-out hover:scale-110"
+                                          />
+                                        </motion.div>
                                       </div>
                                     );
-                                  }
-                                  return null;
-                                })}
+                                  })()}
+                                </AnimatePresence>
                               </div>
 
-                              {/* Thumbnail'ler - Sadece Green World App için ve gallery varsa */}
-                              {design.title.toLowerCase().includes('green world') && design.gallery && design.gallery.length > 0 && (
-                                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 sm:gap-3 px-4">
-                                  {design.gallery.map((img, idx) => {
-                                    const currentIdx = currentGalleryIndex[design.id] ?? 0;
-                                    return (
-                                      <button
-                                        key={`thumb-${design.id}-${idx}`}
-                                        aria-label={`Go to slide ${idx + 1}`}
-                                        className={`relative w-12 h-9 sm:w-20 sm:h-14 overflow-hidden rounded-md shadow-md transition-all duration-300 ring-1 ring-white/10 ${
-                                          idx === currentIdx 
-                                            ? 'ring-2 ring-white/70 scale-[1.03]' 
-                                            : 'opacity-80 hover:opacity-100 hover:scale-[1.02]'
-                                        }`}
-                                        onMouseEnter={() => {
-                                          setCurrentGalleryIndex(prev => ({
-                                            ...prev,
-                                            [design.id]: idx
-                                          }));
-                                        }}
-                                        onClick={() => {
-                                          setCurrentGalleryIndex(prev => ({
-                                            ...prev,
-                                            [design.id]: idx
-                                          }));
-                                        }}
-                                      >
-                                        <Image
-                                          src={img}
-                                          alt={`thumbnail ${idx + 1}`}
-                                          width={80}
-                                          height={56}
-                                          className="w-full h-full object-cover"
+                              {/* Gallery navigation - tüm UI/UX projeleri için nokta ve prev/next butonları */}
+                              {design.gallery && design.gallery.length > 1 && (
+                                <div className="flex items-center justify-center gap-4 mt-4">
+                                  <button
+                                    type="button"
+                                    aria-label="Previous image"
+                                    className="w-8 h-8 flex items-center justify-center rounded-full bg-[#1A1A1A]/80 text-[#edede9] border border-white/30transition"
+                                    onClick={() => {
+                                      const total = design.gallery ? design.gallery.length : 0;
+                                      if (!total) return;
+                                      const currentIdx = currentGalleryIndex[design.id] ?? 0;
+                                      const nextIdx = (currentIdx - 1 + total) % total;
+                                      setCurrentGalleryIndex(prev => ({
+                                        ...prev,
+                                        [design.id]: nextIdx
+                                      }));
+                                    }}
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                  </button>
+                                  <div className="flex items-center gap-2">
+                                    {design.gallery.map((_, idx) => {
+                                      const currentIdx = currentGalleryIndex[design.id] ?? 0;
+                                      const isActiveDot = idx === currentIdx;
+                                      return (
+                                        <button
+                                          key={`dot-${design.id}-${idx}`}
+                                          type="button"
+                                          aria-label={`Go to slide ${idx + 1}`}
+                                          className={`w-2.5 h-2.5 rounded-full transition-all ${
+                                            isActiveDot
+                                              ? 'bg-gray-900 scale-110'
+                                              : 'bg-gray-300 hover:bg-gray-400'
+                                          }`}
+                                          onClick={() => {
+                                            setCurrentGalleryIndex(prev => ({
+                                              ...prev,
+                                              [design.id]: idx
+                                            }));
+                                          }}
                                         />
-                                        <div className="absolute inset-0 bg-black/20" />
-                                      </button>
-                                    );
-                                  })}
+                                      );
+                                    })}
+                                  </div>
+                                  <button
+                                    type="button"
+                                    aria-label="Next image"
+                                    className="w-8 h-8 flex items-center justify-center rounded-full bg-[#1a1a1a]/80 text-[#edede9] border border-white/30 transition"
+                                    onClick={() => {
+                                      const total = design.gallery ? design.gallery.length : 0;
+                                      if (!total) return;
+                                      const currentIdx = currentGalleryIndex[design.id] ?? 0;
+                                      const nextIdx = (currentIdx + 1) % total;
+                                      setCurrentGalleryIndex(prev => ({
+                                        ...prev,
+                                        [design.id]: nextIdx
+                                      }));
+                                    }}
+                                  >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                  </button>
                                 </div>
                               )}
                             </div>
