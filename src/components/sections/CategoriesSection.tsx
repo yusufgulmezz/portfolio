@@ -638,7 +638,7 @@ const CategoriesSection = () => {
                           <div
                             className="relative w-full max-w-[720px] lg:max-w-full"
                             >
-                              {/* Ana görsel alanı */}
+                              {/* Ana görsel alanıı */}
                               <div 
                                 className="relative w-full cursor-zoom-in overflow-hidden"
                                 onClick={() => {
